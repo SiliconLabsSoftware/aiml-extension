@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="ASCII"?>
+<model:MDescriptors xmlns:model="http://www.silabs.com/ss/Studio.ecore">
+  <descriptors name="ml_blink" label="AI/ML - Blink"
+               description="This application demonstrates a model trained to replicate a sine function.
+                            The model is continuously fed with values ranging from 0 to 2pi, and the
+                            output of the model is used to control the intensity of an LED.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning"/>
+    <properties key="solutionReferenceId" value="examples.ml_blink.ml_blink.slcp"/>
+    <properties key="projectFilePaths" value="examples/ml_blink/ml_blink.slcp"/>
+    <properties key="readmeFiles" value="examples/ml_blink/readme.md"/>
+    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
+
+  <descriptors name="ml_magic_wand" label="AI/ML - Magic Wand"
+    description="This application demonstrates a model trained to recognize various hand gestures
+                 with an accelerometer. The detected gestures are printed to the serial port.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning"/>
+    <properties key="solutionReferenceId" value="examples.ml_magic_wand.ml_magic_wand.slcp"/>
+    <properties key="projectFilePaths" value="examples/ml_magic_wand/ml_magic_wand.slcp"/>
+    <properties key="readmeFiles" value="examples/ml_magic_wand/readme.md"/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
+
+  <descriptors name="ml_model_profiler" label="AI/ML - Model Profiler"
+    description="This application profiles a ML model. The ML model is loaded as a byte array
+                 which is generated from a Tensorflow tflite model file. Profiling is performed
+                 by running one inference with the model.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning"/>
+    <properties key="solutionReferenceId" value="examples.ml_model_profiler.ml_model_profiler.slcp"/>
+    <properties key="projectFilePaths" value="examples/ml_model_profiler/ml_model_profiler.slcp"/>
+    <properties key="readmeFiles" value="examples/ml_model_profiler/readme.md"/>
+    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
+
+  <descriptors name="ml_voice_control_light" label="AI/ML - Voice Control Light"
+    description="This application uses TensorFlow Lite for Microcontrollers to detect the spoken
+                 words 'on' and 'off' from audio data recorded on the microphone in a Micrium OS
+                 kernel task. The detected keywords are used to control an LED on the board.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning"/>
+    <properties key="solutionReferenceId" value="examples.ml_voice_control_light.ml_voice_control_light.slcp"/>
+    <properties key="projectFilePaths" value="examples/ml_voice_control_light/ml_voice_control_light.slcp"/>
+    <properties key="readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
+
+  <descriptors name="ml_audio_classifier" label="AI/ML - Audio Classifier"
+    description="This application uses TensorFlow Lite for Microcontrollers to classify
+                 audio data recorded on the microphone in a Micrium OS kernel task.
+                 The classification is used to control a LED on the board.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning"/>
+    <properties key="solutionReferenceId" value="examples.ml_audio_classifier.ml_audio_classifier.slcp"/>
+    <properties key="projectFilePaths" value="examples/ml_audio_classifier/ml_audio_classifier.slcp"/>
+    <properties key="readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
+
+  <descriptors name="ml_zigbee_z3_switch_with_voice" label="AI/ML - Zigbee 3.0 Switch with Voice"
+    description="Zigbee 3.0 Switch with Voice sample.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning zigbee z3"/>
+    <properties key="solutionReferenceId" value="examples.ml_zigbee_z3_switch_with_voice.ml_zigbee_z3_switch_with_voice.slcp"/>
+    <properties key="projectFilePaths" value="examples/ml_zigbee_z3_switch_with_voice/ml_zigbee_z3_switch_with_voice.slcp"/>
+    <properties key="readmeFiles" value="examples/ml_zigbee_z3_switch_with_voice/readme.md"/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Wireless\ Technology|Zigbee Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
+</model:MDescriptors>

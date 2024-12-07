@@ -1,0 +1,30 @@
+id: tensorflow_dependency_gemmlowp
+package: platform
+label: Low Precision General Matrix Multiplication (GEMMLOWP)
+description: >
+  Low precision general matrix multiplication (GEMMLOWP) library
+category: Machine Learning|TensorFlow|Dependency
+quality: production
+metadata:
+  sbom:
+    license: Apache-2.0
+    upstream:
+      name: Gemmlowp
+      version: 719139ce755a0
+      supplier: The Gemmlowp Authors
+      url: https://github.com/google/gemmlowp
+      package_url: pkg:github/google/gemmlowp@719139ce755a0
+      comment: Few header files copied from "fixedpoint" and "internal" folders from Gemmlowp GitHub repo, commit hash 719139ce755a0
+root_path: gemmlowp
+provides:
+  - name: tensorflow_dependency_gemmlowp
+include:
+  - path: .
+    file_list:
+      - path: fixedpoint/fixedpoint.h
+      - path: fixedpoint/fixedpoint_neon.h
+      - path: fixedpoint/fixedpoint_sse.h
+      - path: internal/detect_platform.h
+source: []
+ui_hints:
+  visibility: never

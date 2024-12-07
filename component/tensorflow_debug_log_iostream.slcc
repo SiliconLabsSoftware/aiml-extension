@@ -1,0 +1,21 @@
+id: tensorflow_debug_log_iostream
+package: platform
+label: Debug Logging using IO Stream
+description: >
+  This component enables debug logging in TensorFlow Lite Micro
+  and provides an implementation using IO Stream.
+category: Machine Learning|TensorFlow|Debug
+quality: production
+metadata:
+  sbom:
+    license: Zlib
+provides:
+  - name: tensorflow_debug_log_iostream
+  - name: tensorflow_debug_log_implementation
+requires:
+  - name: iostream
+source:
+  - path: siliconlabs/debug_log.cc
+define:
+  - name: TF_LITE_MCU_DEBUG_LOG
+

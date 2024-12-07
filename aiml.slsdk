@@ -1,0 +1,17 @@
+# Properties file for Simplicity Studio metadata
+id=com.silabs.sdk.aiml
+version=2.0.0
+
+label=AI/ML - Alpha
+description=AI/ML extension for Simplicity SDK
+
+prop.file.templatesFile=aiml_templates.xml
+prop.subLabel=AI/ML\\ 2.0.0
+
+prop.file.docsFile=aiml_docs.xml
+prop.file.demosFile=aiml_demos.xml
+
+prop.file.adapterPacks=tool/tflite
+
+prop.boardCompatibility=.*brd2601.* .*brd2608.* .*brd4186.* .*brd4187.*
+prop.partCompatibility=.*si917.* .*efr32.g2[468].*
