@@ -1,10 +1,10 @@
 # Silicon Labs' AI/ML Extension for Simplicity SDK
 
-> ***NOTE:***  
+> ***NOTE:***
 > The source code in this extension is currently *alpha* quality.
 >
 > If you would like to use the stable version of the AI/ML software, please
-> use the previous version (2024.6 or lower) of simplicity_sdk.
+> use the previous version (2024.6 or lower) of Simplicity SDK.
 >
 > If you want to go ahead with this version, please consider the following
 > expectations while working with this extension:
@@ -13,7 +13,7 @@
 > - Breaking changes: API, code structure, behavior may change in future.
 > - Documentation: Outdated or no documentation, including broken links.
 
-[![Silicon Labs](./docs/images/silabs-logo.jpg)](https://www.silabs.com)
+[![Silicon Labs](./doc/images/silabs-logo.jpg)](https://www.silabs.com)
 
 The Silicon Labs AI/ML extension for [Simplicity SDK](https://github.com/SiliconLabs/simplicity_sdk)
 offers an application programming interface (API) to unleash power-efficient
@@ -23,8 +23,10 @@ applications on Silicon Labs' Series 2 chipsets such as
 
 ## Useful Links
 
-- [Release Notes](docs/release-notes/v2.0.0-alpha.md)
-- [License](/LICENSE.md)
+- [Release Notes](./doc/release-notes/)
+  - [v2.0.0-alpha](./doc/release-notes/v2.0.0-alpha.md)
+  - [v2.0.1-alpha](./doc/release-notes/v2.0.1-alpha.md)
+- [License](./LICENSE.md)
 - [Documentation](https://docs.silabs.com/machine-learning/latest)
   - Software Reference
     - [Getting Started Guides](https://docs.silabs.com/machine-learning/latest/machine-learning-getting-started-guides)

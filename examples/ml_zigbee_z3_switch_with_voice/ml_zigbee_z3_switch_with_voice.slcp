@@ -8,7 +8,7 @@ author: Silicon Laboratories, Inc.
 
 sdk_extension:
   - id: aiml
-    version: 2.0.0
+    version: 2.0.1
 component:
   - id: cli
     instance:

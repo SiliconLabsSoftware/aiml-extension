@@ -30,7 +30,7 @@ config_file:
     directory: tflite
 sdk_extension:
   - id: aiml
-    version: 2.0.0
+    version: 2.0.1
 component:
   - id: sl_system
   - id: device_init

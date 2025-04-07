@@ -4,7 +4,7 @@
     <property key="demos.blurb" value="AI/ML - Blink Demo"/>
     <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
 		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.0.0/demos/brd2601b/ml_blink.s37"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2601b/ml_blink.s37"/>
     <property key="core.readmeFiles" value="examples/ml_blink/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
 		<property key="core.quality" value="PRODUCTION"/>
@@ -19,7 +19,7 @@
     <property key="demos.blurb" value="AI/ML - Magic Wand Demo"/>
     <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
 		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.0.0/demos/brd2601b/ml_magic_wand.s37"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2601b/ml_magic_wand.s37"/>
     <property key="core.readmeFiles" value="examples/ml_magic_wand/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
 		<property key="core.quality" value="PRODUCTION"/>
@@ -33,7 +33,7 @@
     <property key="demos.blurb" value="AI/ML - Model Profiler Demo"/>
     <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
 		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.0.0/demos/brd2601b/ml_model_profiler.s37"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2601b/ml_model_profiler.s37"/>
     <property key="core.readmeFiles" value="examples/ml_model_profiler/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
 		<property key="core.quality" value="PRODUCTION"/>
@@ -48,7 +48,7 @@
     <property key="demos.blurb" value="AI/ML - Voice Control Light Demo"/>
     <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
 		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.0.0/demos/brd2601b/ml_voice_control_light.s37"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2601b/ml_voice_control_light.s37"/>
     <property key="core.readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
 		<property key="core.quality" value="PRODUCTION"/>
@@ -63,7 +63,81 @@
     <property key="demos.blurb" value="AI/ML - Audio Classifier Demo"/>
     <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
 		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.0.0/demos/brd2601b/ml_audio_classifier.s37"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2601b/ml_audio_classifier.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+		<property key="core.quality" value="PRODUCTION"/>
+    <description>
+      This application uses TensorFlow Lite for Microcontrollers to classify
+      audio data recorded on the microphone in a Micrium OS kernel task.
+      The classification is used to control a LED on the board.
+    </description>
+  </demo>
+
+  <demo name="brd2608a.demo.ml_blink" label="AI/ML - Blink Demo">
+    <property key="demos.blurb" value="AI/ML - Blink Demo"/>
+    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
+		<property key="core.boardCompatibility" value="brd2608a"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2608a/ml_blink.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_blink/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+		<property key="core.quality" value="PRODUCTION"/>
+    <description>
+      This application demonstrates a model trained to replicate a sine function.
+      The model is continuously fed with values ranging from 0 to 2pi, and the
+      output of the model is used to control the intensity of an LED.
+    </description>
+  </demo>
+
+  <demo name="brd2608a.demo.ml_magic_wand" label="AI/ML - Magic Wand Demo">
+    <property key="demos.blurb" value="AI/ML - Magic Wand Demo"/>
+    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
+		<property key="core.boardCompatibility" value="brd2608a"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2608a/ml_magic_wand.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_magic_wand/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+		<property key="core.quality" value="PRODUCTION"/>
+    <description>
+      This application demonstrates a model trained to recognize various hand gestures
+      with an accelerometer. The detected gestures are printed to the serial port.
+    </description>
+  </demo>
+
+  <demo name="brd2608a.demo.ml_model_profiler" label="AI/ML - Model Profiler Demo">
+    <property key="demos.blurb" value="AI/ML - Model Profiler Demo"/>
+    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
+		<property key="core.boardCompatibility" value="brd2608a"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2608a/ml_model_profiler.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_model_profiler/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+		<property key="core.quality" value="PRODUCTION"/>
+    <description>
+      This application profiles a ML model. The ML model is loaded as a byte array
+      which is generated from a Tensorflow tflite model file. Profiling is performed
+      by running one inference with the model.
+    </description>
+  </demo>
+
+  <demo name="brd2608a.demo.ml_voice_control_light" label="AI/ML - Voice Control Light Demo">
+    <property key="demos.blurb" value="AI/ML - Voice Control Light Demo"/>
+    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
+		<property key="core.boardCompatibility" value="brd2608a"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2608a/ml_voice_control_light.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+		<property key="core.quality" value="PRODUCTION"/>
+    <description>
+      This application uses TensorFlow Lite for Microcontrollers to detect the spoken
+      words 'on' and 'off' from audio data recorded on the microphone in a Micrium OS
+      kernel task. The detected keywords are used to control an LED on the board.
+    </description>
+  </demo>
+
+  <demo name="brd2608a.demo.ml_audio_classifier" label="AI/ML - Audio Classifier Demo">
+    <property key="demos.blurb" value="AI/ML - Audio Classifier Demo"/>
+    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
+		<property key="core.boardCompatibility" value="brd2608a"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.0.1/demos/brd2608a/ml_audio_classifier.s37"/>
     <property key="core.readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
 		<property key="core.quality" value="PRODUCTION"/>
