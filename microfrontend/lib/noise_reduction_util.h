@@ -17,6 +17,7 @@ This file has been modified by Silicon Labs.
 #ifndef MICROFRONTEND_LIB_NOISE_REDUCTION_UTIL_H_
 #define MICROFRONTEND_LIB_NOISE_REDUCTION_UTIL_H_
 
+#include "microfrontend/lib/utils.h"
 #include "microfrontend/lib/noise_reduction.h"
 
 #ifdef __cplusplus
@@ -37,15 +38,15 @@ struct NoiseReductionConfig {
 };
 
 // Populates the NoiseReductionConfig with "sane" default values.
-void NoiseReductionFillConfigWithDefaults(struct NoiseReductionConfig* config);
+ void NoiseReductionFillConfigWithDefaults(struct NoiseReductionConfig* config);
 
 // Allocates any buffers.
-int NoiseReductionPopulateState(const struct NoiseReductionConfig* config,
+ int NoiseReductionPopulateState(const struct NoiseReductionConfig* config,
                                 struct NoiseReductionState* state,
                                 int num_channels);
 
 // Frees any allocated buffers.
-void NoiseReductionFreeStateContents(struct NoiseReductionState* state);
+ void NoiseReductionFreeStateContents(struct NoiseReductionState* state);
 
 #ifdef __cplusplus
 }  // extern "C"

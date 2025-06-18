@@ -306,14 +306,29 @@ def generate_files(input_dir: Path, output_dir: Path):
     with open(Path(output_dir, 'sl_tflite_micro_model_parameters.h'), 'w') as fd:
       fd.write(tp.substitute(data=(parameter_defines), model_name=model_name))
 
-
+def get_board_platform(part_number: str) -> str:
+    """select platform value based on part number"""
+    board_platform = None
+    _part_no = part_number.lower()  # sanitize input
+    if re.search("efr32", _part_no):
+        board_platform = "efr32"
+    elif re.search("si.*917", _part_no):
+        board_platform = "si91x"
+    else:
+        sys.exit(1)
+    return board_platform
 
 def entry():
   parser = argparse.ArgumentParser(description='TensorFlow Lite flatbuffer to C converter.')
   parser.add_argument('-i', required=True, type=Path, help='Input directory containing .tflite files')
   parser.add_argument('-o', required=True, type=Path, help='Output directory to populate with serialized content.')
+  parser.add_argument('-p', required=True, type=str, help='Part Number')
   args = parser.parse_args()
 
+  board_platform = get_board_platform(args.p)
+  # Skipping if board_platform is si91x
+  if board_platform == 'si91x':
+      return
   generate_files(args.i, args.o)
 
 if __name__ == "__main__":

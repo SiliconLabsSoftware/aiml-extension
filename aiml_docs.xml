@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contentItems xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.silabs.com/ss/ContentItem.ecore">
 
-  <contentItemData label="AI/ML Overview" itemURI="https://docs.silabs.com/machine-learning/latest/machine-learning-overview/" category="Quick Start Guides" priority="1">
+  <contentItemData label="AI/ML Overview" itemURI="https://docs.silabs.com/machine-learning/latest/aiml-getting-started/" category="Quick Start Guides" priority="1">
     <property key="core.category" value="Quick Start Guides"/>
     <property key="core.priority" value="1"/>
     <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
@@ -10,7 +10,7 @@
     <description>Overview of developing AI/ML applications for EFM32, EFR32 chipsets</description>
   </contentItemData>
 
-  <contentItemData label="AI/ML Getting Started Guide" itemURI="https://docs.silabs.com/machine-learning/latest/machine-learning-getting-started-guides/" category="Quick Start Guides" priority="2">
+  <contentItemData label="AI/ML Getting Started Guide" itemURI="https://docs.silabs.com/machine-learning/latest/aiml-getting-started/" category="Quick Start Guides" priority="2">
     <property key="core.category" value="Quick Start Guides"/>
     <property key="core.priority" value="2"/>
     <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
@@ -19,43 +19,43 @@
     <description>Get started with building machine learning into applications on EFM32, EFR32 boards.</description>
   </contentItemData>
 
-  <!-- <contentItemData label="AI/ML Release Notes" itemURI="https://github.com/SiliconLabsSoftware/aiml-extension/blob/v2.0.1/doc/release-notes/release-notes.md" category="Release Notes" priority="3"> -->
-  <!--   <property key="core.category" value="Release Notes"/> -->
-  <!--   <property key="core.priority" value="3"/> -->
-  <!--   <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/> -->
-  <!--   <property key="core.partCompatibility" value=".*efr32.g2[468].*"/> -->
-  <!--   <property key="core.sdkAndProtocolTags" value="AI/ML"/> -->
-  <!--   <description>Release Notes for the AI/ML SDK. These release notes provide information on the release including part compatibility, changes, and supported features.</description> -->
-  <!-- </contentItemData> -->
+  <contentItemData label="AI/ML Release Notes" itemURI="https://docs.silabs.com/machine-learning/latest/sisdk-mc-learning-release-notes/" category="Release Notes" priority="3">
+    <property key="core.category" value="Release Notes"/>
+    <property key="core.priority" value="3"/>
+    <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
+    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
+    <property key="core.sdkAndProtocolTags" value="AI/ML"/>
+    <description>Release Notes for the AI/ML SDK. These release notes provide information on the release including part compatibility, changes, and supported features.</description>
+  </contentItemData>
 
-  <!-- <contentItemData label="AI/ML Glossary of Terms" itemURI="https://docs.silabs.com/machine-learning/latest/machine-learning-glossary/" category="Software" priority="4"> -->
-  <!--   <property key="core.category" value="Software"/> -->
-  <!--   <property key="core.priority" value="4"/> -->
-  <!--   <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/> -->
-  <!--   <property key="core.partCompatibility" value=".*"/> -->
-  <!--   <property key="core.sdkAndProtocolTags" value="AI/ML"/> -->
-  <!--   <description>Glossary of commonly used terms in the AI/ML documentation.</description> -->
-  <!-- </contentItemData> -->
+  <contentItemData label="AI/ML Fundamentals" itemURI="https://docs.silabs.com/machine-learning/latest/aiml-fundamentals/" category="Software" priority="4">
+    <property key="core.category" value="Software"/>
+    <property key="core.priority" value="4"/>
+    <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
+    <property key="core.partCompatibility" value=".*"/>
+    <property key="core.sdkAndProtocolTags" value="AI/ML"/>
+    <description>Commonly used terms in the AI/ML documentation.</description>
+  </contentItemData>
 
-  <!-- <contentItemData label="AI/ML Migration Guide from v1.3.0 to v2.0.1" itemURI="https://github.com/SiliconLabsSoftware/aiml-extension/blob/v2.0.1/doc/software-reference/developer-guides/migrating-from-v1-3-0.md" category="Quick Start Guides" priority="5"> -->
-  <!--   <property key="core.category" value="Quick Start Guides"/> -->
-  <!--   <property key="core.priority" value="5"/> -->
-  <!--   <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/> -->
-  <!--   <property key="core.partCompatibility" value=".*efr32.g2[468].*"/> -->
-  <!--   <property key="core.sdkAndProtocolTags" value="AI/ML"/> -->
-  <!--   <description>Guide for updating an existing application using the AI/ML SDK v1.3.0 to a v2.0.1 application. This guide includes steps to move from the code integrated inside GSDK to the separate AI/ML extension.</description> -->
-  <!-- </contentItemData> -->
+  <contentItemData label="AI/ML Migration Guide from v1.x to v2.x" itemURI="https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/aiml-extension-setup" category="Quick Start Guides" priority="5">
+    <property key="core.category" value="Quick Start Guides"/>
+    <property key="core.priority" value="5"/>
+    <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
+    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
+    <property key="core.sdkAndProtocolTags" value="AI/ML"/>
+    <description>Guide for updating an existing application using the AI/ML SDK v1.x to a v2.x application. This guide includes steps to move from the code integrated inside GSDK to the separate AI/ML extension.</description>
+  </contentItemData>
 
-  <!-- <contentItemData label="AI/ML Software Reference Manual" itemURI="https://github.com/SiliconLabsSoftware/aiml-extension/blob/v2.0.1/doc/software-reference/manuals/aiml-software-reference-manual.md" category="Reference Manuals" priority="6"> -->
-  <!--   <property key="core.category" value="Reference Manuals"/> -->
-  <!--   <property key="core.priority" value="6"/> -->
-  <!--   <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/> -->
-  <!--   <property key="core.partCompatibility" value=".*"/> -->
-  <!--   <property key="core.sdkAndProtocolTags" value="AI/ML"/> -->
-  <!--   <description>This reference manual provides information about the AI/ML software on the EFR32 chipsets. It is intended to provide all the details required for a smooth developer experience.</description> -->
-  <!-- </contentItemData> -->
+  <contentItemData label="AI/ML Software Reference Manual" itemURI="https://github.com/SiliconLabsSoftware/aiml-extension/blob/v2.1.0/doc/software-reference/manuals/aiml-software-reference-manual.md" category="Reference Manuals" priority="6">
+    <property key="core.category" value="Reference Manuals"/>
+    <property key="core.priority" value="6"/>
+    <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
+    <property key="core.partCompatibility" value=".*"/>
+    <property key="core.sdkAndProtocolTags" value="AI/ML"/>
+    <description>This reference manual provides information about the AI/ML software on the EFR32 chipsets. It is intended to provide all the details required for a smooth developer experience.</description>
+  </contentItemData>
 
-  <contentItemData label="AI/ML SDK API Reference" itemURI="https://docs.silabs.com/machine-learning/latest/machine-learning-tensorflow-lite-api/" category="Software API Documentation" priority="7">
+  <contentItemData label="AI/ML SDK API Reference" itemURI="https://docs.silabs.com/machine-learning/latest/aiml-reference-guide/" category="Software API Documentation" priority="7">
     <property key="core.category" value="Software API Documentation"/>
     <property key="core.priority" value="7"/>
     <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>

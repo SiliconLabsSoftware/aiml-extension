@@ -59,6 +59,7 @@ sl_status_t sl_ml_audio_feature_generation_init()
   mic_status = sl_mic_start_streaming(mic_sample_buffer, MIC_DMA_SIZE, (sl_mic_buffer_ready_callback_t)mic_buffer_ready_callback);
 
   if (mic_status != SL_STATUS_OK) {
+    sl_mic_deinit(); // Release resources if streaming fails
     return mic_status;
   }
 

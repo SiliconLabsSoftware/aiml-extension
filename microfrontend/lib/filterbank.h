@@ -20,7 +20,9 @@ This file has been modified by Silicon Labs.
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "microfrontend/lib/utils.h"
 #include "microfrontend/sl_ml_fft.h"
+
 
 #define kFilterbankBits 12
 
@@ -42,21 +44,21 @@ struct FilterbankState {
 
 // Converts the relevant complex values of an FFT output into energy (the
 // square magnitude).
-void FilterbankConvertFftComplexToEnergy(struct FilterbankState* state,
+ void FilterbankConvertFftComplexToEnergy(struct FilterbankState* state,
                                          struct complex_int16_t* fft_output,
                                          int32_t* energy);
 
 // Computes the mel-scale filterbank on the given energy array. Output is cached
 // internally - to fetch it, you need to call FilterbankSqrt.
-void FilterbankAccumulateChannels(struct FilterbankState* state,
+ void FilterbankAccumulateChannels(struct FilterbankState* state,
                                   const int32_t* energy);
 
 // Applies an integer square root to the 64 bit intermediate values of the
 // filterbank, and returns a pointer to them. Memory will be invalidated the
 // next time FilterbankAccumulateChannels is called.
-uint32_t* FilterbankSqrt(struct FilterbankState* state, int scale_down_shift);
+ uint32_t* FilterbankSqrt(struct FilterbankState* state, int scale_down_shift);
 
-void FilterbankReset(struct FilterbankState* state);
+ void FilterbankReset(struct FilterbankState* state);
 
 #ifdef __cplusplus
 }  // extern "C"

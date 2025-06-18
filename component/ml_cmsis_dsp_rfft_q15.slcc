@@ -23,7 +23,7 @@ provides:
   - name: frontend_fft_implementation
 requires:
   - name: device_has_fpu
-    condition: [device_cortexm]
+    condition: [device_efx]
   - name: cmsis_dsp
     condition: [device_cortexm]
 source:

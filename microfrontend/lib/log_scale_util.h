@@ -20,6 +20,7 @@ This file has been modified by Silicon Labs.
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "microfrontend/lib/utils.h"
 #include "microfrontend/lib/log_scale.h"
 
 #ifdef __cplusplus
@@ -34,10 +35,10 @@ struct LogScaleConfig {
 };
 
 // Populates the LogScaleConfig with "sane" default values.
-void LogScaleFillConfigWithDefaults(struct LogScaleConfig* config);
+ void LogScaleFillConfigWithDefaults(struct LogScaleConfig* config);
 
 // Allocates any buffers.
-int LogScalePopulateState(const struct LogScaleConfig* config,
+ int LogScalePopulateState(const struct LogScaleConfig* config,
                           struct LogScaleState* state);
 
 #ifdef __cplusplus

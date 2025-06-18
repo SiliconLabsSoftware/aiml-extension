@@ -17,12 +17,16 @@ This file has been modified by Silicon Labs.
 #ifndef MICROFRONTEND_LIB_FRONTEND_UTIL_H_
 #define MICROFRONTEND_LIB_FRONTEND_UTIL_H_
 
+#include "microfrontend/lib/utils.h"
 #include "microfrontend/lib/filterbank_util.h"
 #include "microfrontend/lib/frontend.h"
 #include "microfrontend/lib/log_scale_util.h"
 #include "microfrontend/lib/noise_reduction_util.h"
 #include "microfrontend/lib/pcan_gain_control_util.h"
 #include "microfrontend/lib/window_util.h"
+#include "microfrontend/lib/activity_detection_util.h"
+#include "microfrontend/lib/dc_notch_filter_util.h"
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,17 +38,19 @@ struct FrontendConfig {
   struct NoiseReductionConfig noise_reduction;
   struct PcanGainControlConfig pcan_gain_control;
   struct LogScaleConfig log_scale;
+  struct ActivityDetectionConfig activity_detection;
+  struct DcNotchFilterConfig dc_notch_filter;
 };
 
 // Fills the frontendConfig with "sane" defaults.
-void FrontendFillConfigWithDefaults(struct FrontendConfig* config);
+ void FrontendFillConfigWithDefaults(struct FrontendConfig* config);
 
 // Allocates any buffers.
-int FrontendPopulateState(const struct FrontendConfig* config,
+ int FrontendPopulateState(const struct FrontendConfig* config,
                           struct FrontendState* state, int sample_rate);
 
 // Frees any allocated buffers.
-void FrontendFreeStateContents(struct FrontendState* state);
+ void FrontendFreeStateContents(struct FrontendState* state);
 
 #ifdef __cplusplus
 }  // extern "C"

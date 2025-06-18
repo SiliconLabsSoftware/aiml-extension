@@ -15,7 +15,7 @@ limitations under the License.
 This file has been modified by Silicon Labs.
 ==============================================================================*/
 #include "microfrontend/lib/frontend_util.h"
-
+#include "microfrontend/lib/dc_notch_filter.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -27,10 +27,19 @@ void FrontendFillConfigWithDefaults(struct FrontendConfig* config) {
   NoiseReductionFillConfigWithDefaults(&config->noise_reduction);
   PcanGainControlFillConfigWithDefaults(&config->pcan_gain_control);
   LogScaleFillConfigWithDefaults(&config->log_scale);
+  ActivityDetectionFillConfigWithDefaults(&config->activity_detection);
+  DcNotchFilterFillConfigWithDefaults(&config->dc_notch_filter);
 }
 
 int FrontendPopulateState(const struct FrontendConfig* config,
                           struct FrontendState* state, int sample_rate) {
+
+  if(!config->noise_reduction.enable_noise_reduction && config->pcan_gain_control.enable_pcan)
+  {
+    fprintf(stderr, "PCAN must be disabled if noise reduction is disabled");
+    return 0;
+  }
+
   memset(state, 0, sizeof(*state));
 
   if (!WindowPopulateState(&config->window, &state->window, sample_rate)) {
@@ -40,6 +49,7 @@ int FrontendPopulateState(const struct FrontendConfig* config,
 
   if (sli_ml_fft_init(&state->fft, state->window.size) != SL_STATUS_OK){
     fprintf(stderr, "Failed to initialize FFT\n");
+    return 0;
   }
 
   if (!FilterbankPopulateState(&config->filterbank, &state->filterbank,
@@ -55,6 +65,9 @@ int FrontendPopulateState(const struct FrontendConfig* config,
     return 0;
   }
 
+  ActivityDetectionConfig(&config->activity_detection, config->filterbank.num_channels, &state->activity_detection);
+
+  DcNotchFilterConfig(&config->dc_notch_filter, &state->dc_notch_filter);
   int input_correction_bits =
       MostSignificantBit32(state->fft.fft_size) - 1 - (kFilterbankBits / 2);
   if (!PcanGainControlPopulateState(
@@ -78,6 +91,7 @@ int FrontendPopulateState(const struct FrontendConfig* config,
 
 void FrontendFreeStateContents(struct FrontendState* state) {
   WindowFreeStateContents(&state->window);
+  sli_ml_fft_deinit(&state->fft);
   FilterbankFreeStateContents(&state->filterbank);
   NoiseReductionFreeStateContents(&state->noise_reduction);
   PcanGainControlFreeStateContents(&state->pcan_gain_control);

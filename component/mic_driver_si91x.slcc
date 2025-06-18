@@ -1,0 +1,16 @@
+id: mic_driver_si91x
+package: aiml
+label: Microphone Driver for si91x ML applications
+description: >
+  Provides an I2S microphone driver for the si91x platform, enabling audio input for machine learning applications
+category: Hardware
+quality: production
+provides:
+  - name: mic_driver_si91x
+  - name: ml_mic_driver_si91x
+include:
+  - path: inc/drivers/mic
+    file_list:
+      - path: sl_ml_mic_i2s_si91x.h
+source:
+  - path: src/drivers/mic/sl_ml_mic_i2s_si91x.c

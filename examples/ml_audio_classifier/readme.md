@@ -1,10 +1,12 @@
 # Audio Classifier
+
 This application uses TensorFlow Lite for Microcontrollers to run audio
 classification machine learning models to classify words from audio data
 recorded from a microphone. The detection is visualized using the LED's on the
 board and the classification results are written to the VCOM serialport.
 
 ## Behavior
+
 The application is using two LEDs to show detection and activity and it is
 printing detection results and debug log output on the VCOM serial port. In the
 application configuration file called audio_classifier_config.h the user can
@@ -31,8 +33,9 @@ By default any labels that start with an underscore are ignored when processing
 results. This behavior can be disabled in the application configuration file.
 
 ## Model
+
 The application uses one of two different available models
-(```keyword_spotting_on_off.tflite``` or ```keyword_spotting_on_off_v2.tflite```)
+(`keyword_spotting_on_off.tflite` or `keyword_spotting_on_off_v2.tflite`)
 as the default model, depending on whether the application is generated for a
 development board featuring an MVP hardware accelerator or not. When an MVP
 hardware accelerator is featured on the board, inference will run at a faster
@@ -41,7 +44,7 @@ detections.
 
 Details about the model architectures and scripts for generating the models can
 be found in the [Silicon Labs machine learning applications](https://github.com/SiliconLabs/machine_learning_applications/tree/main/) repository, under
-```application/voice/keyword_spotting/model```.
+`application/voice/keyword_spotting/model`.
 
 The application is designed to work with an audio classification model created
 using the Silicon Labs Machine Learning Toolkit
@@ -50,7 +53,7 @@ classifier model and replace the model inside this example with the new audio
 classification model. To replace the audio classification model with a new model
 created using the MLTK simply replace the .tflite file in the config/tflite folder
 of this project with your new. tflite file. After a new .tflite file is added
-to the project Simplicity Studio will automatically use the [flatbuffer converter tool](https://docs.silabs.com/aiml/latest/aiml/tensorflow/flatbuffer-conversion)
+to the project Simplicity Studio will automatically use the [flatbuffer converter tool](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/flatbuffer-conversion)
 to convert the .tflite file into a c file which is added to the project.
 
 In order for the audio classification to work correctly we need to use the same
@@ -65,13 +68,12 @@ This example will automatically use the parameters from the .tflite file in
 order to configure the audio feature generator to correctly extract features
 from input audio data which can be passed to TensorFlow when doing inference.
 See the MLTK documentation for more information about the model parameters:
-https://siliconlabs.github.io/mltk/docs/model_parameters.html
+<https://siliconlabs.github.io/mltk/docs/model_parameters.html>
 
 ## References
 
-The example is based on TensorFlow's example called **[micro speech](https://github.com/tensorflow/tflite-micro/tree/main/tensorflow/lite/micro/examples/micro_speech)**
-and audio is processed using the **[audio feature generator](https://docs.silabs.com/aiml/latest/aiml/api/group-ml-audio-feature-generation)**.
+The example is based on TensorFlow's example called **[micro speech](https://github.com/tensorflow/tflite-micro/tree/main/tensorflow/lite/micro/examples/micro_speech)** and audio is processed using the **[audio feature generator](https://docs.silabs.com/machine-learning/latest/aiml-reference-guide/ml-audio-feature-generation)**.
 
-- [Simplicity SDK Machine Learning Documentation](https://docs.silabs.com/aiml/latest/aiml/tensorflow/getting-started)
+- [Machine Learning (AI/ML) Documentation](https://docs.silabs.com/machine-learning/latest/aiml-developing-with)
 - [MLTK Documentation](https://siliconlabs.github.io/mltk)
 - [TensorFlow Lite Micro](https://www.tensorflow.org/lite/microcontrollers)

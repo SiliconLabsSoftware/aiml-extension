@@ -18,6 +18,7 @@ This file has been modified by Silicon Labs.
 #define MICROFRONTEND_LIB_LOG_LUT_H_
 
 #include <stdint.h>
+#include "microfrontend/lib/utils.h"
 
 #ifdef __cplusplus
 extern "C" {

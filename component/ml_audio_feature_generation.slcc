@@ -1,5 +1,5 @@
 id: ml_audio_feature_generation
-package: platform
+package: aiml
 label: Audio Feature Generator
 description: >
   The audio feature generator can be used to extract mel-flterbank features from an audio
@@ -21,22 +21,38 @@ provides:
   - name: ml_audio_feature_generation
 requires:
   - name: toolchain_gcc
+    condition: [device_efx]
   - name: cpp_support
   - name: frontend_fft_implementation
   - name: component_catalog
   - name: mic_driver
+    condition: [device_efx]
+  - name: mic_driver_si91x
+    condition: [device_si91x]
   - name: sl_common
+    condition: [device_efx]
 recommends:
   - id: ml_cmsis_dsp_rfft_q15
 config_file:
   - path: config/sl_ml_audio_feature_generation_config.h
+    condition: [device_efx]
+  - path: config/sl_ml_audio_feature_generation_config_si91x.h
+    condition: [device_si91x]
 include:
   - path: inc
     file_list:
       - path: sl_ml_audio_feature_generation.h
+        condition: [device_efx]
+      - path: sl_ml_audio_feature_generation_si91x.h
+        condition: [device_si91x]
   - path: .
     file_list:
+      - path: microfrontend/lib/utils.h
+      - path: microfrontend/lib/activity_detection.h
+      - path: microfrontend/lib/activity_detection_util.h
       - path: microfrontend/lib/bits.h
+      - path: microfrontend/lib/dc_notch_filter.h
+      - path: microfrontend/lib/dc_notch_filter_util.h
       - path: microfrontend/sl_ml_fft.h
       - path: microfrontend/lib/filterbank.h
       - path: microfrontend/lib/filterbank_util.h
@@ -53,7 +69,19 @@ include:
       - path: microfrontend/lib/window_util.h
 source:
   - path: src/sl_ml_audio_feature_generation.c
+    condition: [device_efx]
   - path: src/sl_ml_audio_feature_generation_init.c
+    condition: [device_efx]
+  - path: src/sl_ml_audio_feature_generation_si91x.cc
+    condition: [device_si91x]
+  - path: src/sl_ml_audio_feature_generation_init_si91x.cc
+    condition: [device_si91x]
+  - path: config/sl_ml_audio_feature_generation_config_si91x.cc
+    condition: [device_si91x]
+  - path: microfrontend/lib/activity_detection_util.c
+  - path: microfrontend/lib/activity_detection.c
+  - path: microfrontend/lib/dc_notch_filter.c
+  - path: microfrontend/lib/dc_notch_filter_util.c
   - path: microfrontend/lib/filterbank.c
   - path: microfrontend/lib/filterbank_util.c
   - path: microfrontend/lib/frontend.c

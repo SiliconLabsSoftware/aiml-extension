@@ -20,12 +20,17 @@ This file has been modified by Silicon Labs.
 #include <stdint.h>
 #include <stdlib.h>
 
+
+#include "microfrontend/lib/utils.h"
 #include "microfrontend/sl_ml_fft.h"
 #include "microfrontend/lib/filterbank.h"
 #include "microfrontend/lib/log_scale.h"
 #include "microfrontend/lib/noise_reduction.h"
 #include "microfrontend/lib/pcan_gain_control.h"
 #include "microfrontend/lib/window.h"
+#include "microfrontend/lib/activity_detection.h"
+#include "microfrontend/lib/dc_notch_filter.h"
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,6 +43,8 @@ struct FrontendState {
   struct NoiseReductionState noise_reduction;
   struct PcanGainControlState pcan_gain_control;
   struct LogScaleState log_scale;
+  struct ActivityDetectionState activity_detection;
+  struct DcNotchFilterState dc_notch_filter;
 };
 
 struct FrontendOutput {
@@ -52,12 +59,12 @@ struct FrontendOutput {
 // values pointer will be NULL. Note that the output pointer will be invalidated
 // as soon as FrontendProcessSamples is called again, so copy the contents
 // elsewhere if you need to use them later.
-struct FrontendOutput FrontendProcessSamples(struct FrontendState* state,
+ struct FrontendOutput FrontendProcessSamples(struct FrontendState* state,
                                              const int16_t* samples,
                                              size_t num_samples,
                                              size_t* num_samples_read);
 
-void FrontendReset(struct FrontendState* state);
+ void FrontendReset(struct FrontendState* state);
 
 #ifdef __cplusplus
 }  // extern "C"

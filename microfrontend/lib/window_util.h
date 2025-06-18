@@ -17,6 +17,7 @@ This file has been modified by Silicon Labs.
 #ifndef MICROFRONTEND_LIB_WINDOW_UTIL_H_
 #define MICROFRONTEND_LIB_WINDOW_UTIL_H_
 
+#include "microfrontend/lib/utils.h"
 #include "microfrontend/lib/window.h"
 
 #ifdef __cplusplus
@@ -31,14 +32,14 @@ struct WindowConfig {
 };
 
 // Populates the WindowConfig with "sane" default values.
-void WindowFillConfigWithDefaults(struct WindowConfig* config);
+ void WindowFillConfigWithDefaults(struct WindowConfig* config);
 
 // Allocates any buffers.
-int WindowPopulateState(const struct WindowConfig* config,
+ int WindowPopulateState(const struct WindowConfig* config,
                         struct WindowState* state, int sample_rate);
 
 // Frees any allocated buffers.
-void WindowFreeStateContents(struct WindowState* state);
+ void WindowFreeStateContents(struct WindowState* state);
 
 #ifdef __cplusplus
 }  // extern "C"

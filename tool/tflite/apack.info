@@ -9,5 +9,5 @@ uc.triggerExtension=tflite
 
 # Standard generation function
 function(uc_generate) {
-  cmd=$(python) tflite.py -i ${contentFolder} -o ${generationOutput}
+  cmd=$(python) tflite.py -i ${contentFolder} -o ${generationOutput} -p ${partOpn}
 }

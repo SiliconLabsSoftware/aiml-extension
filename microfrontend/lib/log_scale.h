@@ -20,6 +20,8 @@ This file has been modified by Silicon Labs.
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "microfrontend/lib/utils.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -31,7 +33,7 @@ struct LogScaleState {
 
 // Applies a fixed point logarithm to the signal and converts it to 16 bit. Note
 // that the signal array will be modified.
-uint16_t* LogScaleApply(struct LogScaleState* state, uint32_t* signal,
+ uint16_t* LogScaleApply(struct LogScaleState* state, uint32_t* signal,
                         int signal_size, int correction_bits);
 
 #ifdef __cplusplus

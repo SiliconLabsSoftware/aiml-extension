@@ -17,6 +17,7 @@ This file has been modified by Silicon Labs.
 #ifndef MICROFRONTEND_LIB_FILTERBANK_UTIL_H_
 #define MICROFRONTEND_LIB_FILTERBANK_UTIL_H_
 
+#include "microfrontend/lib/utils.h"
 #include "microfrontend/lib/filterbank.h"
 
 #ifdef __cplusplus
@@ -35,15 +36,15 @@ struct FilterbankConfig {
 };
 
 // Fills the frontendConfig with "sane" defaults.
-void FilterbankFillConfigWithDefaults(struct FilterbankConfig* config);
+ void FilterbankFillConfigWithDefaults(struct FilterbankConfig* config);
 
 // Allocates any buffers.
-int FilterbankPopulateState(const struct FilterbankConfig* config,
+ int FilterbankPopulateState(const struct FilterbankConfig* config,
                             struct FilterbankState* state, int sample_rate,
                             int spectrum_size);
 
 // Frees any allocated buffers.
-void FilterbankFreeStateContents(struct FilterbankState* state);
+ void FilterbankFreeStateContents(struct FilterbankState* state);
 
 #ifdef __cplusplus
 }  // extern "C"

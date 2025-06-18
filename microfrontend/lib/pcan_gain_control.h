@@ -20,6 +20,9 @@ This file has been modified by Silicon Labs.
 #include <stdint.h>
 #include <stdlib.h>
 
+#include "microfrontend/lib/utils.h"
+
+
 #define kPcanSnrBits 12
 #define kPcanOutputBits 6
 
@@ -36,11 +39,11 @@ struct PcanGainControlState {
   int32_t snr_shift;
 };
 
-int16_t WideDynamicFunction(const uint32_t x, const int16_t* lut);
+ int16_t WideDynamicFunction(const uint32_t x, const int16_t* lut);
 
-uint32_t PcanShrink(const uint32_t x);
+ uint32_t PcanShrink(const uint32_t x);
 
-void PcanGainControlApply(struct PcanGainControlState* state, uint32_t* signal);
+ void PcanGainControlApply(struct PcanGainControlState* state, uint32_t* signal);
 
 #ifdef __cplusplus
 }  // extern "C"

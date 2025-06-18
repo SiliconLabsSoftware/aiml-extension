@@ -17,6 +17,7 @@ This file has been modified by Silicon Labs.
 #ifndef MICROFRONTEND_LIB_PCAN_GAIN_CONTROL_UTIL_H_
 #define MICROFRONTEND_LIB_PCAN_GAIN_CONTROL_UTIL_H_
 
+#include "microfrontend/lib/utils.h"
 #include "microfrontend/lib/pcan_gain_control.h"
 
 #define kWideDynamicFunctionBits 32
@@ -37,20 +38,20 @@ struct PcanGainControlConfig {
   int gain_bits;
 };
 
-void PcanGainControlFillConfigWithDefaults(
+ void PcanGainControlFillConfigWithDefaults(
     struct PcanGainControlConfig* config);
 
-int16_t PcanGainLookupFunction(const struct PcanGainControlConfig* config,
+ int16_t PcanGainLookupFunction(const struct PcanGainControlConfig* config,
                                int32_t input_bits, uint32_t x);
 
-int PcanGainControlPopulateState(const struct PcanGainControlConfig* config,
+ int PcanGainControlPopulateState(const struct PcanGainControlConfig* config,
                                  struct PcanGainControlState* state,
                                  uint32_t* noise_estimate,
                                  const int num_channels,
                                  const uint16_t smoothing_bits,
                                  const int32_t input_correction_bits);
 
-void PcanGainControlFreeStateContents(struct PcanGainControlState* state);
+ void PcanGainControlFreeStateContents(struct PcanGainControlState* state);
 
 #ifdef __cplusplus
 }  // extern "C"

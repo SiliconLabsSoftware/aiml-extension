@@ -29,7 +29,7 @@ source:
   - path: recognize_commands.cc
 sdk_extension:
   - id: aiml
-    version: 2.0.1
+    version: 2.1.0
 component:
   - id: sl_system
   - id: device_init

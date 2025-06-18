@@ -22,6 +22,9 @@ This file has been modified by Silicon Labs.
 #include <stdint.h>
 #include <stdlib.h>
 
+
+#include "microfrontend/lib/utils.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -38,9 +41,9 @@ struct NoiseReductionState {
 
 // Removes stationary noise from each channel of the signal using a low pass
 // filter.
-void NoiseReductionApply(struct NoiseReductionState* state, uint32_t* signal);
+ void NoiseReductionApply(struct NoiseReductionState* state, uint32_t* signal);
 
-void NoiseReductionReset(struct NoiseReductionState* state);
+ void NoiseReductionReset(struct NoiseReductionState* state);
 
 #ifdef __cplusplus
 }  // extern "C"

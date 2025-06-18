@@ -40,11 +40,15 @@
 extern "C" {
 #endif
 
+
+#ifdef __arm__
+
 /// Complex int16 type
 struct complex_int16_t {
   int16_t real;
   int16_t imag;
 };
+
 
 /// FFT state
 struct sli_ml_fft_state {
@@ -52,9 +56,12 @@ struct sli_ml_fft_state {
   struct complex_int16_t* output;   ///< Pointer to the output buffer
   size_t input_size;                ///< Size of input buffer
   size_t fft_size;                  ///< Size of FFT 
-  void *scratch;                    ///< Pointer to scratch buffer
-  size_t scratch_size;              ///< Size of scratch buffer
 };
+
+#else 
+#include "microfrontend/lib/fft.h"
+#define sli_ml_fft_state FftState
+#endif
 
 /**************************************************************************//**
  * Compute real FFT 
@@ -79,6 +86,7 @@ void sli_ml_fft_compute(struct sli_ml_fft_state* state, const int16_t* input,
  * it can not be larger. 
  *****************************************************************************/
 sl_status_t sli_ml_fft_init(struct sli_ml_fft_state* state, size_t input_size);
+void sli_ml_fft_deinit(struct sli_ml_fft_state* state);
 
 /**************************************************************************//**
  * Clear FFT buffers
