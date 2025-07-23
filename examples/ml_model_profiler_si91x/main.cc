@@ -1,6 +1,5 @@
 #include <cstdio>
 
-#include "em_cmu.h"
 #include "energy_profiling_utils.hpp"
 #include "ml_clock_helper.h"
 #include "sl_ml_model_model.h"

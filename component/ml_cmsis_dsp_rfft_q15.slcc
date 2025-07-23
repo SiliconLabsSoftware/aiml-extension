@@ -1,6 +1,6 @@
 id: ml_cmsis_dsp_rfft_q15
 label: cmsis_dsp_rfft
-package: platform
+package: aiml
 description: >
   Includes parts of the CMSIS DSP library required to calculate RFFT on
   Q15 types.

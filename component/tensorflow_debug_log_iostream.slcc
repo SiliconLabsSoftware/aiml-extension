@@ -1,5 +1,5 @@
 id: tensorflow_debug_log_iostream
-package: platform
+package: aiml
 label: Debug Logging using IO Stream
 description: >
   This component enables debug logging in TensorFlow Lite Micro

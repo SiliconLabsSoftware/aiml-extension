@@ -5,6 +5,9 @@ description: >
   Provides an I2S microphone driver for the si91x platform, enabling audio input for machine learning applications
 category: Hardware
 quality: production
+metadata:
+  sbom:
+    license: MSLA
 provides:
   - name: mic_driver_si91x
   - name: ml_mic_driver_si91x

@@ -1,5 +1,5 @@
 id: tensorflow_lite_micro_accelerated_kernels
-package: platform
+package: aiml
 label: MVPv1 Accelerated Kernels
 description: >
   This component includes kernel implementations that are accelerated

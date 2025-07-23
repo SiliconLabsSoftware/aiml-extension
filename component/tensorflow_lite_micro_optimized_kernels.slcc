@@ -1,5 +1,5 @@
 id: tensorflow_lite_micro_optimized_kernels
-package: platform
+package: aiml
 label: CMSIS-NN Optimized Kernels
 description: >
   This component includes kernel implementations that are optimized for certain CPU

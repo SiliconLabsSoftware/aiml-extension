@@ -72,8 +72,8 @@ ui_hints:
       focus: true
 sdk_extension:
   - id: wiseconnect3_sdk
-    version: 3.5.0
+    version: 3.5.1
   - id: aiml
-    version: 2.1.0
+    version: 2.1.1
 post_build:
   path: ../../util/postbuild_profile/wiseconnect_soc.slpb

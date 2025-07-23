@@ -2,7 +2,6 @@
 
 #include <new>
 
-#include "em_cmu.h"
 #include "recognize_commands.h"
 #include "sl_ml_model_keyword_spotting_on_off_v3.h"
 #include "tflite_micro_model.hpp"

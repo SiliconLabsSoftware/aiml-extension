@@ -1,12 +1,12 @@
 # Properties file for Simplicity Studio metadata
 id=com.silabs.sdk.aiml
-version=2.1.0
+version=2.1.1
 
 label=Silicon Labs AI/ML
 description=AI/ML extension for Simplicity SDK
 
 prop.file.templatesFile=aiml_templates.xml
-prop.subLabel=Silicon\\ Labs\\ AI/ML\\ 2.1.0
+prop.subLabel=Silicon\\ Labs\\ AI/ML\\ 2.1.1
 
 prop.file.docsFile=aiml_docs.xml
 prop.file.demosFile=aiml_demos.xml

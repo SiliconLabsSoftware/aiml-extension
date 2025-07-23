@@ -1,0 +1,32 @@
+id: ml_image_feature_generation
+package: aiml
+label: Image Feature Generator
+description: >
+  The image feature generator can be used to capture and preprocess features from an image
+  to use with machine learning image classification or object detection applications. The camera
+  is used as an image source and the features are calculated in real time.
+category: Machine Learning|Feature Generator
+quality: production
+metadata:
+  sbom:
+    license: MSLA
+provides:
+  - name: ml_image_feature_generation
+requires:
+  - name: toolchain_gcc
+  - name: cpp_support
+  - name: arducam
+  - name: sl_common
+  - name: jlink_stream
+config_file:
+  - path: config/sl_ml_image_feature_generation_config.h
+include:
+  - path: inc
+    file_list:
+      - path: sl_ml_image_feature_generation.h
+source:
+  - path: src/sl_ml_image_feature_generation.cc
+  - path: src/sl_ml_image_feature_generation_init.cc
+documentation:
+  docset: aiml
+  document: aiml/api/group-ml-image-feature-generation

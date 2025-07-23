@@ -1,5 +1,5 @@
 id: tensorflow_dependency_flatbuffers
-package: platform
+package: aiml
 label: Flatbuffers
 description: >
   Flatbuffers library

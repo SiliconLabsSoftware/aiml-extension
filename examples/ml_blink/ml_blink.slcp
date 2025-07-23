@@ -30,9 +30,10 @@ config_file:
     directory: tflite
 sdk_extension:
   - id: aiml
-    version: 2.1.0
+    version: 2.1.1
 component:
   - id: sl_system
+  - id: memory_manager
   - id: device_init
   - id: clock_manager
   - id: tensorflow_lite_micro

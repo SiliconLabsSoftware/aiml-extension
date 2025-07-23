@@ -1,5 +1,5 @@
 id: tensorflow_dependency_gemmlowp
-package: platform
+package: aiml
 label: Low Precision General Matrix Multiplication (GEMMLOWP)
 description: >
   Low precision general matrix multiplication (GEMMLOWP) library

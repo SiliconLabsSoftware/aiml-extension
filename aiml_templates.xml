@@ -93,6 +93,25 @@
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
     <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
+  
+  <descriptors name="ml_image_classifier" label="AI/ML - Image Classifier"
+    description="This application uses TensorFlow Lite for Microcontrollers to classify
+                 Hand gestures captured on camera images in a Micrium OS kernel task.
+                 The classification is used to control a LED on the board.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning"/>
+    <properties key="solutionReferenceId" value="examples.ml_image_classifier.ml_image_classifier.slcp"/>
+    <properties key="projectFilePaths" value="examples/ml_image_classifier/ml_image_classifier.slcp"/>
+    <properties key="readmeFiles" value="examples/ml_image_classifier/readme.md"/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
 
   <descriptors name="ml_zigbee_z3_switch_with_voice" label="AI/ML - Zigbee 3.0 Switch with Voice"
     description="Zigbee 3.0 Switch with Voice sample.">

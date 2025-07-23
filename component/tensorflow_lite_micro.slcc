@@ -1,5 +1,5 @@
 id: tensorflow_lite_micro
-package: platform
+package: aiml
 label: TensorFlow Lite Micro
 description: >
   This component provides TensorFlow Lite for Microcontrollers,
