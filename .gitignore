@@ -1,5 +1,34 @@
-# Files
+# General part of the gitignore
+*.launch
+*.orig
+*.bak
 *.pyc
+.vscode/
+**/build/
+**/GNU ARM v*
+**/.projectlinkstore
+**/.settings
+**/.makefile
+**/.trash
+**/.uceditor
+**/autogen/*.crc
+**/__pycache__
+**/GNU ARM v*
+**/IAR ARM*
+**/sonar-bw/
 
-# Folders
-__pycache__/
+##Enable these if you are not tracking Simplicity studio project
+# **/.cproject
+# **/.project
+# **/.pdm
+
+## Documentation related ignores.
+## Modify them if it is necessary
+*.docx
+*.doc
+*.ppt
+*.pdf
+*.xlsx
+*.xls
+*.html
+
