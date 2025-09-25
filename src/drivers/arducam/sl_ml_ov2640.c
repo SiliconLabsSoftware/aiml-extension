@@ -16,16 +16,12 @@
  ******************************************************************************/
 #include "sl_ml_arducam_m_2mp_driver.h"
 
-
 #include "sl_ml_ov2640.h"
 #include "sl_ml_ov2640_regs.h"
 
-
 #define MAX_FIFO_SIZE       0x5FFFF         //384KByte
 
-
 #define OV2640_WRITE_VERIFY(addr, val) SL_VERIFY(slx_ml_arducam_driver_i2c_write_reg(addr, val))
-
 
 // #define DEBUG_REG_ENABLE
 #ifdef DEBUG_REG_ENABLE
@@ -36,30 +32,15 @@
 #endif
 
 #define WRITE_REG(reg, val) \
-    PRINT_REG(reg, val); \
-    SL_VERIFY(slx_ml_arducam_driver_i2c_write_reg(reg, val))
+        PRINT_REG(reg, val); \
+        SL_VERIFY(slx_ml_arducam_driver_i2c_write_reg(reg, val))
 
-
-
-static sl_status_t sli_check_comms_interface(void);
-static sl_status_t sli_set_contrast(int level);
-static sl_status_t sli_set_saturation(int level);
-static sl_status_t sli_set_brightness(int level);
-static sl_status_t sli_set_format(int format);
-static sl_status_t sli_set_gainceiling(int gainceiling);
-static sl_status_t sli_set_flip(int flip);
-static sl_status_t sli_set_mirror(int mirror);
-static sl_status_t sli_set_specialeffect(int effect);
-static sl_status_t sli_set_framesize(arducam_resolution_t resolution, uint32_t width, uint32_t height);
-
-
-
-
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Driver function to initialize ov2640 camera driver.
+ ******************************************************************************/
 sl_status_t slx_ml_ov2640_init(const arducam_config_t *config)
 {
     sl_status_t status;
-
 
     status = sli_check_comms_interface();
     if(status != SL_STATUS_OK)
@@ -82,14 +63,9 @@ sl_status_t slx_ml_ov2640_init(const arducam_config_t *config)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-sl_status_t slx_ml_ov2640_deinit()
-{
-    return SL_STATUS_OK;
-}
-
-
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Driver function to set camera settings.
+ ******************************************************************************/
 sl_status_t slx_ml_ov2640_set_setting(arducam_setting_t setting, int32_t value)
 {
     sl_status_t result;
@@ -125,16 +101,14 @@ sl_status_t slx_ml_ov2640_set_setting(arducam_setting_t setting, int32_t value)
     return result;
 }
 
-/*************************************************************************************************/
-sl_status_t slx_ml_ov2640_get_setting(arducam_setting_t setting, int32_t *value_ptr)
-{
-    return SL_STATUS_NOT_SUPPORTED;
-}
+ /***************************************************************************//**
+ *  Local Functions
+ ******************************************************************************/
 
-
-
-/*************************************************************************************************/
-static sl_status_t sli_check_comms_interface(void)
+ /***************************************************************************//**
+ *  Driver function to check camera compatibility.
+ ******************************************************************************/
+sl_status_t sli_check_comms_interface(void)
 {
     ov2640_id_t id;
 
@@ -153,13 +127,12 @@ static sl_status_t sli_check_comms_interface(void)
     return SL_STATUS_OK;
 }
 
-
-
-/*************************************************************************************************/
-static sl_status_t sli_set_format(int format)
+ /***************************************************************************//**
+ *  Internal driver function to set camera data format.
+ ******************************************************************************/
+sl_status_t sli_set_format(int format)
 {
     const reg_addr_value_t *regs;
-
 
     switch((arducam_data_format_t)format)
     {
@@ -182,8 +155,10 @@ static sl_status_t sli_set_format(int format)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-static sl_status_t sli_set_framesize(arducam_resolution_t resolution, uint32_t width, uint32_t height)
+ /***************************************************************************//**
+ *  Internal driver function to set camera frame size.
+ ******************************************************************************/
+sl_status_t sli_set_framesize(arducam_resolution_t resolution, uint32_t width, uint32_t height)
 {
     const reg_addr_value_t *regs;
 
@@ -244,8 +219,10 @@ static sl_status_t sli_set_framesize(arducam_resolution_t resolution, uint32_t w
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-static sl_status_t sli_set_contrast(int level)
+ /***************************************************************************//**
+ *  Internal driver function to set camera contrast.
+ ******************************************************************************/
+sl_status_t sli_set_contrast(int level)
 {
     const int8_t val = (int8_t)(level + (ARDUCAM_CONTRAST_LEVELS / 2 + 1));
     if (val < 0 || val > ARDUCAM_CONTRAST_LEVELS)
@@ -265,8 +242,10 @@ static sl_status_t sli_set_contrast(int level)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-static sl_status_t sli_set_saturation(int level)
+ /***************************************************************************//**
+ *  Internal driver function to set camera saturation.
+ ******************************************************************************/
+sl_status_t sli_set_saturation(int level)
 {
     const int8_t val = (int8_t)(level + (ARDUCAM_SATURATION_LEVELS / 2 + 1));
     if (val < 0 || val > ARDUCAM_SATURATION_LEVELS)
@@ -286,8 +265,10 @@ static sl_status_t sli_set_saturation(int level)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-static sl_status_t sli_set_brightness(int level)
+ /***************************************************************************//**
+ *  Internal driver function to set camera brightness.
+ ******************************************************************************/
+sl_status_t sli_set_brightness(int level)
 {
     const int8_t val = (int8_t)(level + (ARDUCAM_BRIGHTNESS_LEVELS / 2 + 1));
     if (val < 0 || val > ARDUCAM_BRIGHTNESS_LEVELS)
@@ -307,10 +288,10 @@ static sl_status_t sli_set_brightness(int level)
     return SL_STATUS_OK;
 }
 
-
-
-/*************************************************************************************************/
-static sl_status_t sli_set_gainceiling(int gainceiling)
+ /***************************************************************************//**
+ *  Internal driver function to set camera gainceiling.
+ ******************************************************************************/
+sl_status_t sli_set_gainceiling(int gainceiling)
 {
     if(gainceiling < ARDUCAM_GAINCEILING_MIN || gainceiling > ARDUCAM_GAINCEILING_MAX)
     {
@@ -325,8 +306,10 @@ static sl_status_t sli_set_gainceiling(int gainceiling)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-static sl_status_t sli_set_flip(int flip)
+ /***************************************************************************//**
+ *  Internal driver function to set camera flip functionality.
+ ******************************************************************************/
+sl_status_t sli_set_flip(int flip)
 {
     uint8_t reg04;
     OV2640_WRITE_VERIFY(BANK_SEL, BANK_SEL_SENSOR);
@@ -345,8 +328,10 @@ static sl_status_t sli_set_flip(int flip)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-static sl_status_t sli_set_mirror(int mirror)
+ /***************************************************************************//**
+ *  Internal driver function to set camera mirror image.
+ ******************************************************************************/
+sl_status_t sli_set_mirror(int mirror)
 {
     uint8_t reg04;
 
@@ -367,8 +352,10 @@ static sl_status_t sli_set_mirror(int mirror)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-static sl_status_t sli_set_specialeffect(int effect)
+ /***************************************************************************//**
+ *  Internal driver function to set camera secial effects.
+ ******************************************************************************/
+sl_status_t sli_set_specialeffect(int effect)
 {
     if(effect < ARDUCAM_SPECIALEFFECT_NONE || effect >= ARDUCAM_SPECIALEFFECT_COUNT)
     {

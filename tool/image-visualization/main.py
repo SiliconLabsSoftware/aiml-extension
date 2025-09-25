@@ -1,6 +1,6 @@
 ################################################################################
 # @file
-# @brief Silicon Labs Feature Generation Initialization with image source
+# @brief Silicon Labs Image visualization tool from JLink stream
 ###############################################################################
 # # License
 # <b>Copyright 2025 Silicon Laboratories Inc. www.silabs.com</b>
@@ -53,7 +53,7 @@ class JlinkVisu:
         """
 
         try:
-            sensor_data_width, sensor_data_height = (
+            sensor_data_width, sensor_data_height, sensor_bytes_pixel = (
                 params.camera_resolution.lower().split("x")
             )
         except:
@@ -70,6 +70,8 @@ class JlinkVisu:
         self.sensor_data_height = int(sensor_data_height)
         self.target_data_width = int(target_data_width)
         self.target_data_height = int(target_data_height)
+        
+        self.sensor_bytes_pixel = int(sensor_bytes_pixel)
 
         if self.target_data_width > self.sensor_data_width:
             self.target_data_width = self.sensor_data_width
@@ -136,6 +138,26 @@ class JlinkVisu:
         )
         t.start()
         return stop_event
+    
+    def rgb565TO888(self,in_arr):
+        out_image = np.zeros((self.sensor_data_height,self.sensor_data_width,3), np.uint8)
+        count = 0
+        for row in range(0,self.sensor_data_height):
+            for col in range(0,self.sensor_data_width):
+                # convert values to int first and then shift
+                c = int(in_arr[count]) + (int(in_arr[count+1])<<8)
+                r5 = (c >> 11) & 0x1F  # 5 bits for Red
+                g6 = (c >> 5) & 0x3F   # 6 bits for Green
+                b5 = c & 0x1F        # 5 bits for Blue
+                # Scale to 8-bit values for RGB888
+                # For 5-bit to 8-bit: (value << 3) | (value >> 2)
+                out_image[row,col,2] = (r5 << 3) | (r5 >> 2)
+                # For 6-bit to 8-bit: (value << 2) | (value >> 4)
+                out_image[row,col,1] = (g6 << 2) | (g6 >> 4)
+                # For 5-bit to 8-bit: (value << 3) | (value >> 2)
+                out_image[row,col,0] = (b5 << 3) | (b5 >> 2)
+                count += 2
+        return out_image
 
     def _jlink_processing_loop(
         self,
@@ -155,7 +177,7 @@ class JlinkVisu:
             logger (logging.Logger): Logger object.
         """
         image_stream: JLinkDataStream = None
-        image_length = self.sensor_data_height * self.sensor_data_width
+        image_length = self.sensor_data_height * self.sensor_data_width * self.sensor_bytes_pixel
 
         image_data = bytearray()
         img_count = 0
@@ -184,9 +206,10 @@ class JlinkVisu:
 
             img_buffer = np.frombuffer(image_data, dtype=np.uint8)
             image_data = bytearray()
-            img = np.reshape(
-                img_buffer, (self.sensor_data_height, self.sensor_data_width)
-            )
+            if self.sensor_bytes_pixel == 1:
+                img = np.reshape(img_buffer, (self.sensor_data_height, self.sensor_data_width))
+            elif self.sensor_bytes_pixel == 2:
+                img = self.rgb565TO888(img_buffer)
 
             # latest_image_q.append(img)
             if dump_image_dir:
@@ -214,8 +237,8 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--camera-resolution",
         type=str,
-        help="Input camera resolution Width x Height.",
-        default="160x120",
+        help="Input camera resolution Width x Height x bytes.",
+        default="160x120x2",
     )
     parser.add_argument(
         "--target-shape",

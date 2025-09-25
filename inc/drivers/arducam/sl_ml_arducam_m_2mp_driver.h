@@ -21,6 +21,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+#include "em_i2c.h"
+
 #include "sl_status.h"
 #include "sl_sleeptimer.h"
 #include "sl_udelay.h"
@@ -34,15 +37,12 @@
 #define ARDUCAM_DELAY_US(us) sl_udelay_wait(us)
 #define ARDUCAM_DELAY_MS(us) sl_sleeptimer_delay_millisecond(us)
 
-
-
 //#define ARDUCAM_DEBUG_ENABLED
 #ifdef ARDUCAM_DEBUG_ENABLED
 #define ARDUCAM_DEBUG(fmt, ...) printf("ARDUCAM: " fmt "\n", ## __VA_ARGS__)
 #else
 #define ARDUCAM_DEBUG(...)
 #endif
-
 
 #define ARRAY_COUNT(x) (sizeof(x) / sizeof(*x))
 
@@ -173,17 +173,197 @@ typedef __PACKED_STRUCT
     const uint8_t value;
 } reg_addr_value_t;
 
-
+/***************************************************************************//**
+ * @brief
+ *  Driver function to initialize arducam camera.
+ * 
+ * @param[in] config 
+ *  @ref arducam_config_t driver configuration
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful initialization of camera driver.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_init(const arducam_config_t* config);
+
+/***************************************************************************//**
+ * @brief
+ *  Driver function to de-initialize arducam camera.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful initialization of camera driver.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_deinit();
 
+/***************************************************************************//**
+ * @brief
+ *  Camera driver function used to write single i2c register.
+ * 
+ * @param[in] addr 
+ *  Address to start writing value on register.
+ * 
+ * @param[in] data 
+ *  Data to write value on register.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_i2c_write_reg(uint8_t addr, uint8_t data);
+
+/***************************************************************************//**
+ * @brief
+ *  Camera driver function used to read single i2c register.
+ * 
+ * @param[in] addr 
+ *  Address to start reading value from register.
+ * 
+ * @param[out] val 
+ *  value on register at given address.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_i2c_read_reg(uint8_t addr, uint8_t *val);
+
+/***************************************************************************//**
+ * @brief
+ *  Camera driver function used to write i2c registers.
+ *  This can be used to set multiple registers.
+ * 
+ * @param[in] regs 
+ *  @ref reg_addr_value_t Pointer to hold look up Addresses, values.
+ * 
+ * @param[in] action_list 
+ *  @ref reg_addr_value_t Pointer to array holding address, values to write registers.
+ * 
+ * @param[out] action_list_len 
+ *  Length of action list.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_i2c_write_regs(const reg_addr_value_t *regs, const reg_addr_value_t *action_list, uint8_t action_list_len);
 
+/***************************************************************************//**
+ * @brief
+ *  Camera driver function used to write single spi register.
+ * 
+ * @param[in] addr 
+ *  Address to start writing value on register.
+ * 
+ * @param[in] data 
+ *  Data to write value on register.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_spi_write_reg(uint8_t addr, uint8_t data);
-sl_status_t slx_ml_arducam_driver_spi_clear_bit(uint8_t addr, uint8_t bits);
-sl_status_t slx_ml_arducam_driver_spi_set_bit(uint8_t addr, uint8_t bits);
+
+/***************************************************************************//**
+ * @brief
+ *  Camera driver function used to read single spi register.
+ * 
+ * @param[in] addr 
+ *  Address to start reading value from register.
+ * 
+ * @param[out] data_ptr 
+ *  pointer to hold value on register at given address.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_spi_read_reg(uint8_t addr, uint8_t *data_ptr);
+
+/***************************************************************************//**
+ * @brief
+ *  Camera driver function used to read spi buffer in burst mode.
+ *  SPI Burst Mode can significantly boost data transfer efficiency by sending multiple 
+ *  bytes continuously after a single command.
+ * 
+ * @param[out] buffer 
+ *  Pointer holding buffer to fill.
+ * 
+ * @param[out] length 
+ *  Length of data to read.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_spi_burst_read(uint8_t *buffer, uint32_t length);
+
+/***************************************************************************//**
+ * @brief
+ *  Provides camera buffer fifo size.
+ * 
+ * @param[out] size_ptr 
+ *  Size of fifo buffer.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_get_fifo_size(uint32_t *size_ptr);
+
+/***************************************************************************//**
+ * @brief
+ *  Clear spesific bits on spi register.
+ * 
+ * @param[in] addr 
+ *  Address to start spi register.
+ * 
+ * @param[in] bits 
+ *  Reference bits to clear.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
+sl_status_t slx_ml_arducam_driver_spi_clear_bit(uint8_t addr, uint8_t bits);
+
+/***************************************************************************//**
+ * @brief
+ *  Set spesific bits on spi register.
+ * 
+ * @param[in] addr 
+ *  Address to start spi register.
+ * 
+ * @param[in] bits 
+ *  Reference bits to set.
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
+sl_status_t slx_ml_arducam_driver_spi_set_bit(uint8_t addr, uint8_t bits);
+
+ /***************************************************************************//**
+ *  Local Functions
+ ******************************************************************************/
+
+/***************************************************************************//**
+ * @brief
+ *  Driver function to transfer data to I2C peripheral register.
+ * 
+ * @param[in] seq 
+ *  @ref I2C_TransferSeq_TypeDef Buffers used to hold data to send from or 
+ *  receive into, depending on sequence type
+ * 
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful completion.
+ ******************************************************************************/
+sl_status_t sli_do_i2c_transfer(I2C_TransferSeq_TypeDef *seq);
+
+/***************************************************************************//**
+ * @brief
+ *  Callback function for signalling completion for DMA.
+ * 
+ * @param[in] channel 
+ *  channel ID to use.
+ * 
+ * @param[in] sequenceNo 
+ *  Sequence number.
+ * 
+ * @param[in] userParam 
+ *  An optional user parameter to feed to the callback function. May be NULL if
+ *  not needed.
+ * 
+ * @return
+ *  boolean value representing state.
+ ******************************************************************************/
+bool sli_on_dma_rx_complete_irq_handler( unsigned int channel, unsigned int sequenceNo, void *userParam);

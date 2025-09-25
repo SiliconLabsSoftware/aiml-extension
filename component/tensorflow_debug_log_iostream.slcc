@@ -15,7 +15,7 @@ provides:
 requires:
   - name: iostream
 source:
-  - path: siliconlabs/debug_log.cc
+  - path: src/utils/debug_log.cc
 define:
   - name: TF_LITE_MCU_DEBUG_LOG
 

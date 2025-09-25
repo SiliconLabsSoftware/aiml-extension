@@ -18,7 +18,6 @@
 #define AUDIO_CLASSIFIER_H
 
 #include "sl_sleeptimer.h"
-#include "sl_system_init.h"
 #ifdef __cplusplus
 extern "C" {
 #endif

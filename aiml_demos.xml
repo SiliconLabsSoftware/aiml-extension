@@ -1,13 +1,13 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <demos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.silabs.com/ss/Demo.ecore">
   <demo name="brd2601b.demo.ml_blink" label="AI/ML - Blink Demo for xG24">
     <property key="demos.blurb" value="AI/ML - Blink Demo for xG24"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2601b/ml_blink.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g24.*"/>
+    <property key="core.boardCompatibility" value="brd2601b"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_blink.s37"/>
     <property key="core.readmeFiles" value="examples/ml_blink/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application demonstrates a model trained to replicate a sine function.
       The model is continuously fed with values ranging from 0 to 2pi, and the
@@ -17,12 +17,12 @@
 
   <demo name="brd2601b.demo.ml_magic_wand" label="AI/ML - Magic Wand Demo for xG24">
     <property key="demos.blurb" value="AI/ML - Magic Wand Demo for xG24"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2601b/ml_magic_wand.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g24.*"/>
+    <property key="core.boardCompatibility" value="brd2601b"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_magic_wand.s37"/>
     <property key="core.readmeFiles" value="examples/ml_magic_wand/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application demonstrates a model trained to recognize various hand gestures
       with an accelerometer. The detected gestures are printed to the serial port.
@@ -31,12 +31,12 @@
 
   <demo name="brd2601b.demo.ml_model_profiler" label="AI/ML - Model Profiler Demo for xG24">
     <property key="demos.blurb" value="AI/ML - Model Profiler Demo for xG24"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2601b/ml_model_profiler.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g24.*"/>
+    <property key="core.boardCompatibility" value="brd2601b"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_model_profiler.s37"/>
     <property key="core.readmeFiles" value="examples/ml_model_profiler/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application profiles a ML model. The ML model is loaded as a byte array
       which is generated from a Tensorflow tflite model file. Profiling is performed
@@ -46,12 +46,12 @@
 
   <demo name="brd2601b.demo.ml_voice_control_light" label="AI/ML - Voice Control Light Demo for xG24">
     <property key="demos.blurb" value="AI/ML - Voice Control Light Demo for xG24"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2601b/ml_voice_control_light.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g24.*"/>
+    <property key="core.boardCompatibility" value="brd2601b"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_voice_control_light.s37"/>
     <property key="core.readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application uses TensorFlow Lite for Microcontrollers to detect the spoken
       words 'on' and 'off' from audio data recorded on the microphone in a Micrium OS
@@ -61,12 +61,12 @@
 
   <demo name="brd2601b.demo.ml_audio_classifier" label="AI/ML - Audio Classifier Demo for xG24">
     <property key="demos.blurb" value="AI/ML - Audio Classifier Demo for xG24"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2601b/ml_audio_classifier.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g24.*"/>
+    <property key="core.boardCompatibility" value="brd2601b"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_audio_classifier.s37"/>
     <property key="core.readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application uses TensorFlow Lite for Microcontrollers to classify
       audio data recorded on the microphone in a Micrium OS kernel task.
@@ -76,12 +76,12 @@
 
   <demo name="brd2601b.demo.ml_image_classifier" label="AI/ML - Image Classifier Demo for xG24">
     <property key="demos.blurb" value="AI/ML - Image Classifier Demo for xG24"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2601b"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2601b/ml_image_classifier.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g24.*"/>
+    <property key="core.boardCompatibility" value="brd2601b"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_image_classifier.s37"/>
     <property key="core.readmeFiles" value="examples/ml_image_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application uses TensorFlow Lite for Microcontrollers to run image
       classification machine learning models to classify hand gestures from image data
@@ -90,14 +90,37 @@
     </description>
   </demo>
 
+  <demo name="brd2601b.demo.ml_zigbee_z3_switch_with_voice" label="AI/ML - Zigbee 3.0 Switch with Voice for xG24">
+    <property key="demos.blurb" value="AI/ML - Zigbee 3.0 Switch with Voice for xG24"/>
+    <property key="core.partCompatibility" value=".*efr32.g24.*"/>
+    <property key="core.boardCompatibility" value="brd2601b"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_zigbee_z3_switch_with_voice.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_zigbee_z3_switch_with_voice/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+    <property key="core.quality" value="PRODUCTION"/>
+    <description>
+      Zigbee 3.0 provides a foundation of commissioning and network management
+      mechanisms to be used in all Zigbee applications. The sample scenario
+      presented here demonstrates the flexibility that the Zigbee 3.0
+      specification provides to applications. It also acts as an excellent
+      starting point for users wishing to build their own Zigbee 3.0 applications.
+
+      Voice recognition has been added to the Switch with Voice scenario
+      application, where TensorFlow Lite Micro is used to detect spoken keywords
+      in audio recorded from the board's microphone. Once the switch has
+      finished finding and binding, the user can turn on or off the light by
+      speaking the words "on" or "off" into the microphone.
+    </description>
+  </demo>
+
   <demo name="brd2608a.demo.ml_blink" label="AI/ML - Blink Demo for xG26">
     <property key="demos.blurb" value="AI/ML - Blink Demo for xG26"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2608a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2608a/ml_blink.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g26.*"/>
+    <property key="core.boardCompatibility" value="brd2608a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_blink.s37"/>
     <property key="core.readmeFiles" value="examples/ml_blink/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application demonstrates a model trained to replicate a sine function.
       The model is continuously fed with values ranging from 0 to 2pi, and the
@@ -107,12 +130,12 @@
 
   <demo name="brd2608a.demo.ml_magic_wand" label="AI/ML - Magic Wand Demo for xG26">
     <property key="demos.blurb" value="AI/ML - Magic Wand Demo for xG26"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2608a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2608a/ml_magic_wand.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g26.*"/>
+    <property key="core.boardCompatibility" value="brd2608a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_magic_wand.s37"/>
     <property key="core.readmeFiles" value="examples/ml_magic_wand/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application demonstrates a model trained to recognize various hand gestures
       with an accelerometer. The detected gestures are printed to the serial port.
@@ -121,12 +144,12 @@
 
   <demo name="brd2608a.demo.ml_model_profiler" label="AI/ML - Model Profiler Demo for xG26">
     <property key="demos.blurb" value="AI/ML - Model Profiler Demo for xG26"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2608a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2608a/ml_model_profiler.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g26.*"/>
+    <property key="core.boardCompatibility" value="brd2608a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_model_profiler.s37"/>
     <property key="core.readmeFiles" value="examples/ml_model_profiler/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application profiles a ML model. The ML model is loaded as a byte array
       which is generated from a Tensorflow tflite model file. Profiling is performed
@@ -136,12 +159,12 @@
 
   <demo name="brd2608a.demo.ml_voice_control_light" label="AI/ML - Voice Control Light Demo for xG26">
     <property key="demos.blurb" value="AI/ML - Voice Control Light Demo for xG26"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2608a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2608a/ml_voice_control_light.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g26.*"/>
+    <property key="core.boardCompatibility" value="brd2608a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_voice_control_light.s37"/>
     <property key="core.readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application uses TensorFlow Lite for Microcontrollers to detect the spoken
       words 'on' and 'off' from audio data recorded on the microphone in a Micrium OS
@@ -151,27 +174,27 @@
 
   <demo name="brd2608a.demo.ml_audio_classifier" label="AI/ML - Audio Classifier Demo for xG26">
     <property key="demos.blurb" value="AI/ML - Audio Classifier Demo for xG26"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2608a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2608a/ml_audio_classifier.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g26.*"/>
+    <property key="core.boardCompatibility" value="brd2608a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_audio_classifier.s37"/>
     <property key="core.readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application uses TensorFlow Lite for Microcontrollers to classify
       audio data recorded on the microphone in a Micrium OS kernel task.
       The classification is used to control a LED on the board.
     </description>
   </demo>
-  
+
   <demo name="brd2608a.demo.ml_image_classifier" label="AI/ML - Image Classifier Demo for xG26">
     <property key="demos.blurb" value="AI/ML - Image Classifier Demo for xG26"/>
-    <property key="core.partCompatibility" value=".*efr32.g2[468].*"/>
-		<property key="core.boardCompatibility" value="brd2608a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2608a/ml_image_classifier.s37"/>
+    <property key="core.partCompatibility" value=".*efr32.g26.*"/>
+    <property key="core.boardCompatibility" value="brd2608a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_image_classifier.s37"/>
     <property key="core.readmeFiles" value="examples/ml_image_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application uses TensorFlow Lite for Microcontrollers to run image
       classification machine learning models to classify hand gestures from image data
@@ -180,15 +203,37 @@
     </description>
   </demo>
 
+  <demo name="brd2608a.demo.ml_zigbee_z3_switch_with_voice" label="AI/ML - Zigbee 3.0 Switch with Voice for xG26">
+    <property key="demos.blurb" value="AI/ML - Zigbee 3.0 Switch with Voice for xG26"/>
+    <property key="core.partCompatibility" value=".*efr32.g26.*"/>
+    <property key="core.boardCompatibility" value="brd2608a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_zigbee_z3_switch_with_voice.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_zigbee_z3_switch_with_voice/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+    <property key="core.quality" value="PRODUCTION"/>
+    <description>
+      Zigbee 3.0 provides a foundation of commissioning and network management
+      mechanisms to be used in all Zigbee applications. The sample scenario
+      presented here demonstrates the flexibility that the Zigbee 3.0
+      specification provides to applications. It also acts as an excellent
+      starting point for users wishing to build their own Zigbee 3.0 applications.
+
+      Voice recognition has been added to the Switch with Voice scenario
+      application, where TensorFlow Lite Micro is used to detect spoken keywords
+      in audio recorded from the board's microphone. Once the switch has
+      finished finding and binding, the user can turn on or off the light by
+      speaking the words "on" or "off" into the microphone.
+    </description>
+  </demo>
 
   <demo name="brd2605a.demo.ml_blink" label="AI/ML - Blink Demo for SiWx917">
     <property key="demos.blurb" value="AI/ML - Blink Demo for SiWx917"/>
     <property key="core.partCompatibility" value=".*"/>
-		<property key="core.boardCompatibility" value="brd2605a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2605a/ml_blink_si91x.s37"/>
+    <property key="core.boardCompatibility" value="brd2605a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_blink_si91x.s37"/>
     <property key="core.readmeFiles" value="examples/ml_blink_si91x/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application demonstrates a model trained to replicate a sine function.
       The model is continuously fed with values ranging from 0 to 2pi, and the
@@ -199,11 +244,11 @@
   <demo name="brd2605a.demo.ml_model_profiler" label="AI/ML - Model Profiler Demo for SiWx917">
     <property key="demos.blurb" value="AI/ML - Model Profiler Demo for SiWx917"/>
     <property key="core.partCompatibility" value=".*"/>
-		<property key="core.boardCompatibility" value="brd2605a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2605a/ml_model_profiler_si91x.s37"/>
+    <property key="core.boardCompatibility" value="brd2605a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_model_profiler_si91x.s37"/>
     <property key="core.readmeFiles" value="examples/ml_model_profiler_si91x/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application profiles a ML model. The ML model is loaded as a byte array
       which is generated from a Tensorflow tflite model file. Profiling is performed
@@ -214,25 +259,40 @@
   <demo name="brd2605a.demo.ml_voice_control_light" label="AI/ML - Voice Control Light Demo for SiWx917">
     <property key="demos.blurb" value="AI/ML - Voice Control Light Demo for SiWx917"/>
     <property key="core.partCompatibility" value=".*"/>
-		<property key="core.boardCompatibility" value="brd2605a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2605a/ml_voice_control_light_si91x.s37"/>
+    <property key="core.boardCompatibility" value="brd2605a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_voice_control_light_si91x.s37"/>
     <property key="core.readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+    <property key="core.quality" value="PRODUCTION"/>
+    <description>
+      This application uses TensorFlow Lite for Microcontrollers to detect the spoken
+      words 'on' and 'off' from audio data recorded on the microphone. The detected keywords are
+      used to control an LED on the board.
+    </description>
+  </demo>
+
+  <demo name="brd2605a.demo.ml_magic_wand" label="AI/ML - Magic Wand Demo for SiWx917">
+    <property key="demos.blurb" value="AI/ML - Magic Wand Demo for SiWx917"/>
+    <property key="core.partCompatibility" value=".*"/>
+		<property key="core.boardCompatibility" value="brd2605a"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_magic_wand_si91x.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_magic_wand_si91x/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
 		<property key="core.quality" value="PRODUCTION"/>
     <description>
-      This application uses TensorFlow Lite for Microcontrollers to detect the spoken
-      words 'on' and 'off' from audio data recorded on the microphone. The detected keywords are used to control an LED on the board.
+      This application demonstrates a model trained to recognize various hand gestures
+      with an accelerometer. The detected gestures are printed to the serial port.
     </description>
   </demo>
 
   <demo name="brd2605a.demo.ml_audio_classifier" label="AI/ML - Audio Classifier Demo for SiWx917">
     <property key="demos.blurb" value="AI/ML - Audio Classifier Demo for SiWx917"/>
     <property key="core.partCompatibility" value=".*"/>
-		<property key="core.boardCompatibility" value="brd2605a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.1/demos/brd2605a/ml_audio_classifier_si91x.s37"/>
+    <property key="core.boardCompatibility" value="brd2605a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_audio_classifier_si91x.s37"/>
     <property key="core.readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
-		<property key="core.quality" value="PRODUCTION"/>
+    <property key="core.quality" value="PRODUCTION"/>
     <description>
       This application uses TensorFlow Lite for Microcontrollers to classify
       audio data recorded on the microphone.
@@ -240,4 +300,33 @@
     </description>
   </demo>
 
+  <demo name="brd2705a.demo.ml_blink" label="AI/ML - Blink Demo for xG28">
+    <property key="demos.blurb" value="AI/ML - Blink Demo for xG28"/>
+    <property key="core.partCompatibility" value=".*efr32.g28.*"/>
+    <property key="core.boardCompatibility" value="brd2705a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2705a/ml_blink.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_blink/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+    <property key="core.quality" value="PRODUCTION"/>
+    <description>
+      This application demonstrates a model trained to replicate a sine function.
+      The model is continuously fed with values ranging from 0 to 2pi, and the
+      output of the model is used to control the intensity of an LED.
+    </description>
+  </demo>
+
+  <demo name="brd2601b.demo.ml_model_profiler" label="AI/ML - Model Profiler Demo for xG28">
+    <property key="demos.blurb" value="AI/ML - Model Profiler Demo for xG28"/>
+    <property key="core.partCompatibility" value=".*efr32.g28.*"/>
+    <property key="core.boardCompatibility" value="brd2705a"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2705a/ml_model_profiler.s37"/>
+    <property key="core.readmeFiles" value="examples/ml_model_profiler/readme.md"/>
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+    <property key="core.quality" value="PRODUCTION"/>
+    <description>
+      This application profiles a ML model. The ML model is loaded as a byte array
+      which is generated from a Tensorflow tflite model file. Profiling is performed
+      by running one inference with the model.
+    </description>
+  </demo>
 </demos>

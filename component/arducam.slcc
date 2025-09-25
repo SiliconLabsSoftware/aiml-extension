@@ -1,5 +1,5 @@
 id: arducam
-package: arducam
+package: aiml
 label: ArduCAM Driver
 description: >
   Driver to retrieve images from an ArduCAM camera module
@@ -18,12 +18,13 @@ requires:
   - name: emlib_usart
   - name: dmadrv
   - name: i2cspm
+config_file:
+  - path: config/drivers/sl_ml_arducam_config.h
 include:
   - path: inc/drivers/arducam
     file_list:
       - path: sl_ml_arducam.h
       - path: sl_ml_arducam_types.h
-      - path: sl_ml_arducam_config.h
       - path: sl_ml_arducam_m_2mp_driver.h
       - path: sl_ml_ov2640.h
       - path: sl_ml_ov2640_regs.h

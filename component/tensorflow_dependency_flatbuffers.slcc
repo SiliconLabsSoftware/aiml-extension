@@ -15,7 +15,7 @@ metadata:
       url: https://github.com/google/flatbuffers
       package_url: pkg:github/google/flatbuffers@07a8b5cb5a1085b7a3d7348ca547ec2643ca18c2
       comment: Only "include/" folder copied from Flatbuffers GitHub repo, commit hash 07a8b5cb5a1085b7a3d7348ca547ec2643ca18c2
-root_path: flatbuffers
+root_path: third_party/flatbuffers
 provides:
   - name: tensorflow_dependency_flatbuffers
 include:

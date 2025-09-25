@@ -16,29 +16,17 @@
  ******************************************************************************/
 #include <stdbool.h>
 
-
 #include "em_device.h"
 #include "em_core.h"
-
-
 
 #include "sl_ml_arducam.h"
 #include "sl_ml_arducam_m_2mp_driver.h"
 
-
-
-static void sli_increment_buffer_pointer(uint8_t** ptr);
-static void sli_convert_image_color_space(uint8_t* img);
-
-
-
-
 arducam_driver_context_t arducam_context;
 
-
-
-
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Function initializes arducam camera driver
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_init(const arducam_config_t* config, uint8_t* image_buffer, uint32_t image_buffer_length)
 {
     sl_status_t status;
@@ -96,7 +84,9 @@ sl_status_t slx_ml_arducam_init(const arducam_config_t* config, uint8_t* image_b
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Function de-initializes arducam camera driver
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_deinit()
 {
     if(!arducam_context.is_initialized)
@@ -113,7 +103,9 @@ sl_status_t slx_ml_arducam_deinit()
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  To adjust arducam settings like brightness, contrast
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_set_setting(arducam_setting_t setting, int32_t value)
 {
     if(!arducam_context.is_initialized)
@@ -124,18 +116,9 @@ sl_status_t slx_ml_arducam_set_setting(arducam_setting_t setting, int32_t value)
     return slx_ml_ov2640_set_setting(setting, value);
 }
 
-/*************************************************************************************************/
-sl_status_t slx_ml_arducam_get_setting(arducam_setting_t setting, int32_t* value_ptr)
-{
-    if(!arducam_context.is_initialized)
-    {
-        return SL_STATUS_NOT_INITIALIZED;
-    }
-
-    return slx_ml_ov2640_get_setting(setting, value_ptr);
-}
-
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Starts capturing images and store in buffer
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_start_capture()
 {
     CORE_DECLARE_IRQ_STATE;
@@ -165,7 +148,9 @@ sl_status_t slx_ml_arducam_start_capture()
 }
 
 
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Stops image capture from arducam
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_stop_capture()
 {
     CORE_DECLARE_IRQ_STATE;
@@ -187,7 +172,9 @@ sl_status_t slx_ml_arducam_stop_capture()
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Function used to Poll the camera.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_poll()
 {
     CORE_DECLARE_IRQ_STATE;
@@ -283,7 +270,9 @@ sl_status_t slx_ml_arducam_poll()
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Attempt to retrieve the next capturing image.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_get_next_image(uint8_t** data_ptr, uint32_t* length_ptr)
 {
     CORE_DECLARE_IRQ_STATE;
@@ -332,7 +321,9 @@ sl_status_t slx_ml_arducam_get_next_image(uint8_t** data_ptr, uint32_t* length_p
     return status;
 }
 
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Releases previous image from buffer.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_release_image()
 {
     CORE_DECLARE_IRQ_STATE;
@@ -346,7 +337,6 @@ sl_status_t slx_ml_arducam_release_image()
     {
         return SL_STATUS_INVALID_STATE;
     }
-
 
     CORE_ENTER_CRITICAL();
 
@@ -374,7 +364,9 @@ sl_status_t slx_ml_arducam_release_image()
     return status;
 }
 
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Return number bytes per image
+ ******************************************************************************/
 uint32_t slx_ml_arducam_calculate_image_buffer_length(arducam_data_format_t format, uint32_t width, uint32_t height)
 {
     uint8_t bytes_per_pixel;
@@ -400,7 +392,9 @@ uint32_t slx_ml_arducam_calculate_image_buffer_length(arducam_data_format_t form
     return bytes_per_pixel * width * height;
 }
 
-/*************************************************************************************************/
+ /***************************************************************************//**
+ *  Return size of image in pixels
+ ******************************************************************************/
 uint32_t slx_ml_arducam_calculate_image_size(arducam_data_format_t format, uint32_t width, uint32_t height)
 {
     uint8_t bytes_per_pixel;
@@ -428,9 +422,14 @@ uint32_t slx_ml_arducam_calculate_image_size(arducam_data_format_t format, uint3
     return bytes_per_pixel * width * height;
 }
 
+ /***************************************************************************//**
+ *  Local Functions
+ ******************************************************************************/
 
-/*************************************************************************************************/
-static void sli_increment_buffer_pointer(uint8_t** ptr)
+ /***************************************************************************//**
+ *  This function increments buffer pointer by image size in bytes.
+ ******************************************************************************/
+void sli_increment_buffer_pointer(uint8_t** ptr)
 {
     uint8_t* p = *ptr;
 
@@ -443,8 +442,10 @@ static void sli_increment_buffer_pointer(uint8_t** ptr)
     *ptr = p;
 }
 
-/*************************************************************************************************/
-static void sli_convert_image_color_space(uint8_t* img)
+ /***************************************************************************//**
+ *  Function to convert image color space.
+ ******************************************************************************/
+void sli_convert_image_color_space(uint8_t* img)
 {
     // Convert for RGB565 to grayscale
     if(arducam_context.data_format == ARDUCAM_DATA_FORMAT_GRAYSCALE)
@@ -455,22 +456,16 @@ static void sli_convert_image_color_space(uint8_t* img)
         for(uint32_t pixel_count = arducam_context.buffer.read_length / 2; 
                      pixel_count > 0; --pixel_count)
         {
-            /*const uint8_t hb = src[0];
-            const uint8_t lb = src[1];
-            const uint16_t r = (lb & 0x1F) << 3;
-            const uint16_t g = (hb & 0x07) << 5 | (lb & 0xE0) >> 3;
-            const uint16_t b = hb & 0xF8;*/
-            uint16_t hb = src[0];
-            uint16_t lb = src[1];
-            uint16_t rgb565 = hb + (lb<<8);
-            uint16_t r = (((rgb565 & 0xF800) >> 11) << 3);
-            uint16_t g = (((rgb565 & 0x7E0) >> 5) << 2);
-            uint16_t b = (((rgb565 & 0x1F)) << 3);
+            uint16_t lb = src[0];
+            uint16_t hb = src[1];
+            uint16_t rgb565 = lb + (hb<<8);
+            uint8_t r = (((rgb565 & 0xF800) >> 11) << 3);
+            uint8_t g = (((rgb565 & 0x7E0) >> 5) << 2);
+            uint8_t b = (((rgb565 & 0x1F)) << 3);
+            //weighted rgb to grayscale conversion
             uint16_t val = ((0.2126 * r) + (0.7152 * g ) + (0.0722 * b));
-            //uint16_t val = (0.299 * r) + (0.587 * g) + (0.114 * b);
-            //uint16_t val = (0.3 * r) + (0.6 * g) + (0.1 * b);
+            
             *dst++ = (val <= 255) ? (uint8_t)val : (uint8_t)255;
-            //*dst++ = (uint8_t)((r + g + b) / 3);
             src += 2;
         }
     }
@@ -482,10 +477,12 @@ static void sli_convert_image_color_space(uint8_t* img)
 
         for(uint32_t pixel_count = arducam_context.buffer.read_length / 2; pixel_count > 0; --pixel_count)
         {
-            int c = src[0] + (src[1]<<8);
-            dst[0] = (((c & 0xF800) >> 11) << 3);
-            dst[1] = (((c & 0x7E0) >> 5) << 2);
-            dst[2] = (((c & 0x1F)) << 3);
+            uint16_t lb = src[0];
+            uint16_t hb = src[1];
+            uint16_t rgb565 = lb + (hb<<8);
+            dst[0] = (((rgb565 & 0xF800) >> 11) << 3);
+            dst[1] = (((rgb565 & 0x7E0) >> 5) << 2);
+            dst[2] = (((rgb565 & 0x1F)) << 3);
 
             src += 2;
             dst += 3;

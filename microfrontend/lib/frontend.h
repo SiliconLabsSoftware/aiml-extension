@@ -22,7 +22,7 @@ This file has been modified by Silicon Labs.
 
 
 #include "microfrontend/lib/utils.h"
-#include "microfrontend/sl_ml_fft.h"
+#include "inc/dsp/sl_ml_fft.h"
 #include "microfrontend/lib/filterbank.h"
 #include "microfrontend/lib/log_scale.h"
 #include "microfrontend/lib/noise_reduction.h"

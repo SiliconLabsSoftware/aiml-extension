@@ -1,0 +1,23 @@
+id: imu_driver_si91x
+package: aiml
+label: IMU Driver for si91x ML applications
+description: >
+  Provides an IMU (Inertial Measurement Unit) driver for the si91x platform, enabling 
+  accelerometer and gyroscope data acquisition for machine learning applications.
+category: Hardware
+quality: production
+metadata:
+  sbom:
+    license: MSLA
+provides:
+  - name: imu_driver_si91x
+  - name: ml_imu_driver_si91x
+include:
+  - path: inc/drivers/imu
+    file_list:
+      - path: sl_si91x_imu.h
+source:
+  - path: src/drivers/imu/sl_si91x_imu_icm40627.c
+  - path: src/drivers/imu/sl_si91x_imu_fuse.c
+  - path: src/drivers/imu/sl_si91x_imu_dcm.c
+  - path: src/drivers/imu/sl_si91x_imu_math.c

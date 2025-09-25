@@ -23,15 +23,14 @@ include:
       - path: model_profiler.h
 source:
   - path: app.c
-  - path: main.c
   - path: model_profiler.cc
 sdk_extension:
   - id: aiml
-    version: 2.1.1
+    version: 2.1.2
 component:
   - id: clock_manager
   - id: memory_manager
-  - id: sl_system
+  - id: sl_main
   - id: device_init
   - id: component_catalog
   - id: tensorflow_lite_micro

@@ -19,7 +19,6 @@
 
 #include "ml/platform/ml_clock_helper.h"
 #include "sl_sleeptimer.h"
-#include "sl_system_init.h"
 #include "voice_control_light.h"
 #ifdef __cplusplus
 extern "C" {

@@ -21,7 +21,6 @@
 
 #include "ml/platform/ml_clock_helper.h"
 #include "sl_sleeptimer.h"
-#include "sl_system_init.h"
 
 #ifdef __cplusplus
 extern "C" {

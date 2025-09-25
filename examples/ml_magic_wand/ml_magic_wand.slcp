@@ -24,16 +24,15 @@ include:
       - path: constants.h
       - path: predictor.h
 source:
-  - path: main.c
   - path: app.c
   - path: magic_wand.cc
   - path: accelerometer.cc
   - path: predictor.cc
 sdk_extension:
   - id: aiml
-    version: 2.1.1
+    version: 2.1.2
 component:
-  - id: sl_system
+  - id: sl_main
   - id: memory_manager
   - id: device_init
   - id: clock_manager

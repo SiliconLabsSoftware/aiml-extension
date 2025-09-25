@@ -78,6 +78,6 @@ This application uses JLink to stream image data to python script available at t
 
 ## References
 
-- Image classifier [suds](https://suds-web-prod-scratch-internal.silabs.net/machine-learning/2.1.1-mlsw-10587-update-image-classification-documentation-in-suds-repository/aiml-sample-apps/).
+- [Image classifier](https://docs.silabs.com/machine-learning/latest/aiml-sample-apps/)
 - [Machine Learning (AI/ML) Documentation](https://docs.silabs.com/machine-learning/latest/aiml-developing-with)
 - [TensorFlow Lite Micro](https://www.tensorflow.org/lite/microcontrollers)

@@ -17,10 +17,8 @@
 #include "em_device.h"
 #include "em_cmu.h"
 #include "em_gpio.h"
-#include "em_i2c.h"
 #include "em_usart.h"
 #include "dmadrv.h"
-
 
 #include "sl_ml_arducam.h"
 #include "sl_ml_arducam_m_2mp_driver.h"
@@ -45,16 +43,9 @@
 #endif
 
 
-// Internal functions
-static sl_status_t sli_do_i2c_transfer(I2C_TransferSeq_TypeDef *seq);
-static bool sli_on_dma_rx_complete_irq_handler(
-    unsigned int channel,
-    unsigned int sequenceNo,
-    void *userParam
-);
-
-
-/*************************************************************************************************/
+/***************************************************************************//**
+ *  Driver function to initialize arducam camera
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_init(const arducam_config_t* config)
 {
     sl_status_t status;
@@ -225,10 +216,11 @@ sl_status_t slx_ml_arducam_driver_init(const arducam_config_t* config)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
+/***************************************************************************//**
+ *  Driver function to de-initialize arducam camera.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_deinit()
 {
-    slx_ml_ov2640_deinit();
     I2C_Reset(I2C_PORT(ARDUCAM_I2C_PERIPHERAL_NO));
     USART_Reset(USART_PORT(ARDUCAM_USART_PERIPHERAL_NO));
 
@@ -250,23 +242,9 @@ sl_status_t slx_ml_arducam_driver_deinit()
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-static sl_status_t sli_do_i2c_transfer(I2C_TransferSeq_TypeDef *seq)
-{
-    I2C_TransferReturn_TypeDef ret;
-    uint32_t timeout = 300000;
-
-    /* Do a polled transfer */
-    ret = I2C_TransferInit(I2C_PORT(ARDUCAM_I2C_PERIPHERAL_NO), seq);
-    while (ret == i2cTransferInProgress && timeout--) 
-    {
-        ret = I2C_Transfer(I2C_PORT(ARDUCAM_I2C_PERIPHERAL_NO));
-    }
-
-  return (ret == i2cTransferDone) ? SL_STATUS_OK : SL_STATUS_BUS_ERROR;
-}
-
-/*************************************************************************************************/
+/***************************************************************************//**
+ *  Camera driver function used to write single i2c register.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_i2c_write_reg(uint8_t addr, uint8_t data)
 {
     I2C_TransferSeq_TypeDef seq;
@@ -282,7 +260,9 @@ sl_status_t slx_ml_arducam_driver_i2c_write_reg(uint8_t addr, uint8_t data)
     return sli_do_i2c_transfer(&seq);
 }
 
-/*************************************************************************************************/
+/***************************************************************************//**
+ *  Camera driver function used to read single i2c register.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_i2c_read_reg(uint8_t addr, uint8_t *val)
 {
     I2C_TransferSeq_TypeDef seq;
@@ -300,7 +280,9 @@ sl_status_t slx_ml_arducam_driver_i2c_read_reg(uint8_t addr, uint8_t *val)
     return sli_do_i2c_transfer(&seq);
 }
 
-/*************************************************************************************************/
+/***************************************************************************//**
+ *  Camera driver function used to write i2c registers.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_i2c_write_regs(
     const reg_addr_value_t *regs, 
     const reg_addr_value_t *action_list,
@@ -338,7 +320,9 @@ sl_status_t slx_ml_arducam_driver_i2c_write_regs(
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
+/***************************************************************************//**
+ *  Camera driver function used to write single spi register.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_spi_write_reg(uint8_t addr, uint8_t data)
 {
     DISABLE_SPI_INTERRUPT();
@@ -371,7 +355,9 @@ sl_status_t slx_ml_arducam_driver_spi_write_reg(uint8_t addr, uint8_t data)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
+/***************************************************************************//**
+ *  Camera driver function used to read single spi register.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_spi_read_reg(uint8_t addr, uint8_t *data_ptr)
 {
     DISABLE_SPI_INTERRUPT();
@@ -408,8 +394,9 @@ sl_status_t slx_ml_arducam_driver_spi_read_reg(uint8_t addr, uint8_t *data_ptr)
     return SL_STATUS_OK;
 }
 
-
-/*************************************************************************************************/
+/***************************************************************************//**
+ *  Clear spesific bits on spi register.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_spi_clear_bit(uint8_t addr, uint8_t bits)
 {
     uint8_t reg_value;
@@ -423,7 +410,9 @@ sl_status_t slx_ml_arducam_driver_spi_clear_bit(uint8_t addr, uint8_t bits)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
+/***************************************************************************//**
+ *  Set spesific bits on spi register.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_driver_spi_set_bit(uint8_t addr, uint8_t bits)
 {
     uint8_t reg_value;
@@ -437,12 +426,111 @@ sl_status_t slx_ml_arducam_driver_spi_set_bit(uint8_t addr, uint8_t bits)
     return SL_STATUS_OK;
 }
 
-/*************************************************************************************************/
-static bool sli_on_dma_rx_complete_irq_handler(
-    unsigned int channel,
-    unsigned int sequenceNo,
-    void *userParam
-)
+/***************************************************************************//**
+ *  Camera driver function used to read spi buffer in burst mode.
+ ******************************************************************************/
+sl_status_t slx_ml_arducam_driver_spi_burst_read(uint8_t *buffer, uint32_t length)
+{
+    DISABLE_SPI_INTERRUPT();
+
+    if(arducam_context.is_spi_active)
+    {
+        return SL_STATUS_INVALID_STATE;
+    }
+
+    // NOTE: The SPI interrupt will automatically be enabled
+    arducam_context.is_spi_active = true;
+
+    GPIO_PinOutClear(ARDUCAM_USART_CS_PORT, ARDUCAM_USART_CS_PIN);
+
+    USART_SpiTransfer(USART_PORT(ARDUCAM_USART_PERIPHERAL_NO), BURST_FIFO_READ);
+
+    if(arducam_context.add_dummy_byte_to_burst_read)
+    {
+        USART_SpiTransfer(USART_PORT(ARDUCAM_USART_PERIPHERAL_NO), 0x00);
+    }
+
+    arducam_context.dma_length_remaining = length;
+    arducam_context.dma_rx_ptr = buffer;
+    sli_on_dma_rx_complete_irq_handler(0, 0, (void*)1);
+
+
+    return SL_STATUS_OK;
+}
+
+/***************************************************************************//**
+ *  Provides camera buffer fifo size.
+ ******************************************************************************/
+sl_status_t slx_ml_arducam_driver_get_fifo_size(uint32_t *size_ptr)
+{
+    uint32_t size;
+    sl_status_t status;
+    uint8_t size_part;
+
+    *size_ptr = 0;
+
+    status = slx_ml_arducam_driver_spi_read_reg(FIFO_SIZE3, &size_part);
+    if(status != SL_STATUS_OK)
+    {
+        return status;
+    }
+
+    size = size_part;
+    size <<= 8;
+
+    status = slx_ml_arducam_driver_spi_read_reg(FIFO_SIZE2, &size_part);
+    if(status != SL_STATUS_OK)
+    {
+        return status;
+    }
+
+    size |= (uint32_t)size_part;
+    size <<= 8;
+
+    status = slx_ml_arducam_driver_spi_read_reg(FIFO_SIZE1, &size_part);
+    if(status != SL_STATUS_OK)
+    {
+        return status;
+    }
+
+    size |= (uint32_t)size_part;
+
+    if(size > MAX_IMAGE_SIZE)
+    {
+        return SL_STATUS_BUS_ERROR;
+    }
+
+    *size_ptr = size;
+
+    return SL_STATUS_OK;
+}
+
+ /***************************************************************************//**
+ *  Local Functions
+ ******************************************************************************/
+
+/***************************************************************************//**
+ *  Driver function to transfer data to I2C peripheral.
+ ******************************************************************************/
+sl_status_t sli_do_i2c_transfer(I2C_TransferSeq_TypeDef *seq)
+{
+    I2C_TransferReturn_TypeDef ret;
+    uint32_t timeout = 300000;
+
+    /* Do a polled transfer */
+    ret = I2C_TransferInit(I2C_PORT(ARDUCAM_I2C_PERIPHERAL_NO), seq);
+    while (ret == i2cTransferInProgress && timeout--) 
+    {
+        ret = I2C_Transfer(I2C_PORT(ARDUCAM_I2C_PERIPHERAL_NO));
+    }
+
+  return (ret == i2cTransferDone) ? SL_STATUS_OK : SL_STATUS_BUS_ERROR;
+}
+
+/***************************************************************************//**
+ *   Callback function for signalling completion for DMA.
+ ******************************************************************************/
+bool sli_on_dma_rx_complete_irq_handler(unsigned int channel, unsigned int sequenceNo, void *userParam)
 {
 #define MAX_DMA_LENGTH ((_LDMA_CH_CTRL_XFERCNT_MASK >> _LDMA_CH_CTRL_XFERCNT_SHIFT)+1)
     static uint8_t dummy_tx_buffer = 0;
@@ -500,80 +588,4 @@ static bool sli_on_dma_rx_complete_irq_handler(
     );
 
     return false;
-}
-
-
-/*************************************************************************************************/
-sl_status_t slx_ml_arducam_driver_spi_burst_read(uint8_t *buffer, uint32_t length)
-{
-    DISABLE_SPI_INTERRUPT();
-
-    if(arducam_context.is_spi_active)
-    {
-        return SL_STATUS_INVALID_STATE;
-    }
-
-    // NOTE: The SPI interrupt will automatically be enabled
-    arducam_context.is_spi_active = true;
-
-    GPIO_PinOutClear(ARDUCAM_USART_CS_PORT, ARDUCAM_USART_CS_PIN);
-
-    USART_SpiTransfer(USART_PORT(ARDUCAM_USART_PERIPHERAL_NO), BURST_FIFO_READ);
-
-    if(arducam_context.add_dummy_byte_to_burst_read)
-    {
-        USART_SpiTransfer(USART_PORT(ARDUCAM_USART_PERIPHERAL_NO), 0x00);
-    }
-
-    arducam_context.dma_length_remaining = length;
-    arducam_context.dma_rx_ptr = buffer;
-    sli_on_dma_rx_complete_irq_handler(0, 0, (void*)1);
-
-
-    return SL_STATUS_OK;
-}
-
-/*************************************************************************************************/
-sl_status_t slx_ml_arducam_driver_get_fifo_size(uint32_t *size_ptr)
-{
-    uint32_t size;
-    sl_status_t status;
-    uint8_t size_part;
-
-    *size_ptr = 0;
-
-    status = slx_ml_arducam_driver_spi_read_reg(FIFO_SIZE3, &size_part);
-    if(status != SL_STATUS_OK)
-    {
-        return status;
-    }
-
-    size = size_part;
-    size <<= 8;
-
-    status = slx_ml_arducam_driver_spi_read_reg(FIFO_SIZE2, &size_part);
-    if(status != SL_STATUS_OK)
-    {
-        return status;
-    }
-
-    size |= (uint32_t)size_part;
-    size <<= 8;
-
-    status = slx_ml_arducam_driver_spi_read_reg(FIFO_SIZE1, &size_part);
-    if(status != SL_STATUS_OK)
-    {
-        return status;
-    }
-
-    size |= (uint32_t)size_part;
-
-    if(size > MAX_IMAGE_SIZE)
-    {
-        return SL_STATUS_BUS_ERROR;
-    }
-
-    *size_ptr = size;
-
-    return SL_STATUS_OK;
 }

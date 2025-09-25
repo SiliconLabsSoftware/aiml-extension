@@ -6,8 +6,6 @@
 #include "sl_ml_model_keyword_spotting_on_off_v3.h"
 #include "tflite_micro_model.hpp"
 
-constexpr const int AUDIO_BUFFER_SIZE = 16000;
-static int16_t audio_buffer[AUDIO_BUFFER_SIZE];
 static RecognizeCommands* command_recognizer = nullptr;
 static uint8_t command_recognizer_instance_buffer[sizeof(RecognizeCommands)] alignas(alignof(RecognizeCommands));
 static int32_t detected_timeout = 0;
@@ -20,7 +18,7 @@ int category_count = 0;
 
 void voice_control_light_task() {
     uint32_t prev_loop_timestamp = 0;
-
+    led_turn_off(DETECTION_ON);
     printf("Starting Voice Control Light Application\n");
 
     // Load the model
@@ -310,7 +308,7 @@ sl_status_t load_model() {
     }
 
     // Initialize the audio feature generator
-    if (sl_ml_audio_feature_generation_init_with_buffer(audio_buffer, AUDIO_BUFFER_SIZE) != SL_STATUS_OK) {
+    if (sl_ml_audio_feature_generation_init() != SL_STATUS_OK) {
         printf("Failed to init audio feature generator\n");
         return SL_STATUS_FAIL;
     }

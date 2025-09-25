@@ -18,9 +18,9 @@
 **/sonar-bw/
 
 ##Enable these if you are not tracking Simplicity studio project
-# **/.cproject
-# **/.project
-# **/.pdm
+**/.cproject
+**/.project
+**/.pdm
 
 ## Documentation related ignores.
 ## Modify them if it is necessary
@@ -32,3 +32,6 @@
 *.xls
 *.html
 
+# Project specific part of the gitignore
+**/target/
+/build/

@@ -15,7 +15,7 @@ metadata:
       url: https://github.com/google/gemmlowp
       package_url: pkg:github/google/gemmlowp@719139ce755a0
       comment: Few header files copied from "fixedpoint" and "internal" folders from Gemmlowp GitHub repo, commit hash 719139ce755a0
-root_path: gemmlowp
+root_path: third_party/gemmlowp
 provides:
   - name: tensorflow_dependency_gemmlowp
 include:

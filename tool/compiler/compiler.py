@@ -194,6 +194,7 @@ def main():
     temp_path.rmdir()
 
     model_name = model_path.stem
+    model_name = re.sub(r'[^a-zA-Z0-9_]+|\s+', '_', model_name)
     generate_model_file(
         "templates/", "sl_ml_model_model_name.h.jinja", model_name, args.output_dir
     )

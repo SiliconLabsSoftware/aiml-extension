@@ -20,144 +20,198 @@
 #include "sl_status.h"
 #include "sl_ml_arducam_types.h"
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
-/**
- * @brief Initialize driver
+/***************************************************************************//**
+ * @brief
+ *  Function initializes arducam camera driver.
+ *
+ * @param[in] config
+ *  @ref arducam_config_t driver configuration
  * 
- * Initialize the driver with the given image buffer.
- * The given image buffer length should be a multiple of the output of @ref arducam_calculate_image_buffer_length().
- * Providing 2 buffers allows for best performance.
+ * @param[in] image_buffer
+ *  Pointer to image data buffer
  * 
- * @note This will fail if the camera hardware fails to initialize or if the given image buffer is too small.
- * 
- * @param config @ref arducam_config_t driver configuration
- * @param image_buffer Image data buffer
- * @param buffer_length Size of the image data buffer in bytes, this should be a multiple of  @ref arducam_calculate_image_buffer_length()
- * @return sl_status_t 
- */
+ * @param[in] buffer_length
+ *  Size of the image data buffer in bytes, this should be a multiple of 
+ *  @ref arducam_calculate_image_buffer_length()
+ *
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK for successful initialization of camera driver,
+ *  SL_STATUS_NOT_SUPPORTED When camera not supported with available driver sw to intialize camera.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_init(const arducam_config_t* config, uint8_t* image_buffer, uint32_t buffer_length);
 
-/**
- * @brief De-initialize diver
- * 
- * @return sl_status_t 
- */
+/***************************************************************************//**
+ * @brief
+ *  Function De-initialize arducam camera diver.
+ *
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK when suceed.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_deinit();
 
-/**
- * @brief Set a camera setting
- * 
- * This sets a specific camera setting. See @ref arducam_setting_t for the available settings.
+/***************************************************************************//**
+ * @brief
+ *  Function sets arducam camera setting.
+ *
+ * @param[in] setting
+ *  @ref arducam_setting_t Setting to set
+ * @param[in] value
+ *  Value of the setting
+ *
  * @note Settings may be set while capturing is active.
  * 
- * @param setting @ref arducam_setting_t Setting to set
- * @param value Value of the setting
- * @return sl_status_t 
- */
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK when succeed.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_set_setting(arducam_setting_t setting, int32_t value);
-//sl_status_t arducam_get_setting(arducam_setting_t setting, int32_t* value_ptr);
 
-/**
- * @brief Start image capturing
+/***************************************************************************//**
+ * @brief
+ *  Function used to start image capturing.
+ *
+ *  This enables the camera to begin capturing images.
+ *  After calling this, periodically call @ref slx_ml_arducam_get_next_image() to retrieve a pointer
+ *  to the next available image.
+ *  Call @ref slx_ml_arducam_stop_capture() to disable capturing.
  * 
- * This enables the camera to begin capturing images.
- * After calling this, periodically call @ref arducam_get_next_image() to retrieve a pointer
- * to the next available image.
+ * @note 
+ *  @ref slx_ml_arducam_init() must be called before using this API.
  * 
- * Call @ref arducam_stop_capture() to disable capturing.
- * 
- * @note @ref arducam_init() must be called before using this API.
- * 
- * @return sl_status_t 
- */
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK when succeed
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_start_capture();
 
-/**
- * @brief Stop image capturing
+/***************************************************************************//**
+ * @brief
+ *  Function used to stop image capturing.
+ *  This disables the camera from capturing images.
  * 
- * This disables the camera from capturing images.
- * 
- * @return sl_status_t 
- */
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK when succeed
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_stop_capture();
 
-/**
- * @brief Poll the camera
- * 
- * The polls the camera.
+/***************************************************************************//**
+ * @brief
+ *  Function used to Poll the camera.
  * 
  * @note This API is optional. It can help improve throughput when
- * periodically called from a timer interrupt.
+ *  periodically called from a timer interrupt.
  * 
- * @note @ref arducam_start_capture() must be called before using this API.
- * 
- * @return sl_status_t 
- */
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK when succeed
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_poll();
 
-/**
- * @brief Attempt to retrieve the next capturing image
+/***************************************************************************//**
+ * @brief
+ *  Attempt to retrieve the next capturing image.
+ *    
+ *  This attempts to retrieve the next capturing image from the camera.
+ *  If an image is available, the data_ptr argument will point to the image buffer
+ *  and the length_ptr will contain the length of the image in bytes.
  * 
- * This attempts to retrieve the next capturing image from the camera.
- * If an image is available, the data_ptr argument will point to the image buffer
- * and the length_ptr will contain the length of the image in bytes.
+ * @note 
+ *  @ref slx_ml_arducam_release_image() MUST be called once the image is no longer
+ *  used. This API must NOT be called again until the previous image is released.
+ *  @ref slx_ml_arducam_start_capture() must be called before using this API.
  * 
- * This returns SL_STATUS_IN_PROGRESS if no image is currently available.
+ * @param[out] data_ptr Pointer to hold reference to next captured image, 
+ *  NULL if no image is available
  * 
- * @ref arducam_release_image() MUST be called once the image is no longer
- * used. This API must NOT be called again until the previous image is released.
+ * @param[out] length_ptr Optional pointer to hold length of image in bytes. 
+ *  Leave NULL if unused.
  * 
- * @note @ref arducam_start_capture() must be called before using this API.
- * 
- * @param data_ptr Pointer to hold reference to next captured image, NULL if no image is available
- * @param length_ptr Optional pointer to hold length of image in bytes. Leave NULL if unused.
- * @return sl_status_t 
- */
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK when succeed
+ *  SL_STATUS_IN_PROGRESS if no image is currently available.
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_get_next_image(uint8_t** data_ptr, uint32_t* length_ptr);
 
-/**
- * @brief Release previous image
+/***************************************************************************//**
+ * @brief
+ *  Releases previous image from buffer.
+ *  This releases an image previously returned by @ref slx_ml_arducam_get_next_image().
  * 
- * This releases an image previously returned by @ref arducam_get_next_image().
- * This MUST be called once the image returned by  @ref arducam_get_next_image()
- * is no longer used.
+ * @note 
+ *  This MUST be called once the image returned by  @ref slx_ml_arducam_get_next_image()
+ *  is no longer used.
  * 
- * @return sl_status_t 
- */
+ * @return
+ *  @ref sl_status_t SL_STATUS_OK when succeed
+ ******************************************************************************/
 sl_status_t slx_ml_arducam_release_image();
 
-/**
- * @brief Return number bytes per image
+/***************************************************************************//**
+ * @brief
+ *  Return number bytes per image
+ *  This returns the numbers of bytes per image used by the image buffer.
  * 
- * This returns the numbers of bytes per image used by the image buffer.
+ * @param[in] format 
+ *  @ref arducam_data_format_t Image data format
  * 
- * @note This value may be different than the value returned by @ref arducam_calculate_image_size()
+ * @param[in] width 
+ *  Width of image in pixels
+ * 
+ * @param[in] height 
+ *  Height of image in pixels
+ * 
+ * @note This value may be different than the value returned by @ref slx_ml_arducam_calculate_image_size()
  * due to internal color space conversion requirements.
  * 
- * @param format @ref arducam_data_format_t Image data format
- * @param width Width of image in pixels
- * @param height Height of image in pixels
- * @return uint32_t Bytes required given image parameters
- */
+ * @return
+ *  @ref uint32_t Bytes required given image parameters
+ ******************************************************************************/
 uint32_t slx_ml_arducam_calculate_image_buffer_length(arducam_data_format_t format, uint32_t width, uint32_t height);
 
-/**
- * @brief Return size of image in pixels
+/***************************************************************************//**
+ * @brief
+ *  Return size of image in pixels
+ *  This returns the size of the image in bytes.
  * 
- * This returns the size of the image in bytes.
+ * @param[in] format 
+ *  @ref arducam_data_format_t Image data format
  * 
- * @param format @ref arducam_data_format_t Image data format
- * @param width Width of image in pixels
- * @param height Height of image in pixels
- * @return uint32_t Size of image in pixels
- */
+ * @param[in] width 
+ *  Width of image in pixels
+ * 
+ * @param[in] height 
+ *  Height of image in pixels
+ * 
+ * @note This value may be different than the value returned by @ref slx_ml_arducam_calculate_image_size()
+ * due to internal color space conversion requirements.
+ * 
+ * @return
+ *  @ref uint32_t Size of image in pixels
+ ******************************************************************************/
 uint32_t slx_ml_arducam_calculate_image_size(arducam_data_format_t format, uint32_t width, uint32_t height);
 
+ /***************************************************************************//**
+ *  Local Functions
+ ******************************************************************************/
+
+/***************************************************************************//**
+ * @brief
+ *  This function increments buffer pointer by image size in bytes.
+ * 
+ * @param[out] ptr 
+ *  Pointer holding reference to image data. 
+ ******************************************************************************/
+void sli_increment_buffer_pointer(uint8_t** ptr);
+
+/***************************************************************************//**
+ * @brief
+ *  Function to convert image color space.
+ * 
+ * @param[out] img 
+ *  Pointer holding reference to image data. 
+ ******************************************************************************/
+void sli_convert_image_color_space(uint8_t* img);
 
 #ifdef __cplusplus
 }

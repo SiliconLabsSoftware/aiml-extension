@@ -42,7 +42,6 @@ bool audio_classifier_config_load_model_settings(const void* tflite_flatbuffer) 
     model_parameters.get("dump_raw_spectrograms", SL_ML_AUDIO_FEATURE_GENERATION_DUMP_RAW_SPECTROGRAM);
     model_parameters.get("dump_spectrograms", SL_ML_AUDIO_FEATURE_GENERATION_DUMP_QUANTIZED_SPECTROGRAM);
     model_parameters.get("verbose_model_output_logs", SL_TFLITE_MODEL_VERBOSE_MODEL_OUTPUT_LOGS);
-    model_parameters.get("volume_gain", SL_ML_AUDIO_FEATURE_GENERATION_AUDIO_GAIN);
 
     // #ifdef AUDIO_CLASSIFIER_VERBOSE
     SL_TFLITE_MODEL_VERBOSE_MODEL_OUTPUT_LOGS = 0;

@@ -30,7 +30,7 @@ provides:
 requires:
   - name: tensorflow_lite_micro_optimized_kernels
   - name: nn_mvp
-root_path: siliconlabs
+root_path: src/kernels/mvp1
 source:
   - path: add.cc
   - path: conv.cc

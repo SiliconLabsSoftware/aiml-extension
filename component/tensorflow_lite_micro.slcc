@@ -56,7 +56,7 @@ recommends:
     condition: [device_compute_mvp]
   - id: tensorflow_debug_log_iostream
 include:
-  - path: inc
+  - path: inc/tflite
     file_list:
       - path: sl_tflite_micro_init.h
       - path: sl_tflite_micro_debug_log.h
@@ -235,9 +235,9 @@ include:
       - path: tensorflow/lite/schema/schema_generated.h
       - path: tensorflow/lite/schema/schema_utils.h
 source:
-  - path: src/sl_tflite_micro_init.cc
+  - path: src/tflite/sl_tflite_micro_init.cc
 config_file:
-  - path: config/sl_tflite_micro_config.h
+  - path: config/tflite/sl_tflite_micro_config.h
 template_contribution:
   - name: event_handler
     value:

@@ -15,7 +15,7 @@ metadata:
       url: https://github.com/google/ruy
       package_url: pkg:github/google/ruy@5bb02fbf90824
       comment: Only profiler instrumentation header copied from GitHub repo, commit hash 5bb02fbf90824
-root_path: ruy
+root_path: third_party/ruy
 provides:
   - name: tensorflow_dependency_ruy
 include:

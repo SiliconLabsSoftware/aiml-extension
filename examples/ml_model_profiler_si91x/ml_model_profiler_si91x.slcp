@@ -1,4 +1,3 @@
-# Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
 project_name: ml_model_profiler_si91x
 label: AI/ML - Model Profiler for SiWx917
 description: >
@@ -19,12 +18,16 @@ package: aiml
 quality: production
 readme:
   - path: readme.md
-source:
-  - path: main.cc
 include:
   - path: .
     file_list:
+      - path: app.h
+      - path: model_profiler.h
       - path: energy_profiling_utils.hpp
+source:
+  - path: app.c
+  - path: model_profiler.cc
+
 toolchain_settings:
   - option: gcc_compiler_option
     value: -Wall -Werror
@@ -48,7 +51,7 @@ component:
   - id: syscalls
     from: wiseconnect3_sdk
   - id: emlib_common
-  - id: sl_system
+  - id: sl_main
 config_file:
   - path: tflite_models/tflite/model.tflite
     directory: tflite
@@ -72,8 +75,8 @@ ui_hints:
       focus: true
 sdk_extension:
   - id: wiseconnect3_sdk
-    version: 3.5.1
+    version: 3.5.2
   - id: aiml
-    version: 2.1.1
+    version: 2.1.2
 post_build:
   path: ../../util/postbuild_profile/wiseconnect_soc.slpb

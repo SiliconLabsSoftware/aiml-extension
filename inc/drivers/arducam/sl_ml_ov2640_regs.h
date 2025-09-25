@@ -262,9 +262,6 @@
 #define UXGA_HEIGHT     (1200)
 
 
-
-
-
 static const reg_addr_value_t ov2640_default_regs[] =
 {
     { 0xff, 0x00 },

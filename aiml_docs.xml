@@ -46,15 +46,6 @@
     <description>Guide for updating an existing application using the AI/ML SDK v1.x to a v2.x application. This guide includes steps to move from the code integrated inside GSDK to the separate AI/ML extension.</description>
   </contentItemData>
 
-  <contentItemData label="AI/ML Software Reference Manual" itemURI="https://github.com/SiliconLabsSoftware/aiml-extension/blob/v2.1.1/doc/software-reference/manuals/aiml-software-reference-manual.md" category="Reference Manuals" priority="6">
-    <property key="core.category" value="Reference Manuals"/>
-    <property key="core.priority" value="6"/>
-    <property key="core.boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
-    <property key="core.partCompatibility" value=".*"/>
-    <property key="core.sdkAndProtocolTags" value="AI/ML"/>
-    <description>This reference manual provides information about the AI/ML software on the EFR32 chipsets. It is intended to provide all the details required for a smooth developer experience.</description>
-  </contentItemData>
-
   <contentItemData label="AI/ML SDK API Reference" itemURI="https://docs.silabs.com/machine-learning/latest/aiml-reference-guide/" category="Software API Documentation" priority="7">
     <property key="core.category" value="Software API Documentation"/>
     <property key="core.priority" value="7"/>

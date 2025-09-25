@@ -69,10 +69,6 @@ from input audio data which can be passed to TensorFlow when doing inference.
 See the MLTK documentation for more information about the model parameters:
 <https://siliconlabs.github.io/mltk/docs/model_parameters.html>
 
-## I2S Pin Configuration (IMPORTANT)
-
-The I2S pin configuration is required for correct operation of all ML audio applications. Please refer to the shared documentation for instructions: [I2S Pin Configuration Guide](https://docs.silabs.com/machine-learning/latest/aiml-getting-started/i2s-pin-configuration).
-
 ## References
 
 The example is based on TensorFlow's example called **[micro speech](https://github.com/tensorflow/tflite-micro/tree/main/tensorflow/lite/micro/examples/micro_speech)**

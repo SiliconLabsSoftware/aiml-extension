@@ -21,7 +21,7 @@ This file has been modified by Silicon Labs.
 #include <stdlib.h>
 
 #include "microfrontend/lib/utils.h"
-#include "microfrontend/sl_ml_fft.h"
+#include "inc/dsp/sl_ml_fft.h"
 
 
 #define kFilterbankBits 12

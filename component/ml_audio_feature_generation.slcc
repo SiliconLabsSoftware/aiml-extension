@@ -34,12 +34,12 @@ requires:
 recommends:
   - id: ml_cmsis_dsp_rfft_q15
 config_file:
-  - path: config/sl_ml_audio_feature_generation_config.h
+  - path: config/features/audio/sl_ml_audio_feature_generation_config.h
     condition: [device_efx]
-  - path: config/sl_ml_audio_feature_generation_config_si91x.h
+  - path: config/features/audio/sl_ml_audio_feature_generation_config_si91x.h
     condition: [device_si91x]
 include:
-  - path: inc
+  - path: inc/features/audio
     file_list:
       - path: sl_ml_audio_feature_generation.h
         condition: [device_efx]
@@ -53,7 +53,7 @@ include:
       - path: microfrontend/lib/bits.h
       - path: microfrontend/lib/dc_notch_filter.h
       - path: microfrontend/lib/dc_notch_filter_util.h
-      - path: microfrontend/sl_ml_fft.h
+      - path: inc/dsp/sl_ml_fft.h
       - path: microfrontend/lib/filterbank.h
       - path: microfrontend/lib/filterbank_util.h
       - path: microfrontend/lib/frontend.h
@@ -68,15 +68,15 @@ include:
       - path: microfrontend/lib/window.h
       - path: microfrontend/lib/window_util.h
 source:
-  - path: src/sl_ml_audio_feature_generation.c
+  - path: src/features/audio/sl_ml_audio_feature_generation.c
     condition: [device_efx]
-  - path: src/sl_ml_audio_feature_generation_init.c
+  - path: src/features/audio/sl_ml_audio_feature_generation_init.c
     condition: [device_efx]
-  - path: src/sl_ml_audio_feature_generation_si91x.cc
+  - path: src/features/audio/sl_ml_audio_feature_generation_si91x.cc
     condition: [device_si91x]
-  - path: src/sl_ml_audio_feature_generation_init_si91x.cc
+  - path: src/features/audio/sl_ml_audio_feature_generation_init_si91x.cc
     condition: [device_si91x]
-  - path: config/sl_ml_audio_feature_generation_config_si91x.cc
+  - path: config/features/audio/sl_ml_audio_feature_generation_config_si91x.cc
     condition: [device_si91x]
   - path: microfrontend/lib/activity_detection_util.c
   - path: microfrontend/lib/activity_detection.c

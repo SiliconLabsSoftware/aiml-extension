@@ -15,4 +15,4 @@ define:
   - name: TF_LITE_STRIP_ERROR_STRINGS
   - name: NDEBUG
 source:
-  - path: siliconlabs/debug_log_none.cc
+  - path: src/utils/debug_log_none.cc

@@ -19,14 +19,14 @@ requires:
   - name: sl_common
   - name: jlink_stream
 config_file:
-  - path: config/sl_ml_image_feature_generation_config.h
+  - path: config/features/image/sl_ml_image_feature_generation_config.h
 include:
-  - path: inc
+  - path: inc/features/image
     file_list:
       - path: sl_ml_image_feature_generation.h
 source:
-  - path: src/sl_ml_image_feature_generation.cc
-  - path: src/sl_ml_image_feature_generation_init.cc
+  - path: src/features/image/sl_ml_image_feature_generation.cc
+  - path: src/features/image/sl_ml_image_feature_generation_init.cc
 documentation:
   docset: aiml
   document: aiml/api/group-ml-image-feature-generation
