@@ -1,0 +1,17 @@
+{
+  "id": "aiml.flatbuffer-converter",
+  "label": "TensorFlow Lite Micro Advanced Configurator Adapter Pack",
+  "description": "TensorFlow Lite Micro Advanced Configurator Adapter Pack Definition",
+  "path": ["."],
+  "requiredFeatureLevel": "apack.core:8",
+  "featureLevel": 1,
+  "uc.triggerExtension": "tflite",
+  "function": {
+    "uc_generate": {
+      "cmd": "$(python) flatbuffer_converter.py generate ${contentFolder} ${generationOutput} ${partOpn}"
+    },
+    "uc_upgrade": {
+      "cmd": "$(python) flatbuffer_converter.py upgrade ${tempContentFolder} ${results}"
+    }
+  }
+}

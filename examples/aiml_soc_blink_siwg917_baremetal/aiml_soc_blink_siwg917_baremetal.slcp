@@ -1,0 +1,89 @@
+# Silicon Labs Project Configuration Tools: slcp, v0, Component selection file.
+project_name: aiml_soc_blink_siwg917_baremetal
+label: AI/ML - SoC Blink Baremetal for SiWG917
+description: |
+  This application demonstrates a model trained to replicate a sine function.
+  The model is continuously fed with values ranging from 0 to 2pi, and the
+  output of the model is used to control the intensity of an LED.
+category: AI/ML Application
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+- name: "Capability"
+  value: ["Machine Learning"]
+package: aiml_app
+quality: production
+readme:
+- path: readme.md
+source:
+- path: app.cc
+- path: rgb_led.c
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: rgb_led.h
+  - path: timestamp.h
+config_file:
+- path: tflite_models/tflite/blink.tflite
+  file_id: flatbuffer_file_id
+  directory: tflite
+toolchain_settings:
+- option: gcc_compiler_option
+  value: -Wall -Werror
+- option: gcc_compiler_option
+  value: -Wno-unused-parameter
+- option: gcc_compiler_option
+  value: -mfp16-format=ieee
+- option: gcc_compiler_option
+  value: -Wno-missing-field-initializers
+- option: gcc_linker_option
+  value: -u _printf_float
+component:
+- id: cpp_support
+- id: si91x_memory_default_config
+- id: sl_si91x_rgb_led_917
+  instance: [led0]
+  condition: [brd2605a]
+- id: sl_si91x_led_917
+  instance: [led0]
+  condition: [brd4338a]
+- id: sleeptimer_si91x
+- id: syscalls
+- id: emlib_common
+- id: sl_main
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_TFLITE_MICRO_ARENA_SIZE
+  value: 2048
+define:
+- name: SUPPORT_CPLUSPLUS
+  value: 1
+ui_hints:
+  highlight:
+  - path: readme.md
+    focus: true
+post_build:
+  path: ../util/postbuild_profile/wiseconnect_soc.slpb
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 2.2.0
+- id: wiseconnect3_sdk
+  vendor: silabs
+  version: 4.0.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2025.12.0

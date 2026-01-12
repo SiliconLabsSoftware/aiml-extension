@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="ASCII"?>
 <model:MDescriptors xmlns:model="http://www.silabs.com/ss/Studio.ecore">
-  <descriptors name="ml_blink" label="AI/ML - Blink"
+  <descriptors name="aiml_soc_blink_efr32_baremetal" label="AI/ML - SoC Blink Baremetal for EFR32"
                description="This application demonstrates a model trained to replicate a sine function.
                             The model is continuously fed with values ranging from 0 to 2pi, and the
                             output of the model is used to control the intensity of an LED.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="solutionReferenceId" value="examples.ml_blink.ml_blink.slcp"/>
-    <properties key="projectFilePaths" value="examples/ml_blink/ml_blink.slcp"/>
-    <properties key="readmeFiles" value="examples/ml_blink/readme.md"/>
+    <properties key="keywords" value="ai ml machine\ learning sine intensity"/>
+    <properties key="solutionReferenceId" value="aiml_soc_blink_efr32_baremetal.aiml_soc_blink_efr32_baremetal.slcp"/>
+    <properties key="projectFilePaths" value="aiml_soc_blink_efr32_baremetal/aiml_soc_blink_efr32_baremetal.slcp"/>
+    <properties key="readmeFiles" value="aiml_soc_blink_efr32_baremetal/readme.md"/>
     <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
@@ -19,14 +19,14 @@
     <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_magic_wand" label="AI/ML - Magic Wand"
+  <descriptors name="aiml_soc_magic_wand_efr32_baremetal" label="AI/ML - Magic Wand Baremetal for EFR32"
     description="This application demonstrates a model trained to recognize various hand gestures
                  with an accelerometer. The detected gestures are printed to the serial port.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="solutionReferenceId" value="examples.ml_magic_wand.ml_magic_wand.slcp"/>
-    <properties key="projectFilePaths" value="examples/ml_magic_wand/ml_magic_wand.slcp"/>
-    <properties key="readmeFiles" value="examples/ml_magic_wand/readme.md"/>
+    <properties key="keywords" value="ai ml machine\ learning hand\ gestures accelerometer"/>
+    <properties key="solutionReferenceId" value="aiml_soc_magic_wand_efr32_baremetal.aiml_soc_magic_wand_efr32_baremetal.slcp"/>
+    <properties key="projectFilePaths" value="aiml_soc_magic_wand_efr32_baremetal/aiml_soc_magic_wand_efr32_baremetal.slcp"/>
+    <properties key="readmeFiles" value="aiml_soc_magic_wand_efr32_baremetal/readme.md"/>
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
@@ -37,15 +37,15 @@
     <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_model_profiler" label="AI/ML - Model Profiler"
+  <descriptors name="aiml_soc_model_profiler_efr32_baremetal" label="AI/ML - SoC Model Profiler Baremetal for EFR32"
     description="This application profiles a ML model. The ML model is loaded as a byte array
                  which is generated from a Tensorflow tflite model file. Profiling is performed
                  by running one inference with the model.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="solutionReferenceId" value="examples.ml_model_profiler.ml_model_profiler.slcp"/>
-    <properties key="projectFilePaths" value="examples/ml_model_profiler/ml_model_profiler.slcp"/>
-    <properties key="readmeFiles" value="examples/ml_model_profiler/readme.md"/>
+    <properties key="keywords" value="ai ml machine\ learning profiler byte\ array"/>
+    <properties key="solutionReferenceId" value="aiml_soc_model_profiler_efr32_baremetal.aiml_soc_model_profiler_efr32_baremetal.slcp"/>
+    <properties key="projectFilePaths" value="aiml_soc_model_profiler_efr32_baremetal/aiml_soc_model_profiler_efr32_baremetal.slcp"/>
+    <properties key="readmeFiles" value="aiml_soc_model_profiler_efr32_baremetal/readme.md"/>
     <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
@@ -56,15 +56,15 @@
     <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_voice_control_light" label="AI/ML - Voice Control Light"
+  <descriptors name="aiml_soc_voice_control_light_efr32_micriumos" label="AI/ML - SoC Voice Control Light for EFR32"
     description="This application uses TensorFlow Lite for Microcontrollers to detect the spoken
                  words 'on' and 'off' from audio data recorded on the microphone in a Micrium OS
                  kernel task. The detected keywords are used to control an LED on the board.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="solutionReferenceId" value="examples.ml_voice_control_light.ml_voice_control_light.slcp"/>
-    <properties key="projectFilePaths" value="examples/ml_voice_control_light/ml_voice_control_light.slcp"/>
-    <properties key="readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
+    <properties key="keywords" value="ai ml machine\ learning on off audio microphone"/>
+    <properties key="solutionReferenceId" value="aiml_soc_voice_control_light_efr32_micriumos.aiml_soc_voice_control_light_efr32_micriumos.slcp"/>
+    <properties key="projectFilePaths" value="aiml_soc_voice_control_light_efr32_micriumos/aiml_soc_voice_control_light_efr32_micriumos.slcp"/>
+    <properties key="readmeFiles" value="aiml_soc_voice_control_light_efr32_micriumos/readme.md"/>
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
@@ -75,15 +75,15 @@
     <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_audio_classifier" label="AI/ML - Audio Classifier"
+  <descriptors name="aiml_soc_audio_classifier_efr32_micriumos" label="AI/ML - SoC Audio Classifier Micrium OS for EFR32"
     description="This application uses TensorFlow Lite for Microcontrollers to classify
                  audio data recorded on the microphone in a Micrium OS kernel task.
                  The classification is used to control a LED on the board.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="solutionReferenceId" value="examples.ml_audio_classifier.ml_audio_classifier.slcp"/>
-    <properties key="projectFilePaths" value="examples/ml_audio_classifier/ml_audio_classifier.slcp"/>
-    <properties key="readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
+    <properties key="keywords" value="ai ml machine\ learning audio microphone"/>
+    <properties key="solutionReferenceId" value="aiml_soc_audio_classifier_efr32_micriumos.aiml_soc_audio_classifier_efr32_micriumos.slcp"/>
+    <properties key="projectFilePaths" value="aiml_soc_audio_classifier_efr32_micriumos/aiml_soc_audio_classifier_efr32_micriumos.slcp"/>
+    <properties key="readmeFiles" value="aiml_soc_audio_classifier_efr32_micriumos/readme.md"/>
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
@@ -94,15 +94,15 @@
     <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_image_classifier" label="AI/ML - Image Classifier"
+  <descriptors name="aiml_soc_image_classifier_efr32_baremetal" label="AI/ML -SoC Image Classifier Baremetal for EFR32"
     description="This application uses TensorFlow Lite for Microcontrollers to classify
                  Hand gestures captured on camera images in a Micrium OS kernel task.
                  The classification is used to control a LED on the board.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="solutionReferenceId" value="examples.ml_image_classifier.ml_image_classifier.slcp"/>
-    <properties key="projectFilePaths" value="examples/ml_image_classifier/ml_image_classifier.slcp"/>
-    <properties key="readmeFiles" value="examples/ml_image_classifier/readme.md"/>
+    <properties key="keywords" value="ai ml machine\ learning images hand\ gestures"/>
+    <properties key="solutionReferenceId" value="aiml_soc_image_classifier_efr32_baremetal.aiml_soc_image_classifier_efr32_baremetal.slcp"/>
+    <properties key="projectFilePaths" value="aiml_soc_image_classifier_efr32_baremetal/aiml_soc_image_classifier_efr32_baremetal.slcp"/>
+    <properties key="readmeFiles" value="aiml_soc_image_classifier_efr32_baremetal/readme.md"/>
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
@@ -113,13 +113,31 @@
     <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_zigbee_z3_switch_with_voice" label="AI/ML - Zigbee 3.0 Switch with Voice"
+  <descriptors name="aiml_soc_data_capture_efr32_baremetal" label="AI/ML - SoC Data Capture for EFR32 Baremetal"
+    description="This application captures IMU sensor data and logs it to CSV format
+                 for machine learning dataset generation.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning"/>
+    <properties key="solutionReferenceId" value="aiml_soc_data_capture_efr32_baremetal.aiml_soc_data_capture_efr32_baremetal.slcp"/>
+    <properties key="projectFilePaths" value="aiml_soc_data_capture_efr32_baremetal/aiml_soc_data_capture_efr32_baremetal.slcp"/>
+    <properties key="readmeFiles" value="aiml_soc_data_capture_efr32_baremetal/readme.md"/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[46].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
+
+  <descriptors name="aiml_zigbee_soc_z3_switch_with_voice_efr32_baremetal" label="AI/ML - SoC Zigbee 3.0 Switch with Voice Baremetal"
     description="Zigbee 3.0 Switch with Voice sample.">
     <properties key="namespace" value="template.uc"/>
     <properties key="keywords" value="ai ml machine\ learning zigbee z3"/>
-    <properties key="solutionReferenceId" value="examples.ml_zigbee_z3_switch_with_voice.ml_zigbee_z3_switch_with_voice.slcp"/>
-    <properties key="projectFilePaths" value="examples/ml_zigbee_z3_switch_with_voice/ml_zigbee_z3_switch_with_voice.slcp"/>
-    <properties key="readmeFiles" value="examples/ml_zigbee_z3_switch_with_voice/readme.md"/>
+    <properties key="solutionReferenceId" value="aiml_zigbee_soc_z3_switch_with_voice_efr32_baremetal.aiml_zigbee_soc_z3_switch_with_voice_efr32_baremetal.slcp"/>
+    <properties key="projectFilePaths" value="aiml_zigbee_soc_z3_switch_with_voice_efr32_baremetal/aiml_zigbee_soc_z3_switch_with_voice_efr32_baremetal.slcp"/>
+    <properties key="readmeFiles" value="aiml_zigbee_soc_z3_switch_with_voice_efr32_baremetal/readme.md"/>
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
@@ -130,14 +148,49 @@
     <properties key="filters" value="Wireless\ Technology|Zigbee Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_blink_si91x" label="AI/ML - Blink for SiWx917"
+  <descriptors name="aiml_soc_anomaly_detection_efr32_baremetal" label="AI/ML - Anomaly Detection"
+    description="This application demonstrates a model trained to detect anomalies in imu series data. The detected class (anomaly/no anomaly) is printed to the serial port.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning"/>
+    <properties key="solutionReferenceId" value="aiml_soc_anomaly_detection_efr32_baremetal.aiml_soc_anomaly_detection_efr32_baremetal.slcp"/>
+    <properties key="projectFilePaths" value="aiml_soc_anomaly_detection_efr32_baremetal/aiml_soc_anomaly_detection_efr32_baremetal.slcp"/>
+    <properties key="readmeFiles" value="aiml_soc_anomaly_detection_efr32_baremetal/readme.md"/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[46].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
+
+  <descriptors name="aiml_soc_profiler_firmware_efr32_baremetal" label="AI/ML - SoC Profiler Firmware for EFR32"
+    description="This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component
+                 to profile machine learning models on EFR Series 2 boards.">
+    <properties key="namespace" value="template.uc"/>
+    <properties key="keywords" value="ai ml machine\ learning audio microphone"/>
+    <properties key="solutionReferenceId" value="aiml_soc_profiler_firmware_efr32_baremetal.aiml_soc_profiler_firmware_efr32_baremetal.slcp"/>
+    <properties key="projectFilePaths" value="aiml_soc_profiler_firmware_efr32_baremetal/aiml_soc_profiler_firmware_efr32_baremetal.slcp"/>
+    <properties key="readmeFiles" value="aiml_soc_profiler_firmware_efr32_baremetal/readme.md"/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="partCompatibility" value=".*efr32.g2[468].*"/>
+    <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake"/>
+    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="category" value="AI/ML Application"/>
+    <properties key="quality" value="production"/>
+    <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
+    <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
+  </descriptors>
+
+  <descriptors name="aiml_soc_blink_siwg917_baremetal" label="AI/ML - SoC Blink for SiWG917 Baremetal"
     description="This application demonstrates a model trained to replicate a sine function.
                  The model is continuously fed with values ranging from 0 to 2pi, and the
                  output of the model is used to control the intensity of an LED.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="projectFilePaths" value="examples/ml_blink_si91x/ml_blink_si91x.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd4343a brd4343b brd4339b brd4340b brd4342a brd4343q brd2605a"/>
+    <properties key="keywords" value="ai ml machine\ learning sine intensity 917"/>
+    <properties key="projectFilePaths" value="aiml_soc_blink_siwg917_baremetal/aiml_soc_blink_siwg917_baremetal.slcp"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc"/>
@@ -145,17 +198,17 @@
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
     <properties key="sdkAndProtocolTags" value=""/>
-    <properties key="readmeFiles" value="examples/ml_blink_si91x/readme.md"/>
+    <properties key="readmeFiles" value="aiml_soc_blink_siwg917_baremetal/readme.md"/>
     <properties key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_model_profiler_si91x" label="AI/ML - Model Profiler for SiWx917"
+  <descriptors name="aiml_soc_model_profiler_siwg917_baremetal" label="AI/ML - SoC Model Profiler for SiWG917 Baremetal"
     description="This application profiles a ML model. The ML model is loaded as a byte array
                  tflite model file. Profiling is performed which is generated from a
                  Tensorflow by running one inference with the model.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="projectFilePaths" value="examples/ml_model_profiler_si91x/ml_model_profiler_si91x.slcp"/>
+    <properties key="keywords" value="ai ml machine\ learning profiler byte\ array"/>
+    <properties key="projectFilePaths" value="aiml_soc_model_profiler_siwg917_baremetal/aiml_soc_model_profiler_siwg917_baremetal.slcp"/>
     <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd4343a brd4343b brd4339b brd4340b brd4342a brd4343q brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
@@ -164,18 +217,18 @@
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
     <properties key="sdkAndProtocolTags" value=""/>
-    <properties key="readmeFiles" value="examples/ml_model_profiler_si91x/readme.md"/>
+    <properties key="readmeFiles" value="aiml_soc_model_profiler_siwg917_baremetal/readme.md"/>
     <properties key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_voice_control_light_si91x" label="AI/ML - Voice control light for SiWx917"
+  <descriptors name="aiml_soc_voice_control_light_siwg917_baremetal" label="AI/ML - SoC Voice control light for SiWG917 Baremetal"
     description="This application uses TensorFlow Lite for Microcontrollers to detect the spoken
                  words on and off from audio data recorded on the microphone.
                  The detected keywords are used to control an LED on the board.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="projectFilePaths" value="examples/ml_voice_control_light_si91x/ml_voice_control_light_si91x.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd4343a brd4343b brd4339b brd4340b brd4342a brd4343q brd2605a"/>
+    <properties key="keywords" value="ai ml machine\ learning on off audio microphone"/>
+    <properties key="projectFilePaths" value="aiml_soc_voice_control_light_siwg917_baremetal/aiml_soc_voice_control_light_siwg917_baremetal.slcp"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc"/>
@@ -183,18 +236,18 @@
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
     <properties key="sdkAndProtocolTags" value=""/>
-    <properties key="readmeFiles" value="examples/ml_voice_control_light_si91x/readme.md"/>
+    <properties key="readmeFiles" value="aiml_soc_voice_control_light_siwg917_baremetal/readme.md"/>
     <properties key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_audio_classifier_si91x" label="AI/ML - Audio Classifier for SiWx917"
+  <descriptors name="aiml_soc_audio_classifier_siwg917_baremetal" label="AI/ML - SoC Audio Classifier for SiWG917 Baremetal"
     description="This application uses TensorFlow Lite for Microcontrollers to classify
                  audio data recorded on the microphone.
                  The classification is used to control a LED on the board.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="projectFilePaths" value="examples/ml_audio_classifier_si91x/ml_audio_classifier_si91x.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd4343a brd4343b brd4339b brd4340b brd4342a brd4343q brd2605a"/>
+    <properties key="keywords" value="ai ml machine\ learning audio microphone"/>
+    <properties key="projectFilePaths" value="aiml_soc_audio_classifier_siwg917_baremetal/aiml_soc_audio_classifier_siwg917_baremetal.slcp"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc"/>
@@ -202,17 +255,17 @@
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
     <properties key="sdkAndProtocolTags" value=""/>
-    <properties key="readmeFiles" value="examples/ml_audio_classifier_si91x/readme.md"/>
+    <properties key="readmeFiles" value="aiml_soc_audio_classifier_siwg917_baremetal/readme.md"/>
     <properties key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
-  <descriptors name="ml_magic_wand_si91x" label="AI/ML - Magic Wand for SiWx917"
+  <descriptors name="aiml_soc_magic_wand_siwg917_baremetal" label="AI/ML -SoC Magic Wand for SiWG917 Baremetal"
     description="This application demonstrates a model trained to recognize various hand gestures
                  with an accelerometer. The detected gestures are printed to the serial port.">
     <properties key="namespace" value="template.uc"/>
-    <properties key="keywords" value="ai ml machine\ learning"/>
-    <properties key="projectFilePaths" value="examples/ml_magic_wand_si91x/ml_magic_wand_si91x.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd4343a brd4343b brd4339b brd4340b brd4342a brd4343q brd2605a"/>
+    <properties key="keywords" value="ai ml machine\ learning hand\ gestures accelerometer"/>
+    <properties key="projectFilePaths" value="aiml_soc_magic_wand_siwg917_baremetal/aiml_soc_magic_wand_siwg917_baremetal.slcp"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc"/>
@@ -220,8 +273,9 @@
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
     <properties key="sdkAndProtocolTags" value=""/>
-    <properties key="readmeFiles" value="examples/ml_magic_wand_si91x/readme.md"/>
+    <properties key="readmeFiles" value="aiml_soc_magic_wand_siwg917_baremetal/readme.md"/>
     <properties key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
   </descriptors>
 
 </model:MDescriptors>
+

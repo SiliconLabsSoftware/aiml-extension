@@ -1,0 +1,94 @@
+project_name: aiml_soc_profiler_firmware_efr32_baremetal
+package: aiml_app
+quality: production
+label: AI/ML - ML Profiler Firmware
+description: >
+  This application uses to generate firmware for TensorFlow Lite for Microcontrollers to profile tflite model
+category: AI/ML Application
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+- name: Capability
+  value: [Machine Learning]
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: sl_ml_profiler_firmware.h
+source:
+- path: app.c
+- path: sl_ml_profiler_firmware.cc
+component:
+- id: ml_profiler
+- id: sl_main
+- id: memory_manager
+- id: device_init
+- id: clock_manager
+- id: tensorflow_lite_micro
+- id: printf
+- id: iostream_recommended_stream
+- id: iostream_retarget_stdio
+- id: status
+- id: power_manager
+- id: sleeptimer
+- id: tensorflow_debug_log_iostream
+- id: tensorflow_lite_micro_accelerated_kernels
+  condition: [device_has_mvp]
+- id: tensorflow_lite_micro_optimized_kernels
+  condition: [device_has_mvp]
+- id: tensorflow_lite_micro_optimized_kernels
+  condition: [device_compute_basic]
+define:
+- name: DEBUG_EFM
+- name: TF_LITE_STATIC_MEMORY
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_usart]
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_uart]
+- name: SL_TFLITE_MICRO_ARENA_SIZE
+  value: -1
+- name: SL_ML_PROFILER_DEBUG_MODEL_BASE_ADDR
+  value: 0x080A2800UL
+- name: SL_HEAP_SIZE
+  value: 0x2000
+- name: SL_MVP_OPTIMIZE_SPEED
+  value: 1
+  condition: [tensorflow_lite_micro_accelerated_kernels]
+- name: SL_CLOCK_MANAGER_HFRCO_DPLL_EN
+  value: 1
+- name: SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE
+  value: "SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_HFRCODPLL"
+- name: SL_ML_ENABLE_PROFILER_DEBUG_MSG
+  value: 1
+- name: SL_ML_ENABLE_DYNAMIC_MODEL_LOAD
+  value: 1
+toolchain_settings:
+- option: gcc_compiler_option
+  value: -Wno-unused-parameter
+- option: gcc_compiler_option
+  value: -Wno-missing-field-initializers
+readme:
+- path: readme.md
+ui_hints:
+  highlight: readme.md
+tag:
+- hardware:component:microphone
+- hardware:device:ram:128
+- hardware:device:flash:130
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 2.2.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2025.12.0

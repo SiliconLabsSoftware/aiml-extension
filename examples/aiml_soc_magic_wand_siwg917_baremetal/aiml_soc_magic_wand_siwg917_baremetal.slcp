@@ -1,0 +1,110 @@
+project_name: aiml_soc_magic_wand_siwg917_baremetal
+label: AI/ML - SoC Magic Wand Baremetal for SiWG917
+description: |
+  This application demonstrates a model trained to replicate a sine function.
+  The model is continuously fed with values ranging from 0 to 2pi, and the
+  output of the model is used to control the intensity of an LED.
+category: AI/ML Application
+filter:
+- name: Capability
+  value:
+  - Machine Learning
+- name: Device Type
+  value:
+  - SoC
+- name: MCU
+  value:
+  - 32-bit MCU
+- name: Project Difficulty
+  value:
+  - Advanced
+package: aiml_app
+quality: production
+readme:
+- path: readme.md
+source:
+- path: accelerometer.c
+- path: app.c
+- path: magic_wand.cc
+- path: predictor.cc
+- path: rgb_led.c
+include:
+- path: .
+  file_list:
+  - path: accelerometer.h
+  - path: app.h
+  - path: constants.h
+  - path: magic_wand.h
+  - path: predictor.h
+  - path: rgb_led.h
+toolchain_settings:
+- option: gcc_compiler_option
+  value: -Wall -Werror
+- option: gcc_compiler_option
+  value: -Wno-unused-parameter
+- option: gcc_compiler_option
+  value: -mfp16-format=ieee
+- option: gcc_compiler_option
+  value: -Wno-missing-field-initializers
+- option: gcc_linker_option
+  value: -u _printf_float
+component:
+- id: dma_ulp_component
+- id: pm_ps2_component
+- id: si91x_memory_default_config
+- id: sl_gpdma
+- id: sl_icm40627
+- id: imu_driver_si91x
+- id: sl_si91x_rgb_led_917
+  instance:
+  - led0
+- id: sl_ssi_instance
+  instance:
+  - ulp_primary
+- id: sleeptimer_si91x
+- id: ssi_ulp_component
+- id: syscalls
+- id: bootloader_gpio_activation
+- id: emlib_common
+- id: sl_main
+- id: cpp_support
+define:
+- name: SUPPORT_CPLUSPLUS
+  value: 1
+- name: IMU_interrupt_PORT
+  value: UULP_VBAT
+- name: IMU_interrupt_PIN
+  value: 3
+config_file:
+- path: config/tflite/magic_wand_model.tflite
+  directory: tflite
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_TFLITE_MICRO_ARENA_SIZE
+  value: 2048
+ui_hints:
+  highlight:
+  - path: readme.md
+    focus: true
+post_build:
+- path: ../util/postbuild_profile/wiseconnect_soc.slpb
+
+
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 2.2.0
+- id: wiseconnect3_sdk
+  vendor: silabs
+  version: 4.0.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2025.12.0

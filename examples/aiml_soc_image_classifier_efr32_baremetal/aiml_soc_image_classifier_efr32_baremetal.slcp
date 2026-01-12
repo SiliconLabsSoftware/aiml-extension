@@ -1,0 +1,100 @@
+project_name: aiml_soc_image_classifier_efr32_baremetal
+package: aiml_app
+quality: production
+label: AI/ML - SoC Image Classifier Baremetal for EFR32
+description: >
+  This application uses TensorFlow Lite for Microcontrollers to classify
+  image captured on the camera. The classification results are displayed in VCOM serial port.
+  Image data streamed over JLink using image feature generation component.
+category: AI/ML Application
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+- name: Capability
+  value: [Machine Learning]
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: image_classifier.h
+  - path: recognize_commands.h
+source:
+- path: app.c
+- path: image_classifier.cc
+- path: recognize_commands.cc
+component:
+- id: sl_main
+- id: memory_manager
+- id: spidrv
+  instance: [exp]
+- id: cmsis_nn
+- id: i2cspm
+  instance: [sensor]
+- id: device_init
+- id: tensorflow_lite_micro
+- id: ml_image_feature_generation
+- id: printf
+- id: iostream_recommended_stream
+- id: iostream_retarget_stdio
+- id: simple_led
+  instance: [led0, led1]
+- id: status
+- id: power_manager
+- id: device_init_hfrco
+- id: sleeptimer
+- id: tensorflow_debug_log_iostream
+- id: tensorflow_lite_micro_accelerated_kernels
+- id: tensorflow_lite_micro_optimized_kernels
+- id: cpp_support
+config_file:
+- path: config/image_classifier_config.h
+- path: tflite_models/tflite/rock_paper_scissors.tflite
+  file_id: flatbuffer_file_id
+  directory: tflite
+- override:
+    component: spidrv
+    file_id: spidrv_config
+    instance: exp
+  path: config/sl_spidrv_exp_config.h
+  condition: [brd2608a]
+define:
+- name: DEBUG_EFM
+- name: TF_LITE_STATIC_MEMORY
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_MVP_POWER_MODE
+  value: 1
+- name: SL_ML_MODEL_INPUT_WIDTH
+  value: 84
+- name: SL_ML_MODEL_INPUT_HEIGHT
+  value: 84
+- name: SL_ML_IMAGE_MEAN_THRESHOLD
+  value: 50
+toolchain_settings:
+- option: gcc_compiler_option
+  value: -Wno-unused-parameter
+- option: gcc_compiler_option
+  value: -Wno-missing-field-initializers
+- option: gcc_linker_option
+  value: -u _printf_float
+readme:
+- path: readme.md
+ui_hints:
+  highlight: readme.md
+tag:
+- hardware:component:led:2+
+- hardware:device:ram:128
+- hardware:device:flash:130
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 2.2.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2025.12.0

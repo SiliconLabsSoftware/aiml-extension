@@ -27,8 +27,16 @@
  * 3. This notice may not be removed or altered from any source distribution.
  *
  ******************************************************************************/
-#if defined __has_include
 
+ #if defined(SL_ML_ENABLE_SILABS_PROFILER)
+#include "sl_ml_silabs_profiler.h"
+#endif
+
+#if (SL_ML_ENABLE_DYNAMIC_MODEL_LOAD)
+#define HAS_TFLITE_MICRO_FLATBUFFER_IN_CONFIGURATION
+#include "sl_tflite_micro_all_opcode_resolver.h"
+#else //SL_ML_ENABLE_DYNAMIC_MODEL_LOAD
+#if defined __has_include
 #if __has_include("sl_tflite_micro_model.h")
   #define HAS_TFLITE_MICRO_FLATBUFFER_IN_CONFIGURATION
 #include "sl_tflite_micro_model.h"
@@ -42,6 +50,8 @@
 #endif //__has_include("sl_tflite_micro_model_parameters.h")
 
 #endif //__has_include
+
+#endif //SL_ML_ENABLE_DYNAMIC_MODEL_LOAD
 
 #include "sl_tflite_micro_init.h"
 #include "sl_tflite_micro_config.h"
@@ -74,7 +84,20 @@
 #endif // SL_TFLITE_MICRO_INTERPRETER_INIT_ENABLE && defined(HAS_TFLITE_MICRO_FLATBUFFER_IN_CONFIGURATION)
 
 #ifndef SL_TFLITE_MICRO_MODEL_ARRAY
+#if (SL_ML_ENABLE_DYNAMIC_MODEL_LOAD)
+// Model is loaded dynamically, use the model base address here to get the model data
+// Adjust the address according to your memory map and linker script
+// SL_ML_PROFILER_DEBUG_MODEL_BASE_ADDR is defined in slcp project file as a preprocessor macro
+// EXAMPLE: 0x08140000 set to your reserved region start last 256 KiB on 1536kb RAM part
+// 1536-256=1280kb=0x140000=> 0x08000000+0x140000=0x08140000
+// 0x08000000 is the base address of flash in EFR32 parts
+// Make sure the address is aligned to at least 4 bytes
+// and the model binary is flashed to that address
+#define MODEL_BASE_ADDR  (static_cast<uintptr_t>(SL_ML_PROFILER_DEBUG_MODEL_BASE_ADDR))
+#define SL_TFLITE_MICRO_MODEL_ARRAY  (reinterpret_cast<const uint8_t*>(MODEL_BASE_ADDR))  
+#else //SL_ML_ENABLE_DYNAMIC_MODEL_LOAD
 #define SL_TFLITE_MICRO_MODEL_ARRAY sl_tflite_model_array
+#endif //SL_ML_ENABLE_DYNAMIC_MODEL_LOAD
 #endif
 
 /***************************************************************************//**
@@ -216,7 +239,6 @@ static void init(void)
   // Instantiate model from char array.
   // The array may have been created in autogen/sl_ml_model.h or elsewhere.
   const tflite::Model* model = tflite::GetModel(SL_TFLITE_MICRO_MODEL_ARRAY);
-
   // Check model schema version
   if (model->version() != TFLITE_SCHEMA_VERSION) {
     TF_LITE_REPORT_ERROR(sl_tflite_micro_error_reporter, "Error: Invalid model version");
@@ -246,10 +268,22 @@ static void init(void)
   #endif
 
   // Instantiate interpreter
+  // Construct profiler with default inputs where possible (model, arena, resolver).
+  // Interpreter must be assigned after the interpreter object is created because
+  // MicroInterpreter expects a profiler pointer in its constructor.
+#if defined(SL_ML_ENABLE_SILABS_PROFILER)
+  // Init profiler object
+  static sl::ml::SilabsProfiler silabs_profiler;
+  static SLMicroInterpreter static_interpreter(
+  model, opcode_resolver, tensor_arena, arena_size,nullptr,&silabs_profiler);
+  silabs_profiler.model_profiler = model;
+  silabs_profiler.interpreter_profiler = &static_interpreter;
+#else // SL_ML_ENABLE_SILABS_PROFILER
   static tflite::MicroInterpreter static_interpreter(
-    model, opcode_resolver, tensor_arena, arena_size);
-  sl_tflite_micro_interpreter = &static_interpreter;
+  model, opcode_resolver, tensor_arena, arena_size);
+#endif // SL_ML_ENABLE_SILABS_PROFILER
 
+  sl_tflite_micro_interpreter = &static_interpreter;
   // Allocate memory from tensor_arena for the model's tensors.
   if (sl_tflite_micro_interpreter->AllocateTensors() != kTfLiteOk) {
     TF_LITE_REPORT_ERROR(sl_tflite_micro_error_reporter, "Error: Arena size too small, failed to allocate tensors");

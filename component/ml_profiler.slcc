@@ -1,0 +1,46 @@
+id: ml_profiler
+package: aiml
+label: ML Model Profiler
+description: >
+  This component provides APIs to profile a model created for Silicon Labs devices.
+category: Machine Learning|Profiling
+quality: production
+metadata:
+  sbom:
+    license: MSLA
+provides:
+  - name: ml_profiler
+requires:
+  - name: ml_profiler_implementation
+  - name: toolchain_gcc
+    condition: [device_efx]
+  - name: cpp_support
+  - name: iostream_debug
+    condition: [device_efx]
+  - name: iostream_debug_si91x
+    condition: [device_si91x]
+  - name: iostream_uart
+    condition: [device_efx]
+recommends:
+  - id: ml_silabs_profiler
+    condition: [device_has_mvp]
+config_file:
+  - path: config/utils/profiler/sl_ml_profiler_config.h
+template_contribution:
+  - name: event_handler
+    value:
+      event: internal_app_init
+      include: sl_ml_profiler_init.h
+      handler: sl_ml_profiler_init
+  - name: component_catalog
+    value: ml_profiler
+include:
+  - path: inc/utils/profiler
+    file_list:
+      - path: sl_ml_profiler_init.h
+source:
+  - path: src/utils/profiler/sl_ml_profiler_init.cc
+define:
+  - name: CIRCULAR_QUEUE_LEN_MAX
+    value: 1
+  

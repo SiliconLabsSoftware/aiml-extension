@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import sys
 import zipfile
+import yaml
 from jinja2 import Environment, FileSystemLoader
 from pathlib import Path
 
@@ -46,13 +47,13 @@ def get_board_platform(part_number: str) -> str:
 def execute_compiler(
     model_path: Path, board_platform: str, output_dir: Path
 ) -> Path | None:
-    # select NPU toolkit executable based on OS
+    # select MVP compiler executable based on OS
     mvp_compiler_executable = None
     if sys.platform == "win32" or sys.platform == "cygwin":
         mvp_compiler_executable = "./mvp_compiler.exe"
     elif sys.platform == "linux":
         mvp_compiler_executable = "./mvp_compiler"
-    # MLSW-10402: Stop NPU compiler execution on macOS
+    # MLSW-10402: Stop MVP compiler execution on macOS
     # this condition should be updated to call the macOS-compatible binary when it is created
     elif sys.platform == "darwin":
         return
@@ -67,24 +68,28 @@ def execute_compiler(
         [mvp_compiler_executable, "--version"], capture_output=True, text=True
     )
     logging.debug(f"Running version: {mvp_compiler_version_output.stdout}")
+    process_args = [
+        mvp_compiler_executable,
+        "--accelerator",
+        "mvpv1",
+        "--platform",
+        board_platform,
+        "--weights-paging",
+        "--output",
+        output_dir,
+        "-x",
+        "codegen.profiler_enabled=1",
+        "-x",
+        "codegen.shorten_paths=1",
+        model_path,
+    ]
 
-    rc = subprocess.Popen(
-        [
-            mvp_compiler_executable,
-            "--accelerator",
-            "mvpv1",
-            "--platform",
-            board_platform,
-            "--weights-paging",
-            "--output",
-            output_dir,
-            "-x",
-            "codegen.profiler_enabled=1",
-            "-x",
-            "codegen.shorten_paths=1",
-            model_path,
-        ]
-    )
+    if model_path.name == "firmware_model_si91x.tflite":
+        process_args.append("-x")
+        process_args.append("codegen.model_header.generate_op_resolver=0")
+
+    rc = subprocess.Popen(process_args)
+
     rc.wait()
     logging.debug(f"compiler ran with these arguments: {rc.args}")
     logging.debug(f"compiler executable returned {rc.returncode}")
@@ -124,22 +129,42 @@ def generate_model_file(
 
 
 def parse_arguments() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Machine Learning Model Compiler")
-    parser.add_argument(
-        "-i",
-        "--input-dir",
-        required=True,
-        type=Path,
-        help="Input directory containing .tflite files",
+    parser = argparse.ArgumentParser(
+        description="Machine Learning Model Compiler for MVP"
     )
-    parser.add_argument(
-        "-o",
-        "--output-dir",
-        required=True,
+
+    subparsers = parser.add_subparsers(
+        dest="command", help="Available commands", required=True
+    )
+
+    # parser for uc_generate
+    # https://confluence.silabs.com/spaces/UC/pages/109688909/Adapter+Pack+Advanced+Configurators#AdapterPackAdvancedConfigurators-uc_generate
+    generate_parser = subparsers.add_parser(
+        "generate",
+        description="Runs when project is generated using SLC-CLI or Studio.",
+    )
+    generate_parser.add_argument(
+        "input_dir", type=Path, help="Input directory containing .tflite files"
+    )
+    generate_parser.add_argument(
+        "output_dir",
         type=Path,
         help="Output directory to populate with serialized content.",
     )
-    parser.add_argument("-p", "--part-number", required=True, help="Part number")
+    generate_parser.add_argument("part_number", type=str, help="Part Number")
+
+    # parser for uc_upgrade
+    # https://confluence.silabs.com/spaces/UC/pages/109688909/Adapter+Pack+Advanced+Configurators#AdapterPackAdvancedConfigurators-uc_upgrade
+    upgrade_parser = subparsers.add_parser(
+        "upgrade",
+        description="Runs when project is upgraded using SLC-CLI or Studio.",
+    )
+    upgrade_parser.add_argument(
+        "temp_dir", type=Path, help="Temporary directory for upgrade operation"
+    )
+    upgrade_parser.add_argument(
+        "result_file", type=str, help="YAML file with upgrade results"
+    )
     return parser.parse_args()
 
 
@@ -154,50 +179,83 @@ def setup_logging(output_dir):
     )
 
 
+def write_upgrade_result(result_file: Path):
+    dummy_result = {
+        "upgrade_results": [
+            {"message": "No upgrade action taken.", "status": "nothing"}
+        ]
+    }
+    with open(result_file, "w") as rf:
+        yaml.dump(dummy_result, rf)
+
+
 def main():
-    # MLSW-10402: Stop execution on macOS
-    # This condition should be removed when a macOS NPU compiler binary is created
-    if sys.platform == "darwin":
-        print(
-            "NPU Compiler Adapter Pack: macOS is not supported yet but this will not throw an error."
-        )
-        return
-
     args = parse_arguments()
-    setup_logging(args.output_dir)
-    logging.debug(f"Input directory: {args.input_dir}")
-    logging.debug(f"Output directory: {args.output_dir}")
-    logging.debug(f"Part Number: {args.part_number}")
 
-    model_path = find_first_tflite_file(args.input_dir)
-    board_platform = get_board_platform(args.part_number)
+    if args.command == "generate":
+        setup_logging(args.output_dir)
+        logging.debug(f"Input directory: {args.input_dir}")
+        logging.debug(f"Output directory: {args.output_dir}")
+        logging.debug(f"Part Number: {args.part_number}")
 
-    # Skipping if board_platform is not si91x
-    if board_platform != "si91x":
-        return
+        model_path = find_first_tflite_file(args.input_dir)
+        board_platform = get_board_platform(args.part_number)
 
-    temp_path = Path(args.input_dir).parent / "temp/"
-    temp_path.mkdir(exist_ok=True)
-    # args.output_dir = temp_path
-    zip_path = execute_compiler(model_path, board_platform, temp_path)
-    logging.debug(f"model compiled in archive: {zip_path}")
+        # Skipping if board_platform is not si91x
+        if board_platform != "si91x":
+            return
 
-    zip_extract_dir = extract_zip(zip_path)
-    logging.debug(f"archive extracted to {zip_extract_dir}")
+        model_name = model_path.stem
+        model_name = re.sub(r"[^a-zA-Z0-9_]+|\s+", "_", model_name)
 
-    # move generated files to output_dir
-    shutil.copytree(
-        zip_extract_dir / "codegen", Path(args.output_dir), dirs_exist_ok=True
-    )
-    logging.debug(f"model files moved to {args.output_dir}")
-    delete_files([zip_path, zip_extract_dir])
-    temp_path.rmdir()
+        if sys.platform == "darwin":
+            macos_incompatibility_error = (
+                "MVP Compiler is not supported on macOS, please use Linux or Windows. "
+                "Other errors may occur due to this. The project will not build successfully."
+            )
+            print(macos_incompatibility_error)
+            logging.error(macos_incompatibility_error)
+            # MLSW-10582: generate all the files generated by mvp compiler with error macro
+            with open("./manifest.yaml", "r") as f:
+                files = yaml.safe_load(f)
 
-    model_name = model_path.stem
-    model_name = re.sub(r'[^a-zA-Z0-9_]+|\s+', '_', model_name)
-    generate_model_file(
-        "templates/", "sl_ml_model_model_name.h.jinja", model_name, args.output_dir
-    )
+            files += [
+                f"{model_name}_generated.h",
+                f"{model_name}_generated.parameters.h",
+                f"sl_ml_model_{model_name}.h",
+            ]
+
+            for file in files:
+                Path(args.output_dir / file).parent.mkdir(parents=True, exist_ok=True)
+                with open(args.output_dir / file, "w") as f:
+                    f.write(f"#error {macos_incompatibility_error}")
+        else:
+            temp_path = Path(args.input_dir).parent / "temp/"
+            temp_path.mkdir(exist_ok=True)
+            # args.output_dir = temp_path
+            zip_path = execute_compiler(model_path, board_platform, temp_path)
+            logging.debug(f"model compiled in archive: {zip_path}")
+
+            zip_extract_dir = extract_zip(zip_path)
+            logging.debug(f"archive extracted to {zip_extract_dir}")
+
+            # move generated files to output_dir
+            shutil.copytree(
+                zip_extract_dir / "codegen", Path(args.output_dir), dirs_exist_ok=True
+            )
+            logging.debug(f"model files moved to {args.output_dir}")
+            delete_files([zip_path, zip_extract_dir])
+            temp_path.rmdir()
+
+            generate_model_file(
+                "templates/",
+                "sl_ml_model_model_name.h.jinja",
+                model_name,
+                args.output_dir,
+            )
+    elif args.command == "upgrade":
+        # some command to upgrade
+        write_upgrade_result(args.result_file)
 
 
 if __name__ == "__main__":

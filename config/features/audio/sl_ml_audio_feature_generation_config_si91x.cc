@@ -1,4 +1,3 @@
-
 #include "ml/tflite_micro_model/tflite_model_parameters.hpp"
 #include "ml/tflite_micro_model/tflite_micro_logger.hpp"
 #include "sl_ml_audio_feature_generation_config_si91x.h"

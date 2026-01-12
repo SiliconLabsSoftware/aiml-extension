@@ -21,21 +21,43 @@
 #pragma once
 
 #include "sl_status.h"
+
+#if defined(SL_ML_ENABLE_SILABS_PROFILER)
+#include "sl_ml_silabs_profiler.h"
+#include "sl_ml_profiler_helper.h"
+#endif
+
+#if defined(SL_ML_ENABLE_DYNAMIC_MODEL_LOAD) && (SL_ML_ENABLE_DYNAMIC_MODEL_LOAD == 1)
+#define DYNAMIC_MODEL
+#endif
+
+#if !defined(DYNAMIC_MODEL)
 #include "{{ model_name }}_generated.h"
+#endif //DYNAMIC_MODEL
+
 #include "tflite_micro_model_config.h"
 
 using namespace npu_toolkit;
 
+// ml_silabs_profiler 
+#if defined(SL_ML_ENABLE_SILABS_PROFILER)
+sl::ml::SilabsProfiler slprofiler;
+static SLTfliteMicroModel {{ model_name | lower }}_model(&slprofiler);
+#else //SL_ML_ENABLE_SILABS_PROFILER
 static TfliteMicroModel {{ model_name | lower }}_model;
+#endif
+
 static sl_status_t {{ model_name | lower }}_model_status;
 
-uint8_t* {{ model_name | lower }}_model_flatbuffer = npu_toolkit_model;
+#if !defined(DYNAMIC_MODEL)
+const uint8_t* {{ model_name | lower }}_model_flatbuffer = npu_toolkit_model;
 const int {{ model_name | lower }}_model_flatbuffer_length = npu_toolkit_model_length;
 
 sl_status_t slx_ml_{{ model_name | lower }}_model_init(void) {
   {{ model_name | lower }}_model_status = load_tflite_micro_model({{ model_name | lower }}_model) ? SL_STATUS_OK : SL_STATUS_FAIL;
   return {{ model_name | lower }}_model_status;
 }
+#endif //DYNAMIC_MODEL
 
 sl_status_t slx_ml_{{ model_name | lower }}_model_run(void) {
   if ({{ model_name | lower }}_model_status != SL_STATUS_OK) {

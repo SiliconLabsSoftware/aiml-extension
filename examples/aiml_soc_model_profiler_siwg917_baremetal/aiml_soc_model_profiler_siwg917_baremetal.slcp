@@ -1,0 +1,84 @@
+project_name: aiml_soc_model_profiler_siwg917_baremetal
+label: AI/ML - SoC Model Profiler Baremetal for SiWG917
+description: >
+  This application profiles a ML model. The ML model is loaded as a byte array
+  which is generated from a Tensorflow tflite model file. Profiling is performed
+  by running one inference with the model.
+category: AI/ML Application
+filter:
+- name: "Device Type"
+  value: ["SoC"]
+- name: "MCU"
+  value: ["32-bit MCU"]
+- name: "Project Difficulty"
+  value: ["Advanced"]
+- name: "Capability"
+  value: ["Machine Learning"]
+package: aiml_app
+quality: production
+readme:
+- path: readme.md
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: model_profiler.h
+  - path: energy_profiling_utils.hpp
+source:
+- path: app.c
+- path: model_profiler.cc
+
+toolchain_settings:
+- option: gcc_compiler_option
+  value: -Wall -Werror
+- option: gcc_compiler_option
+  value: -Wno-unused-parameter
+- option: gcc_compiler_option
+  value: -mfp16-format=ieee
+- option: gcc_compiler_option
+  value: -Wno-missing-field-initializers
+- option: gcc_linker_option
+  value: -u _printf_float
+component:
+- id: cpp_support
+- id: adc_instance
+  instance: [channel_1]
+- id: si91x_memory_default_config
+- id: sleeptimer_si91x
+- id: syscalls
+- id: emlib_common
+- id: sl_main
+config_file:
+- path: tflite_models/tflite/model.tflite
+  directory: tflite
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_TFLITE_MICRO_ARENA_SIZE
+  value: 2048
+define:
+- name: SUPPORT_CPLUSPLUS
+  value: 1
+ui_hints:
+  highlight:
+  - path: readme.md
+    focus: true
+post_build:
+  path: ../util/postbuild_profile/wiseconnect_soc.slpb
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 2.2.0
+- id: wiseconnect3_sdk
+  vendor: silabs
+  version: 4.0.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2025.12.0

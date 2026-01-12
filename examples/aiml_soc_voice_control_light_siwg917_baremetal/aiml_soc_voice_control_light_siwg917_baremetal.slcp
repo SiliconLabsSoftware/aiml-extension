@@ -1,0 +1,104 @@
+project_name: aiml_soc_voice_control_light_siwg917_baremetal
+package: aiml_app
+quality: production
+label: AI/ML - SoC Voice Control Light Baremetal for SiWG917
+description: |
+  This application uses TensorFlow Lite for Microcontrollers to detect the spoken
+  words "on" and "off" from audio data recorded on the microphone.
+  The detected keywords are used to control an LED on the board.
+category: AI/ML Application
+filter:
+- name: Capability
+  value: [Machine Learning]
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+readme:
+- path: readme.md
+source:
+- path: voice_control_light.cc
+- path: recognize_commands.cc
+- path: audio_classifier_config.cc
+- path: app.cc
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: audio_classifier_config.h
+  - path: voice_control_light.h
+  - path: recognize_commands.h
+  - path: led_helper.hpp
+  - path: mic_helper.hpp
+toolchain_settings:
+- option: gcc_compiler_option
+  value: -Wall -Werror
+- option: gcc_compiler_option
+  value: -Wno-unused-parameter
+- option: gcc_compiler_option
+  value: -mfp16-format=ieee
+- option: gcc_compiler_option
+  value: -Wno-missing-field-initializers
+- option: gcc_linker_option
+  value: -u _printf_float
+component:
+- id: i2s_instance
+  instance: [i2s0]
+- id: si91x_memory_default_config
+- id: sl_si91x_led_917
+  instance: [led0]
+- id: sleeptimer_si91x
+- id: syscalls
+- id: cmsis_dsp
+- id: emlib_common
+- id: sl_main
+- id: cpp_support
+- id: ml_audio_feature_generation
+define:
+- name: SUPPORT_CPLUSPLUS
+  value: 1
+config_file:
+- path: tflite_models/tflite/keyword_spotting_on_off_v3.tflite
+  directory: tflite
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_TFLITE_MICRO_ARENA_SIZE
+  value: 2048
+- name: SL_I2S0_SCLK_PIN
+  value: 46
+- name: SL_I2S0_WSCLK_PIN
+  value: 47
+- name: SL_I2S0_DIN0_PIN
+  value: 48
+- name: RTE_I2S0_DIN0_PORT_ID
+  value: 2
+- name: RTE_I2S0_SCLK_PORT_ID
+  value: 2
+- name: RTE_I2S0_WSCLK_PORT_ID
+  value: 2
+ui_hints:
+  highlight:
+  - path: readme.md
+    focus: true
+post_build:
+- path: ../util/postbuild_profile/wiseconnect_soc.slpb
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 2.2.0
+- id: wiseconnect3_sdk
+  vendor: silabs
+  version: 4.0.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2025.12.0

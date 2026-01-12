@@ -1,0 +1,81 @@
+id: ml_silabs_profiler
+package: aiml
+label: Machine learning model profiler
+description: >
+  This component provides APIs to profile a model created for Silicon Labs devices with MVP accelarators.
+category: Machine Learning|Model Profiler
+quality: production
+metadata:
+  sbom:
+    license: MSLA
+provides:
+  - name: ml_silabs_profiler
+  - name: ml_profiler_implementation
+requires:
+  - name: toolchain_gcc
+    condition: [device_efx]
+  - name: cpp_support
+  - name: component_catalog
+  - name: sl_common
+    condition: [device_efx]
+  - name: tensorflow_lite_micro
+    condition: [device_efx]
+  - name: sleeptimer_si91x
+    condition: [device_si91x]
+  - name: nn_util
+    condition: [device_si91x]
+include:
+  - path: inc/utils/profiler
+    file_list:
+      - path: sl_ml_silabs_profiler.h
+      - path: sl_ml_profiler_interpreter.h
+      - path: sl_ml_profiler_debug_channel.h
+      - path: sl_ml_profiler_helper.h
+        condition: [device_si91x]
+  - path: inc/utils/profiler/debug_msg
+    file_list:
+      - path: sl_ml_start_session_packet.h
+      - path: sl_ml_end_session_packet.h
+      - path: sl_ml_start_event_packet.h
+      - path: sl_ml_end_event_packet.h
+      - path: sl_ml_start_track_packet.h
+      - path: sl_ml_end_track_packet.h
+      - path: sl_ml_counter_packet.h
+      - path: sl_ml_profiler_msg_id.h
+      - path: sl_tlv.h
+      - path: sl_ml_mcu_id.h
+      - path: sl_ml_accelerator_id.h
+      - path: uuid_embedded.h
+      - path: sl_ml_processor_id.h
+      - path: sl_ml_counter_unit_id.h
+  - path: inc/tflite
+    file_list:
+    - path: sl_tflite_micro_all_opcode_resolver.h
+source:
+  - path: src/utils/profiler/sl_ml_silabs_profiler.cc
+  - path: src/utils/profiler/sl_ml_profiler_debug_channel.c
+  - path: src/utils/profiler/sl_ml_profiler_model_metrics.cc
+  - path: src/utils/profiler/sl_ml_profiler_session_metrics.cc
+  - path: src/utils/profiler/sl_ml_profiler_output.cc
+  - path: src/utils/profiler/sl_ml_profiler_helper.cc
+    condition: [device_si91x]
+  - path: src/utils/profiler/debug_msg/sl_ml_start_session_packet.c
+  - path: src/utils/profiler/debug_msg/sl_ml_end_session_packet.c
+  - path: src/utils/profiler/debug_msg/sl_ml_start_event_packet.c
+  - path: src/utils/profiler/debug_msg/sl_ml_end_event_packet.c
+  - path: src/utils/profiler/debug_msg/sl_ml_start_track_packet.c
+  - path: src/utils/profiler/debug_msg/sl_ml_end_track_packet.c
+  - path: src/utils/profiler/debug_msg/sl_ml_counter_packet.c
+  - path: src/utils/profiler/debug_msg/uuid_embedded.c
+documentation:
+  docset: aiml
+  document: aiml/api/group-ml-model-profiler
+define:
+  - name: SL_ML_ENABLE_SILABS_PROFILER
+  # - name: SL_ML_ENABLE_ENERGY_PROFILING
+  - name: SL_BOARD_EFX
+    condition: [device_efx]
+  - name: SL_BOARD_SI91X
+    condition: [device_si91x]
+ui_hints:
+  visibility: never

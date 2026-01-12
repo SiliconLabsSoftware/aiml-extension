@@ -1,0 +1,90 @@
+project_name: aiml_soc_data_capture_efr32_baremetal
+package: aiml_app
+quality: production
+label: AI/ML - SoC Data Capture for EFR32 Baremetal
+description: >
+  This application captures data through IMU Sensors. The captured data
+  (Accelerometer, Gyrsocope,Orientation) is streamed over the JLINK Stream to
+  be used as a dataset for other data capturing apps.
+category: AI/ML Application
+filter:
+- name: Device Type
+  value:
+  - SoC
+- name: MCU
+  value:
+  - 32-bit MCU
+- name: Project Difficulty
+  value:
+  - Advanced
+- name: Capability
+  value:
+  - Machine Learning
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: data_capture.h
+  - path: imu.h
+  - path: constants.h
+source:
+- path: app.c
+- path: data_capture.cc
+- path: imu.cc
+component:
+- id: jlink_stream
+- id: sl_main
+- id: memory_manager
+- id: device_init
+- id: clock_manager
+- id: tensorflow_lite_micro
+- id: imu_driver
+- id: component_catalog
+- id: iostream_recommended_stream
+- id: simple_led
+  instance:
+  - led0
+  - led1
+- id: gpio
+- id: sleeptimer
+- id: iostream_retarget_stdio
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_BOARD_ENABLE_SENSOR_IMU
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition:
+  - iostream_usart
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition:
+  - iostream_uart
+- name: SL_HEAP_SIZE
+  value: 0x3000
+toolchain_settings:
+- option: gcc_compiler_option
+  value: -Wno-unused-parameter
+- option: gcc_compiler_option
+  value: -Wno-missing-field-initializers
+- option: gcc_linker_option
+  value: -u _printf_float
+tag:
+- hardware:component:led:2+
+- hardware:component:imu
+- hardware:device:ram:40
+- hardware:device:flash:100
+readme:
+- path: readme.md
+ui_hints:
+  highlight: readme.md
+
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 2.2.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2025.12.0

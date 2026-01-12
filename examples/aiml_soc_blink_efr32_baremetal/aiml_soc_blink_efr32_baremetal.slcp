@@ -1,0 +1,85 @@
+project_name: aiml_soc_blink_efr32_baremetal
+package: aiml_app
+quality: production
+label: AI/ML - SoC Blink Baremetal for EFR32
+description: >
+  This application demonstrates a model trained to replicate a sine function.
+  The model is continuously fed with values ranging from 0 to 2pi, and the
+  output of the model is used to control the intensity of an LED.
+category: AI/ML Application
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+- name: Capability
+  value: [Machine Learning]
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: timestamp.h
+source:
+- path: app.cc
+config_file:
+- path: tflite_models/tflite/blink.tflite
+  file_id: flatbuffer_file_id
+  directory: tflite
+component:
+- id: sl_main
+- id: memory_manager
+- id: device_init
+- id: clock_manager
+- id: tensorflow_lite_micro
+- id: iostream_recommended_stream
+- id: iostream_retarget_stdio
+- id: pwm
+  instance:
+  - led0
+- id: sleeptimer
+- id: tensorflow_debug_log_iostream
+- id: tensorflow_lite_micro_accelerated_kernels
+  condition: [device_compute_mvp]
+- id: tensorflow_lite_micro_optimized_kernels
+  condition: [device_compute_mvp]
+- id: tensorflow_lite_micro_optimized_kernels
+  condition: [device_compute_basic]
+define:
+- name: DEBUG_EFM
+- name: TF_LITE_STATIC_MEMORY
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_TFLITE_MICRO_ARENA_SIZE
+  value: 2048
+toolchain_settings:
+- option: gcc_compiler_option
+  value: -Wno-unused-parameter
+- option: gcc_compiler_option
+  value: -Wno-missing-field-initializers
+- option: gcc_linker_option
+  value: -u _printf_float
+readme:
+- path: readme.md
+ui_hints:
+  highlight: readme.md
+tag:
+- hardware:component:led:1+
+- hardware:device:ram:16
+- hardware:device:flash:160
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 2.2.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2025.12.0

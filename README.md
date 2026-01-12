@@ -1,34 +1,29 @@
-# Silicon Labs' AI/ML Extension for Simplicity SDK
+# ⚠️ Important Notice – Repository Not Intended for Direct Use
 
-[![Silicon Labs](./doc/images/silabs-logo.jpg)](https://www.silabs.com)
+This GitHub repository is published by **Silicon Labs** solely to support **public documentation URLs** that reference software release content.
 
-The Silicon Labs AI/ML extension for [Simplicity SDK](https://github.com/SiliconLabs/simplicity_sdk) provides an application programming interface (API) to enable power-efficient hardware acceleration for artificial intelligence (AI) and machine learning (ML) applications on Silicon Labs' Series 2 and SiWx917 family of parts.
+**Developers should NOT clone, fork, or otherwise use this repository as a means to obtain or manage Silicon Labs software.**
 
-## Documentation
+## Intended Use
 
-- [Developer Documentation](https://docs.silabs.com/machine-learning/latest)
-- Software Reference
-  - [Getting Started Guides](https://docs.silabs.com/machine-learning/latest/aiml-getting-started)
-  - [Examples](https://docs.silabs.com/machine-learning/latest/aiml-additional-topics/sample-apps)
-  - [Migration Guide](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/aiml-extension-setup)
-  - [API Reference](https://docs.silabs.com/machine-learning/latest/aiml-reference-guide)
-- Hardware Reference
-  - [EFR32xG24 Dev Kit Reference Manual](https://www.silabs.com/documents/public/reference-manuals/efr32xg24-rm.pdf)
-  - [SiWx917-DK2605A Dev Kit](https://www.silabs.com/development-tools/wireless/wi-fi/siwx917-dk2605a-wifi-6-bluetooth-le-soc-dev-kit?tab=overview)
-- User Guides
-  - [UG524: xG24 Dev Kit User's Guide](https://www.silabs.com/documents/public/user-guides/ug524-brd2601b-user-guide.pdf)
-  - [UG581: SiWx917 Dev Kit User's Guide](https://www.silabs.com/documents/public/user-guides/ug581-brd2605a-user-guide.pdf)
+- This repository exists only for references within documentation (and other sources) to share links to source files and directories in the released asset.
+- The structure, dependencies and content are **not guaranteed** to match officially supported software distributions.
 
-## Release Notes
+## Supported Method to Access Software
 
-- [v2.0.0-alpha](./doc/release-notes/v2.0.0-alpha.md)
-- [v2.0.1-alpha](./doc/release-notes/v2.0.1-alpha.md)
-- [v2.1.1 and beyond](https://docs.silabs.com/sisdk-release-notes/latest/sisdk-mc-learning-release-notes).
+To obtain and work with Silicon Labs software releases, customers must use one of these two access methods using **Silicon Labs supported tools**:
 
-## Contributing
+- **[SLT-CLI](https://www.silabs.com/software-and-tools/simplicity-studio/silicon-labs-tool) (v1.1.0+)** – a standalone command-line tool
+- **[Simplicity Installer](https://www.silabs.com/software-and-tools/simplicity-studio?tab=getting-started) (v1.1.0+)** – a graphical installer that integrates SLT-CLI functionality
 
-Please follow the [CONTRIBUTING](./.github/CONTRIBUTING.md) guideline.
+These tools ensure:
 
-## License
+- Correct software versions
+- Proper dependency management
+- Compatibility with supported devices and development workflows
 
-See the [LICENSE.md](./LICENSE.md) file for details.
+See the SLT documentation (<https://docs.silabs.com/simplicity-installer-slt/latest/slt-getting-started-slt-cli/first-time-installation-setup>) for step-by-step instructions on downloading the Simplicity SDK using slt-cli.
+
+## Disclaimer
+
+Silicon Labs does **not** provide support for software obtained by cloning or using this GitHub repository directly. Issues arising from use of this repository outside of the supported tools are not covered by Silicon Labs support.
