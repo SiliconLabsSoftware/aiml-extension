@@ -26,7 +26,7 @@ source:
   - path: model_profiler.cc
 sdk_extension:
   - id: aiml
-    version: 2.1.2
+    version: 2.1.3
 component:
   - id: clock_manager
   - id: memory_manager

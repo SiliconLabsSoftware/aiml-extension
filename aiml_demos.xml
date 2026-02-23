@@ -4,7 +4,7 @@
     <property key="demos.blurb" value="AI/ML - Blink Demo for xG24"/>
     <property key="core.partCompatibility" value=".*efr32.g24.*"/>
     <property key="core.boardCompatibility" value="brd2601b"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_blink.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2601b/ml_blink.s37"/>
     <property key="core.readmeFiles" value="examples/ml_blink/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -19,7 +19,7 @@
     <property key="demos.blurb" value="AI/ML - Magic Wand Demo for xG24"/>
     <property key="core.partCompatibility" value=".*efr32.g24.*"/>
     <property key="core.boardCompatibility" value="brd2601b"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_magic_wand.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2601b/ml_magic_wand.s37"/>
     <property key="core.readmeFiles" value="examples/ml_magic_wand/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -33,7 +33,7 @@
     <property key="demos.blurb" value="AI/ML - Model Profiler Demo for xG24"/>
     <property key="core.partCompatibility" value=".*efr32.g24.*"/>
     <property key="core.boardCompatibility" value="brd2601b"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_model_profiler.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2601b/ml_model_profiler.s37"/>
     <property key="core.readmeFiles" value="examples/ml_model_profiler/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -48,7 +48,7 @@
     <property key="demos.blurb" value="AI/ML - Voice Control Light Demo for xG24"/>
     <property key="core.partCompatibility" value=".*efr32.g24.*"/>
     <property key="core.boardCompatibility" value="brd2601b"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_voice_control_light.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2601b/ml_voice_control_light.s37"/>
     <property key="core.readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -63,7 +63,7 @@
     <property key="demos.blurb" value="AI/ML - Audio Classifier Demo for xG24"/>
     <property key="core.partCompatibility" value=".*efr32.g24.*"/>
     <property key="core.boardCompatibility" value="brd2601b"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_audio_classifier.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2601b/ml_audio_classifier.s37"/>
     <property key="core.readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -78,7 +78,7 @@
     <property key="demos.blurb" value="AI/ML - Image Classifier Demo for xG24"/>
     <property key="core.partCompatibility" value=".*efr32.g24.*"/>
     <property key="core.boardCompatibility" value="brd2601b"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_image_classifier.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2601b/ml_image_classifier.s37"/>
     <property key="core.readmeFiles" value="examples/ml_image_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -94,7 +94,7 @@
     <property key="demos.blurb" value="AI/ML - Zigbee 3.0 Switch with Voice for xG24"/>
     <property key="core.partCompatibility" value=".*efr32.g24.*"/>
     <property key="core.boardCompatibility" value="brd2601b"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2601b/ml_zigbee_z3_switch_with_voice.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2601b/ml_zigbee_z3_switch_with_voice.s37"/>
     <property key="core.readmeFiles" value="examples/ml_zigbee_z3_switch_with_voice/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -117,7 +117,7 @@
     <property key="demos.blurb" value="AI/ML - Blink Demo for xG26"/>
     <property key="core.partCompatibility" value=".*efr32.g26.*"/>
     <property key="core.boardCompatibility" value="brd2608a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_blink.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2608a/ml_blink.s37"/>
     <property key="core.readmeFiles" value="examples/ml_blink/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -132,7 +132,7 @@
     <property key="demos.blurb" value="AI/ML - Magic Wand Demo for xG26"/>
     <property key="core.partCompatibility" value=".*efr32.g26.*"/>
     <property key="core.boardCompatibility" value="brd2608a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_magic_wand.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2608a/ml_magic_wand.s37"/>
     <property key="core.readmeFiles" value="examples/ml_magic_wand/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -146,7 +146,7 @@
     <property key="demos.blurb" value="AI/ML - Model Profiler Demo for xG26"/>
     <property key="core.partCompatibility" value=".*efr32.g26.*"/>
     <property key="core.boardCompatibility" value="brd2608a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_model_profiler.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2608a/ml_model_profiler.s37"/>
     <property key="core.readmeFiles" value="examples/ml_model_profiler/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -161,7 +161,7 @@
     <property key="demos.blurb" value="AI/ML - Voice Control Light Demo for xG26"/>
     <property key="core.partCompatibility" value=".*efr32.g26.*"/>
     <property key="core.boardCompatibility" value="brd2608a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_voice_control_light.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2608a/ml_voice_control_light.s37"/>
     <property key="core.readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -176,7 +176,7 @@
     <property key="demos.blurb" value="AI/ML - Audio Classifier Demo for xG26"/>
     <property key="core.partCompatibility" value=".*efr32.g26.*"/>
     <property key="core.boardCompatibility" value="brd2608a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_audio_classifier.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2608a/ml_audio_classifier.s37"/>
     <property key="core.readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -191,7 +191,7 @@
     <property key="demos.blurb" value="AI/ML - Image Classifier Demo for xG26"/>
     <property key="core.partCompatibility" value=".*efr32.g26.*"/>
     <property key="core.boardCompatibility" value="brd2608a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_image_classifier.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2608a/ml_image_classifier.s37"/>
     <property key="core.readmeFiles" value="examples/ml_image_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -207,7 +207,7 @@
     <property key="demos.blurb" value="AI/ML - Zigbee 3.0 Switch with Voice for xG26"/>
     <property key="core.partCompatibility" value=".*efr32.g26.*"/>
     <property key="core.boardCompatibility" value="brd2608a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2608a/ml_zigbee_z3_switch_with_voice.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2608a/ml_zigbee_z3_switch_with_voice.s37"/>
     <property key="core.readmeFiles" value="examples/ml_zigbee_z3_switch_with_voice/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -230,7 +230,7 @@
     <property key="demos.blurb" value="AI/ML - Blink Demo for SiWx917"/>
     <property key="core.partCompatibility" value=".*"/>
     <property key="core.boardCompatibility" value="brd2605a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_blink_si91x.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2605a/ml_blink_si91x.s37"/>
     <property key="core.readmeFiles" value="examples/ml_blink_si91x/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -245,7 +245,7 @@
     <property key="demos.blurb" value="AI/ML - Model Profiler Demo for SiWx917"/>
     <property key="core.partCompatibility" value=".*"/>
     <property key="core.boardCompatibility" value="brd2605a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_model_profiler_si91x.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2605a/ml_model_profiler_si91x.s37"/>
     <property key="core.readmeFiles" value="examples/ml_model_profiler_si91x/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -260,7 +260,7 @@
     <property key="demos.blurb" value="AI/ML - Voice Control Light Demo for SiWx917"/>
     <property key="core.partCompatibility" value=".*"/>
     <property key="core.boardCompatibility" value="brd2605a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_voice_control_light_si91x.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2605a/ml_voice_control_light_si91x.s37"/>
     <property key="core.readmeFiles" value="examples/ml_voice_control_light/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -275,7 +275,7 @@
     <property key="demos.blurb" value="AI/ML - Magic Wand Demo for SiWx917"/>
     <property key="core.partCompatibility" value=".*"/>
 		<property key="core.boardCompatibility" value="brd2605a"/>
-		<property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_magic_wand_si91x.s37"/>
+		<property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2605a/ml_magic_wand_si91x.s37"/>
     <property key="core.readmeFiles" value="examples/ml_magic_wand_si91x/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
 		<property key="core.quality" value="PRODUCTION"/>
@@ -289,7 +289,7 @@
     <property key="demos.blurb" value="AI/ML - Audio Classifier Demo for SiWx917"/>
     <property key="core.partCompatibility" value=".*"/>
     <property key="core.boardCompatibility" value="brd2605a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2605a/ml_audio_classifier_si91x.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2605a/ml_audio_classifier_si91x.s37"/>
     <property key="core.readmeFiles" value="examples/ml_audio_classifier/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -304,7 +304,7 @@
     <property key="demos.blurb" value="AI/ML - Blink Demo for xG28"/>
     <property key="core.partCompatibility" value=".*efr32.g28.*"/>
     <property key="core.boardCompatibility" value="brd2705a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2705a/ml_blink.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2705a/ml_blink.s37"/>
     <property key="core.readmeFiles" value="examples/ml_blink/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>
@@ -319,7 +319,7 @@
     <property key="demos.blurb" value="AI/ML - Model Profiler Demo for xG28"/>
     <property key="core.partCompatibility" value=".*efr32.g28.*"/>
     <property key="core.boardCompatibility" value="brd2705a"/>
-    <property key="demos.imageFile" value="asset://extension.aiml_2.1.2/demos/brd2705a/ml_model_profiler.s37"/>
+    <property key="demos.imageFile" value="asset://extension.aiml_2.1.3/demos/brd2705a/ml_model_profiler.s37"/>
     <property key="core.readmeFiles" value="examples/ml_model_profiler/readme.md"/>
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning"/>
     <property key="core.quality" value="PRODUCTION"/>

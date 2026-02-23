@@ -1,5 +1,5 @@
 id: aiml
-version: 2.1.2
+version: 2.1.3
 description: >
   AI/ML extension for Simplicity SDK
 label: Silicon Labs AI/ML
@@ -11,4 +11,4 @@ component_path:
   - path: component
 documentation:
   - docset: machine-learning
-    version: 2.1.2
+    version: 2.1.3

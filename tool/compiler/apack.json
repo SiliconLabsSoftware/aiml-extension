@@ -1,0 +1,17 @@
+{
+  "id": "aiml.mvp-compiler",
+  "label": "MVP Compiler Advanced Configurator Adapter Pack",
+  "description": "MVP Compiler Advanced Configurator Adapter Pack Definition",
+  "path": ["."],
+  "requiredFeatureLevel": "apack.core:8",
+  "featureLevel": 1,
+  "uc.triggerExtension": "tflite",
+  "function": {
+    "uc_generate": {
+      "cmd": "$(python) compiler.py generate ${contentFolder} ${generationOutput} ${partOpn}"
+    },
+    "uc_upgrade": {
+      "cmd": "$(python) compiler.py upgrade ${tempContentFolder} ${results}"
+    }
+  }
+}

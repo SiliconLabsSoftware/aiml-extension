@@ -30,7 +30,7 @@ source:
   - path: predictor.cc
 sdk_extension:
   - id: aiml
-    version: 2.1.2
+    version: 2.1.3
 component:
   - id: sl_main
   - id: memory_manager

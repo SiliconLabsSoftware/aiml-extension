@@ -107,6 +107,6 @@ sdk_extension:
   - id: wiseconnect3_sdk
     version: 3.5.2
   - id: aiml
-    version: 2.1.2
+    version: 2.1.3
 post_build:
   - path: ../../util/postbuild_profile/wiseconnect_soc.slpb

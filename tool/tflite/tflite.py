@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import yaml
 import argparse
 from string import Template
 import re
@@ -8,10 +9,15 @@ from pathlib import Path
 
 # Patch site-packages to find numpy
 import jinja2
+
 if sys.platform.startswith("win"):
-  site_packages_path = (Path(jinja2.__file__).parent / "../../../ext-site-packages").resolve()
+    site_packages_path = (
+        Path(jinja2.__file__).parent / "../../../ext-site-packages"
+    ).resolve()
 else:
-  site_packages_path = (Path(jinja2.__file__).parent / "../../../../ext-site-packages").resolve()
+    site_packages_path = (
+        Path(jinja2.__file__).parent / "../../../../ext-site-packages"
+    ).resolve()
 if site_packages_path.exists() and str(site_packages_path) not in sys.path:
     sys.path.insert(0, str(site_packages_path))
 
@@ -85,226 +91,235 @@ The following dictionary has been created using the BuiltinOperator enum definin
 function names defined in the MicroMutableOpResolver object, see micro_mutable_op_resolver.h.
 """
 opcode_dict = {
-    BuiltinOperator.ABS: 'AddAbs',
-    BuiltinOperator.ADD: 'AddAdd',
-    BuiltinOperator.ADD_N: 'AddAddN',
-    BuiltinOperator.ARG_MAX: 'AddArgMax',
-    BuiltinOperator.ARG_MIN: 'AddArgMin',
-    BuiltinOperator.ASSIGN_VARIABLE: 'AddAssignVariable',
-    BuiltinOperator.AVERAGE_POOL_2D: 'AddAveragePool2D',
-    BuiltinOperator.BATCH_TO_SPACE_ND: 'AddBatchToSpaceNd',
-    BuiltinOperator.BROADCAST_ARGS: 'AddBroadcastArgs',
-    BuiltinOperator.BROADCAST_TO: 'AddBroadcastTo',
-    BuiltinOperator.CALL_ONCE: 'AddCallOnce',
-    BuiltinOperator.CAST: 'AddCast',
-    BuiltinOperator.CEIL: 'AddCeil',
-#    AddCircularBuffer (custom)
-    BuiltinOperator.CONCATENATION: 'AddConcatenation',
-    BuiltinOperator.CONV_2D: 'AddConv2D',
-    BuiltinOperator.COS: 'AddCos',
-    BuiltinOperator.CUMSUM: 'AddCumSum',
-    BuiltinOperator.DEPTH_TO_SPACE: 'AddDepthToSpace',
-    BuiltinOperator.DEPTHWISE_CONV_2D: 'AddDepthwiseConv2D',
-    BuiltinOperator.DEQUANTIZE: 'AddDequantize',
-#    AddDetectionPostprocess (custom)
-    BuiltinOperator.ELU: 'AddElu',
-    BuiltinOperator.EQUAL: 'AddEqual',
-#    AddEthosU (custom)
-    BuiltinOperator.EXP: 'AddExp',
-    BuiltinOperator.EXPAND_DIMS: 'AddExpandDims',
-    BuiltinOperator.FILL: 'AddFill',
-    BuiltinOperator.FLOOR: 'AddFloor',
-    BuiltinOperator.FLOOR_DIV: 'AddFloorDiv',
-    BuiltinOperator.FLOOR_MOD: 'AddFloorMod',
-    BuiltinOperator.FULLY_CONNECTED: 'AddFullyConnected',
-    BuiltinOperator.GATHER: 'AddGather',
-    BuiltinOperator.GATHER_ND: 'AddGatherNd',
-    BuiltinOperator.GREATER: 'AddGreater',
-    BuiltinOperator.GREATER_EQUAL: 'AddGreaterEqual',
-    BuiltinOperator.HARD_SWISH: 'AddHardSwish',
-    BuiltinOperator.IF: 'AddIf',
-    BuiltinOperator.L2_NORMALIZATION: 'AddL2Normalization',
-    BuiltinOperator.L2_POOL_2D: 'AddL2Pool2D',
-    BuiltinOperator.LEAKY_RELU: 'AddLeakyRelu',
-    BuiltinOperator.LESS: 'AddLess',
-    BuiltinOperator.LESS_EQUAL: 'AddLessEqual',
-    BuiltinOperator.LOG: 'AddLog',
-    BuiltinOperator.LOGICAL_AND: 'AddLogicalAnd',
-    BuiltinOperator.LOGICAL_NOT: 'AddLogicalNot',
-    BuiltinOperator.LOGICAL_OR: 'AddLogicalOr',
-    BuiltinOperator.LOGISTIC: 'AddLogistic',
-    BuiltinOperator.MAX_POOL_2D: 'AddMaxPool2D',
-    BuiltinOperator.MAXIMUM: 'AddMaximum',
-    BuiltinOperator.MEAN: 'AddMean',
-    BuiltinOperator.MINIMUM: 'AddMinimum',
-    BuiltinOperator.MIRROR_PAD: 'AddMirrorPad',
-    BuiltinOperator.MUL: 'AddMul',
-    BuiltinOperator.NEG: 'AddNeg',
-    BuiltinOperator.NOT_EQUAL: 'AddNotEqual',
-    BuiltinOperator.PACK: 'AddPack',
-    BuiltinOperator.PAD: 'AddPad',
-    BuiltinOperator.PADV2: 'AddPadV2',
-    BuiltinOperator.PRELU: 'AddPrelu',
-    BuiltinOperator.QUANTIZE: 'AddQuantize',
-    BuiltinOperator.READ_VARIABLE: 'AddReadVariable',
-    BuiltinOperator.REDUCE_MAX: 'AddReduceMax',
-    BuiltinOperator.RELU: 'AddRelu',
-    BuiltinOperator.RELU6: 'AddRelu6',
-    BuiltinOperator.RESHAPE: 'AddReshape',
-    BuiltinOperator.RESIZE_BILINEAR: 'AddResizeBilinear',
-    BuiltinOperator.RESIZE_NEAREST_NEIGHBOR: 'AddResizeNearestNeighbor',
-    BuiltinOperator.ROUND: 'AddRound',
-    BuiltinOperator.RSQRT: 'AddRsqrt',
-    BuiltinOperator.SHAPE: 'AddShape',
-    BuiltinOperator.SIN: 'AddSin',
-    BuiltinOperator.SLICE: 'AddSlice',
-    BuiltinOperator.SOFTMAX: 'AddSoftmax',
-    BuiltinOperator.SPACE_TO_BATCH_ND: 'AddSpaceToBatchNd',
-    BuiltinOperator.SPACE_TO_DEPTH: 'AddSpaceToDepth',
-    BuiltinOperator.SPLIT: 'AddSplit',
-    BuiltinOperator.SPLIT_V: 'AddSplitV',
-    BuiltinOperator.SQRT: 'AddSqrt',
-    BuiltinOperator.SQUARE: 'AddSquare',
-    BuiltinOperator.SQUEEZE: 'AddSqueeze',
-    BuiltinOperator.STRIDED_SLICE: 'AddStridedSlice',
-    BuiltinOperator.SUB: 'AddSub',
-    BuiltinOperator.SVDF: 'AddSvdf',
-    BuiltinOperator.TANH: 'AddTanh',
-    BuiltinOperator.TRANSPOSE: 'AddTranspose',
-    BuiltinOperator.TRANSPOSE_CONV: 'AddTransposeConv',
-    BuiltinOperator.UNPACK: 'AddUnpack',
-    BuiltinOperator.VAR_HANDLE: 'AddVarHandle',
-    BuiltinOperator.WHILE: 'AddWhile',
-    BuiltinOperator.ZEROS_LIKE: 'AddZerosLike',
+    BuiltinOperator.ABS: "AddAbs",
+    BuiltinOperator.ADD: "AddAdd",
+    BuiltinOperator.ADD_N: "AddAddN",
+    BuiltinOperator.ARG_MAX: "AddArgMax",
+    BuiltinOperator.ARG_MIN: "AddArgMin",
+    BuiltinOperator.ASSIGN_VARIABLE: "AddAssignVariable",
+    BuiltinOperator.AVERAGE_POOL_2D: "AddAveragePool2D",
+    BuiltinOperator.BATCH_TO_SPACE_ND: "AddBatchToSpaceNd",
+    BuiltinOperator.BROADCAST_ARGS: "AddBroadcastArgs",
+    BuiltinOperator.BROADCAST_TO: "AddBroadcastTo",
+    BuiltinOperator.CALL_ONCE: "AddCallOnce",
+    BuiltinOperator.CAST: "AddCast",
+    BuiltinOperator.CEIL: "AddCeil",
+    #    AddCircularBuffer (custom)
+    BuiltinOperator.CONCATENATION: "AddConcatenation",
+    BuiltinOperator.CONV_2D: "AddConv2D",
+    BuiltinOperator.COS: "AddCos",
+    BuiltinOperator.CUMSUM: "AddCumSum",
+    BuiltinOperator.DEPTH_TO_SPACE: "AddDepthToSpace",
+    BuiltinOperator.DEPTHWISE_CONV_2D: "AddDepthwiseConv2D",
+    BuiltinOperator.DEQUANTIZE: "AddDequantize",
+    #    AddDetectionPostprocess (custom)
+    BuiltinOperator.ELU: "AddElu",
+    BuiltinOperator.EQUAL: "AddEqual",
+    #    AddEthosU (custom)
+    BuiltinOperator.EXP: "AddExp",
+    BuiltinOperator.EXPAND_DIMS: "AddExpandDims",
+    BuiltinOperator.FILL: "AddFill",
+    BuiltinOperator.FLOOR: "AddFloor",
+    BuiltinOperator.FLOOR_DIV: "AddFloorDiv",
+    BuiltinOperator.FLOOR_MOD: "AddFloorMod",
+    BuiltinOperator.FULLY_CONNECTED: "AddFullyConnected",
+    BuiltinOperator.GATHER: "AddGather",
+    BuiltinOperator.GATHER_ND: "AddGatherNd",
+    BuiltinOperator.GREATER: "AddGreater",
+    BuiltinOperator.GREATER_EQUAL: "AddGreaterEqual",
+    BuiltinOperator.HARD_SWISH: "AddHardSwish",
+    BuiltinOperator.IF: "AddIf",
+    BuiltinOperator.L2_NORMALIZATION: "AddL2Normalization",
+    BuiltinOperator.L2_POOL_2D: "AddL2Pool2D",
+    BuiltinOperator.LEAKY_RELU: "AddLeakyRelu",
+    BuiltinOperator.LESS: "AddLess",
+    BuiltinOperator.LESS_EQUAL: "AddLessEqual",
+    BuiltinOperator.LOG: "AddLog",
+    BuiltinOperator.LOGICAL_AND: "AddLogicalAnd",
+    BuiltinOperator.LOGICAL_NOT: "AddLogicalNot",
+    BuiltinOperator.LOGICAL_OR: "AddLogicalOr",
+    BuiltinOperator.LOGISTIC: "AddLogistic",
+    BuiltinOperator.MAX_POOL_2D: "AddMaxPool2D",
+    BuiltinOperator.MAXIMUM: "AddMaximum",
+    BuiltinOperator.MEAN: "AddMean",
+    BuiltinOperator.MINIMUM: "AddMinimum",
+    BuiltinOperator.MIRROR_PAD: "AddMirrorPad",
+    BuiltinOperator.MUL: "AddMul",
+    BuiltinOperator.NEG: "AddNeg",
+    BuiltinOperator.NOT_EQUAL: "AddNotEqual",
+    BuiltinOperator.PACK: "AddPack",
+    BuiltinOperator.PAD: "AddPad",
+    BuiltinOperator.PADV2: "AddPadV2",
+    BuiltinOperator.PRELU: "AddPrelu",
+    BuiltinOperator.QUANTIZE: "AddQuantize",
+    BuiltinOperator.READ_VARIABLE: "AddReadVariable",
+    BuiltinOperator.REDUCE_MAX: "AddReduceMax",
+    BuiltinOperator.RELU: "AddRelu",
+    BuiltinOperator.RELU6: "AddRelu6",
+    BuiltinOperator.RESHAPE: "AddReshape",
+    BuiltinOperator.RESIZE_BILINEAR: "AddResizeBilinear",
+    BuiltinOperator.RESIZE_NEAREST_NEIGHBOR: "AddResizeNearestNeighbor",
+    BuiltinOperator.ROUND: "AddRound",
+    BuiltinOperator.RSQRT: "AddRsqrt",
+    BuiltinOperator.SHAPE: "AddShape",
+    BuiltinOperator.SIN: "AddSin",
+    BuiltinOperator.SLICE: "AddSlice",
+    BuiltinOperator.SOFTMAX: "AddSoftmax",
+    BuiltinOperator.SPACE_TO_BATCH_ND: "AddSpaceToBatchNd",
+    BuiltinOperator.SPACE_TO_DEPTH: "AddSpaceToDepth",
+    BuiltinOperator.SPLIT: "AddSplit",
+    BuiltinOperator.SPLIT_V: "AddSplitV",
+    BuiltinOperator.SQRT: "AddSqrt",
+    BuiltinOperator.SQUARE: "AddSquare",
+    BuiltinOperator.SQUEEZE: "AddSqueeze",
+    BuiltinOperator.STRIDED_SLICE: "AddStridedSlice",
+    BuiltinOperator.SUB: "AddSub",
+    BuiltinOperator.SVDF: "AddSvdf",
+    BuiltinOperator.TANH: "AddTanh",
+    BuiltinOperator.TRANSPOSE: "AddTranspose",
+    BuiltinOperator.TRANSPOSE_CONV: "AddTransposeConv",
+    BuiltinOperator.UNPACK: "AddUnpack",
+    BuiltinOperator.VAR_HANDLE: "AddVarHandle",
+    BuiltinOperator.WHILE: "AddWhile",
+    BuiltinOperator.ZEROS_LIKE: "AddZerosLike",
 }
 
+
 def sanitize_filename(name):
-  # Strip invalid characters
-  name = re.sub(r'[^a-zA-Z0-9_]', '', name)
-  # C variables can't start with a number
-  name = name.lstrip('0123456789')
-  return name
+    # Strip invalid characters
+    name = re.sub(r"[^a-zA-Z0-9_]", "", name)
+    # C variables can't start with a number
+    name = name.lstrip("0123456789")
+    return name
 
 
 def find_first_tflite_file(input_dir: Path):
-  '''
-  Return the alphabetically sorted first tflite filename and content
-  '''
-  candidates = sorted(input_dir.glob("**/*.tflite"))
-  if not candidates:
-    print("tflite.py INFO: No tflite file found - exiting.")
-    sys.exit(0)
+    """
+    Return the alphabetically sorted first tflite filename and content
+    """
+    candidates = sorted(input_dir.glob("**/*.tflite"))
+    if not candidates:
+        print("tflite.py INFO: No tflite file found - exiting.")
+        sys.exit(0)
 
-  tflite_file = candidates[0]
-  if 1 < len(candidates):
-    listing = "\n- ".join(str(cand) for cand in candidates)
-    print(f"tflite.py WARNING: Multiple tflite files found:\n- {listing}")
-    print(f"Defaulting to converting {tflite_file}")
+    tflite_file = candidates[0]
+    if 1 < len(candidates):
+        listing = "\n- ".join(str(cand) for cand in candidates)
+        print(f"tflite.py WARNING: Multiple tflite files found:\n- {listing}")
+        print(f"Defaulting to converting {tflite_file}")
 
-  with open(tflite_file, "rb") as fd:
-    data = fd.read()
+    with open(tflite_file, "rb") as fd:
+        data = fd.read()
 
-  return tflite_file.stem, data
+    return tflite_file.stem, data
+
 
 def generate_c_array(buf):
-  arr = ''
-  for i, ch in enumerate(buf):
-    if (i % 12) == 0:
-      arr += '\n  '
-    arr += '0x{:02x}, '.format(ch)
+    arr = ""
+    for i, ch in enumerate(buf):
+        if (i % 12) == 0:
+            arr += "\n  "
+        arr += "0x{:02x}, ".format(ch)
 
-  return arr.lstrip().rstrip(', ')
+    return arr.lstrip().rstrip(", ")
+
 
 def opcode_parse_opcode(opcode):
-  if opcode.CustomCode() is not None:
-    opcode_val = opcode.CustomCode()
-  else:
-    opcode_val = opcode.DeprecatedBuiltinCode()
-    if opcode_val == BuiltinOperator.PLACEHOLDER_FOR_GREATER_OP_CODES:
-      opcode_val = opcode.BuiltinCode()
+    if opcode.CustomCode() is not None:
+        opcode_val = opcode.CustomCode()
+    else:
+        opcode_val = opcode.DeprecatedBuiltinCode()
+        if opcode_val == BuiltinOperator.PLACEHOLDER_FOR_GREATER_OP_CODES:
+            opcode_val = opcode.BuiltinCode()
 
-  if opcode_val in opcode_dict.keys():
-    opcode_func = opcode_dict[opcode_val]
-    opcode_entry = {opcode_val: opcode_func}
-  else:
-    print(f"tflite.py WARNING: An unknown operator with code value={opcode_val} has been discovered. It will not be automatic initialized.")
-    opcode_entry = {-1: "UndefinedOp"}
-  return opcode_entry
+    if opcode_val in opcode_dict.keys():
+        opcode_func = opcode_dict[opcode_val]
+        opcode_entry = {opcode_val: opcode_func}
+    else:
+        print(
+            f"tflite.py WARNING: An unknown operator with code value={opcode_val} has been discovered. It will not be automatic initialized."
+        )
+        opcode_entry = {-1: "UndefinedOp"}
+    return opcode_entry
+
 
 def opcode_parse_model(model):
-  opcodes = {}
-  for index in range(model.OperatorCodesLength()):
-    opcode = model.OperatorCodes(index)
-    opcodes.update(opcode_parse_opcode(opcode))
-  return opcodes
+    opcodes = {}
+    for index in range(model.OperatorCodesLength()):
+        opcode = model.OperatorCodes(index)
+        opcodes.update(opcode_parse_opcode(opcode))
+    return opcodes
+
 
 def generate_c_type(value):
-  if type(value) is list:
-        c_list =[]
+    if type(value) is list:
+        c_list = []
         for item in value:
-          c_list.append(generate_c_type(item))
-        value = "{" + ', '.join(c_list) + "}"
-  elif type(value) == str:
-    value = f'"{value}"'
-  elif type(value) == bool:
-    value = str(value).lower()
-  elif type(value) == float:
-    value = str(value) + "f"
-  return value
+            c_list.append(generate_c_type(item))
+        value = "{" + ", ".join(c_list) + "}"
+    elif type(value) == str:
+        value = f'"{value}"'
+    elif type(value) == bool:
+        value = str(value).lower()
+    elif type(value) == float:
+        value = str(value) + "f"
+    return value
+
 
 def generate_files(input_dir: Path, output_dir: Path):
-  model_name, buf = find_first_tflite_file(input_dir)
+    model_name, buf = find_first_tflite_file(input_dir)
 
-  # Generate model data
-  props = {
-    'model_name': model_name,
-    'data': generate_c_array(buf),
-    'data_len': len(buf),
-  }
-  tc = Template(template_model_data_c)
-  model_data_c = tc.substitute(**props)
+    # Generate model data
+    props = {
+        "model_name": model_name,
+        "data": generate_c_array(buf),
+        "data_len": len(buf),
+    }
+    tc = Template(template_model_data_c)
+    model_data_c = tc.substitute(**props)
 
-  # Generate OP code resolver
-  opcodes = {}
-  model = Model.GetRootAsModel(buf)
-  opcodes.update(opcode_parse_model(model))
-  opcode_len = len(opcodes)
-  opcode_str = ''
-  for opcode_key in opcodes.keys():
-    if opcode_key != BuiltinOperator.CUSTOM:
-      opcode_str += f"opcode_resolver.{opcodes[opcode_key]}(); \\\n"
-  tm = Template(template_opcode_resolver_h)
-  opcode_data = tm.substitute({'data_len':str(opcode_len), 'data':opcode_str})
+    # Generate OP code resolver
+    opcodes = {}
+    model = Model.GetRootAsModel(buf)
+    opcodes.update(opcode_parse_model(model))
+    opcode_len = len(opcodes)
+    opcode_str = ""
+    for opcode_key in opcodes.keys():
+        if opcode_key != BuiltinOperator.CUSTOM:
+            opcode_str += f"opcode_resolver.{opcodes[opcode_key]}(); \\\n"
+    tm = Template(template_opcode_resolver_h)
+    opcode_data = tm.substitute({"data_len": str(opcode_len), "data": opcode_str})
 
-  # Extract model parameters
-  parameter_defines = ''
-  try:
-    loaded_model_params = TfliteModelParameters.load_from_tflite_flatbuffer(buf)
-  except:
-    loaded_model_params = {}
-  if loaded_model_params:
-    param_define_t = Template(template_model_parameter_single)
-    for key, value in sorted(loaded_model_params.items()):
-      # Ensure valid C code:
-      c_value = generate_c_type(value)
-      props = {
-        'config_key': key.replace('.', '_').upper(),
-        'config_val': c_value,
-      }
-      parameter_defines += param_define_t.substitute(**props)
-    parameter_defines += '\n'
+    # Extract model parameters
+    parameter_defines = ""
+    try:
+        loaded_model_params = TfliteModelParameters.load_from_tflite_flatbuffer(buf)
+    except:
+        loaded_model_params = {}
+    if loaded_model_params:
+        param_define_t = Template(template_model_parameter_single)
+        for key, value in sorted(loaded_model_params.items()):
+            # Ensure valid C code:
+            c_value = generate_c_type(value)
+            props = {
+                "config_key": key.replace(".", "_").upper(),
+                "config_val": c_value,
+            }
+            parameter_defines += param_define_t.substitute(**props)
+        parameter_defines += "\n"
 
-  with open(Path(output_dir, 'sl_tflite_micro_model.h'), 'w') as fd:
-    fd.write(model_data_h)
-  with open(Path(output_dir, 'sl_tflite_micro_model.c'), 'w') as fd:
-    fd.write(model_data_c)
-  with open(Path(output_dir, 'sl_tflite_micro_opcode_resolver.h'), 'w') as fd:
-    fd.write(opcode_data)
-  # Only emit this file if model parameters are available
-  if parameter_defines:
-    tp = Template(template_model_parameters_h)
-    with open(Path(output_dir, 'sl_tflite_micro_model_parameters.h'), 'w') as fd:
-      fd.write(tp.substitute(data=(parameter_defines), model_name=model_name))
+    with open(Path(output_dir, "sl_tflite_micro_model.h"), "w") as fd:
+        fd.write(model_data_h)
+    with open(Path(output_dir, "sl_tflite_micro_model.c"), "w") as fd:
+        fd.write(model_data_c)
+    with open(Path(output_dir, "sl_tflite_micro_opcode_resolver.h"), "w") as fd:
+        fd.write(opcode_data)
+    # Only emit this file if model parameters are available
+    if parameter_defines:
+        tp = Template(template_model_parameters_h)
+        with open(Path(output_dir, "sl_tflite_micro_model_parameters.h"), "w") as fd:
+            fd.write(tp.substitute(data=(parameter_defines), model_name=model_name))
+
 
 def get_board_platform(part_number: str) -> str:
     """select platform value based on part number"""
@@ -318,18 +333,67 @@ def get_board_platform(part_number: str) -> str:
         sys.exit(1)
     return board_platform
 
-def entry():
-  parser = argparse.ArgumentParser(description='TensorFlow Lite flatbuffer to C converter.')
-  parser.add_argument('-i', required=True, type=Path, help='Input directory containing .tflite files')
-  parser.add_argument('-o', required=True, type=Path, help='Output directory to populate with serialized content.')
-  parser.add_argument('-p', required=True, type=str, help='Part Number')
-  args = parser.parse_args()
 
-  board_platform = get_board_platform(args.p)
-  # Skipping if board_platform is si91x
-  if board_platform == 'si91x':
-      return
-  generate_files(args.i, args.o)
+def write_upgrade_result(result_file: Path):
+    dummy_result = {
+        "upgrade_results": [
+            {"message": "No upgrade action taken.", "status": "nothing"}
+        ]
+    }
+    with open(result_file, "w") as rf:
+        yaml.dump(dummy_result, rf)
+
+
+def entry():
+    parser = argparse.ArgumentParser(
+        description="TensorFlow Lite flatbuffer to C converter."
+    )
+
+    subparsers = parser.add_subparsers(
+        dest="command", help="Available commands", required=True
+    )
+
+    # parser for uc_generate
+    # https://confluence.silabs.com/spaces/UC/pages/109688909/Adapter+Pack+Advanced+Configurators#AdapterPackAdvancedConfigurators-uc_generate
+    generate_parser = subparsers.add_parser(
+        "generate",
+        description="Runs when project is generated using SLC-CLI or Studio.",
+    )
+    generate_parser.add_argument(
+        "input_dir", type=Path, help="Input directory containing .tflite files"
+    )
+    generate_parser.add_argument(
+        "output_dir",
+        type=Path,
+        help="Output directory to populate with serialized content.",
+    )
+    generate_parser.add_argument("part_number", type=str, help="Part Number")
+
+    # parser for uc_upgrade
+    # https://confluence.silabs.com/spaces/UC/pages/109688909/Adapter+Pack+Advanced+Configurators#AdapterPackAdvancedConfigurators-uc_upgrade
+    upgrade_parser = subparsers.add_parser(
+        "upgrade",
+        description="Runs when project is upgraded using SLC-CLI or Studio.",
+    )
+    upgrade_parser.add_argument(
+        "temp_dir", type=Path, help="Temporary directory for upgrade operation"
+    )
+    upgrade_parser.add_argument(
+        "result_file", type=Path, help="YAML file with upgrade results"
+    )
+    args = parser.parse_args()
+
+    if args.command == "generate":
+        board_platform = get_board_platform(args.part_number)
+        # Skipping if board_platform is si91x
+        if board_platform == "si91x":
+            return
+
+        generate_files(args.input_dir, args.output_dir)
+    elif args.command == "upgrade":
+        # some command to upgrade
+        write_upgrade_result(args.result_file)
+
 
 if __name__ == "__main__":
-  entry()
+    entry()
