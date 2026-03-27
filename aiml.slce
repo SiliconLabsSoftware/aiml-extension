@@ -1,5 +1,5 @@
 id: aiml
-version: 2.2.0
+version: 2.2.1
 description: >
   AI/ML SDK for Simplicity SDK
 label: Silicon Labs AI/ML
@@ -8,5 +8,5 @@ component_path:
   - path: component
 documentation:
   - docset: machine-learning
-    version: 2.2.0
+    version: 2.2.1
 vendor: silabs

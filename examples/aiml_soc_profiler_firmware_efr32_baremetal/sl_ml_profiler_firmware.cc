@@ -14,16 +14,10 @@
  * sections of the MSLA applicable to Source Code.
  *
  ******************************************************************************/
-#include "sl_power_manager.h"
 #include "sl_status.h"
 #include "sl_ml_profiler_firmware.h"
 #include "sl_tflite_micro_init.h"
-#include "sl_sleeptimer.h"
 #include <cmath>
-#include "sl_ml_profiler_debug_channel.h"
-#include <stdlib.h>
-#include <stdint.h>
-#include <time.h>
 
 /***************************************************************************//**
  * @brief

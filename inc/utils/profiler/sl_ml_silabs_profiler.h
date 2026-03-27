@@ -94,7 +94,6 @@ namespace ml {
 		const char *op_name_;
 
 		// Init event info
-		//cpu_util_scope_t cpu_metrics;
 		sl_ml_profiler_event_info_t event_info;
 		sl_ml_profiler_end_session_info_t end_session_info;
 		sl_ml_profiler_start_session_info_t start_session_info;
@@ -103,12 +102,11 @@ namespace ml {
 #endif //SL_ML_ENABLE_PROFILER_DEBUG_MSG
 
 		// counter metrics
-		uint32_t busy_cycles=0;
+		uint32_t cpu_cnt_start=0;
   		uint32_t wall_ticks=0;
 		uint32_t mvp_instructions=0;
 		uint32_t mvp_stall_cycles=0;
 		uint32_t mvp_programs=0;
-		float_t inference_time_ms_ = 0;
 
 		// ================ SESSION METRICS FUNCTIONS =====================
 		bool reset_profiler_metrics();

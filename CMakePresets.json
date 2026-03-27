@@ -1,0 +1,48 @@
+{
+  "version": 7,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 27,
+    "patch": 0
+  },
+  "include": [
+    "cmake/preset/compiler.json",
+    "cmake/preset/variant.json"
+  ],
+  "vendor": {
+    "silabs.com/sled": {
+      "components": {
+        "tensorflow_lite_micro": {
+          "presets": [
+            "gcc/cortex-m4",
+            "gcc/cortex-m33"
+          ],
+          "targets": ["tflm"]
+        }
+      }
+    }
+  },
+  "configurePresets": [
+    {"hidden": true, "name": "root", "environment": {"SLED_ROOT": "."}},
+    {"name": "gcc/cortex-m4", "inherits": ["root", "gcc", "variant-cortex-m4"]},
+    {"name": "gcc/cortex-m33", "inherits": ["root", "gcc", "variant-cortex-m33"]}
+  ],
+  "buildPresets": [
+    {"name": "gcc/cortex-m4", "configurePreset": "gcc/cortex-m4"},
+    {"name": "gcc/cortex-m33", "configurePreset": "gcc/cortex-m33"},
+    {"name": "install/gcc/cortex-m4", "configurePreset": "gcc/cortex-m4", "targets": ["install"]},
+    {"name": "install/gcc/cortex-m33", "configurePreset": "gcc/cortex-m33", "targets": ["install"]}
+  ],
+  "workflowPresets": [
+    {"name": "release/gcc/cortex-m4", "steps": [
+        {"type": "configure", "name": "gcc/cortex-m4"},
+        {"type": "build", "name": "gcc/cortex-m4"},
+        {"type": "build", "name": "install/gcc/cortex-m4"}
+    ]},
+    {"name": "release/gcc/cortex-m33", "steps": [
+        {"type": "configure", "name": "gcc/cortex-m33"},
+        {"type": "build", "name": "gcc/cortex-m33"},
+        {"type": "build", "name": "install/gcc/cortex-m33"}
+    ]}
+  ]
+}

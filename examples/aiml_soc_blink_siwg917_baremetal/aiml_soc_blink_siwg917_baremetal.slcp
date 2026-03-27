@@ -79,11 +79,11 @@ post_build:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 2.2.0
+  version: 2.2.1
 - id: wiseconnect3_sdk
   vendor: silabs
-  version: 4.0.0
+  version: 4.0.1
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2025.12.0
+  version: 2025.12.2

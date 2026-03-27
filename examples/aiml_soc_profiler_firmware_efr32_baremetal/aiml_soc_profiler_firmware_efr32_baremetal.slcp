@@ -29,11 +29,8 @@ component:
 - id: device_init
 - id: clock_manager
 - id: tensorflow_lite_micro
-- id: printf
 - id: iostream_recommended_stream
 - id: iostream_retarget_stdio
-- id: status
-- id: power_manager
 - id: sleeptimer
 - id: tensorflow_debug_log_iostream
 - id: tensorflow_lite_micro_accelerated_kernels
@@ -42,8 +39,9 @@ component:
   condition: [device_has_mvp]
 - id: tensorflow_lite_micro_optimized_kernels
   condition: [device_compute_basic]
+- id: tensorflow_lite_micro_reference_kernels
 define:
-- name: DEBUG_EFM
+- name: NDEBUG
 - name: TF_LITE_STATIC_MEMORY
 configuration:
 - name: SL_BOARD_ENABLE_VCOM
@@ -76,19 +74,22 @@ toolchain_settings:
   value: -Wno-unused-parameter
 - option: gcc_compiler_option
   value: -Wno-missing-field-initializers
+- option: optimize
+  value: speed
+- option: gcc_linker_option
+  value: -u _printf_float
 readme:
 - path: readme.md
 ui_hints:
   highlight: readme.md
 tag:
-- hardware:component:microphone
 - hardware:device:ram:128
-- hardware:device:flash:130
+- hardware:device:flash:400
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 2.2.0
+  version: 2.2.1
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2025.12.0
+  version: 2025.12.2

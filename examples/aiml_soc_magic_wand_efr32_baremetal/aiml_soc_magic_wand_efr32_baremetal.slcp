@@ -90,8 +90,8 @@ config_file:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 2.2.0
+  version: 2.2.1
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2025.12.0
+  version: 2025.12.2

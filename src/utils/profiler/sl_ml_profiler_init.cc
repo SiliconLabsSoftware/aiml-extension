@@ -39,8 +39,7 @@ extern sl_iostream_t *sl_iostream_vcom_handle;
  ******************************************************************************/
 static void init(void)
 {
-  sl_status_t st = sl_sleeptimer_init();
-  assert(st == SL_STATUS_OK);
+  sl_sleeptimer_init();
 
 #if (SL_ML_ENABLE_PROFILER_DEBUG_MSG == 1)
   sl_ml_profiler_debug_init();

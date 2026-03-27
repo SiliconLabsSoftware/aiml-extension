@@ -159,7 +159,6 @@ bool SilabsProfiler::reset_profiler_metrics()
         end_session_info.total_flash_used_kb   = 0;
         end_session_info.total_ram_used_kb     = 0;
         end_session_info.mean_mac_per_cycle    = 0.0f;
-        end_session_info.total_num_cycles      = 0;
     }
     // Reset energy and inference when session start only
     if (operation_index_ == 0)
@@ -341,11 +340,21 @@ void SilabsProfiler::update_start_session_info(sl_ml_profiler_start_session_info
   info->opn         = "SIW91X";
   info->part_family = "SIW91X";
   uintptr_t rom_size  = (uintptr_t)__rom_length;
-  info->flash_kb    = (uint16_t)(rom_size / 1024);
+  {
+    const uintptr_t flash_kb_value = rom_size / 1024;
+    info->flash_kb = (flash_kb_value > UINT16_MAX) 
+                     ? UINT16_MAX 
+                     : static_cast<uint16_t>(flash_kb_value);
+  }
 
   uintptr_t ram_base = (uintptr_t)__data_start__;
   uintptr_t ram_top  = (uintptr_t)__HeapLimit;
-  info->ram_kb   = (ram_top - ram_base) / 1024;
+  {
+    const uintptr_t ram_kb_value = (ram_top - ram_base) / 1024;
+    info->ram_kb = (ram_kb_value > UINT16_MAX) 
+                   ? UINT16_MAX 
+                   : static_cast<uint16_t>(ram_kb_value);
+  }
 #endif
 
 }
@@ -359,7 +368,7 @@ void SilabsProfiler::update_start_session_info(sl_ml_profiler_start_session_info
  ******************************************************************************/
 void SilabsProfiler::update_end_session_info()
 {
-    end_session_info.total_num_cycles += event_info.num_cpu_cycles;
+    end_session_info.total_num_cycles += (event_info.num_cpu_cycles + event_info.num_mvp_cycles);
     end_session_info.total_num_stalls += event_info.num_cpu_stalls;
     end_session_info.total_acc_cycles += event_info.num_mvp_cycles;
     end_session_info.total_acc_stalls += event_info.num_mvp_stalls;
@@ -371,20 +380,23 @@ void SilabsProfiler::update_end_session_info()
 #ifdef SL_ML_ENABLE_ENERGY_PROFILING
     end_session_info.energy_joules += event_info.energy_joules;
 #endif // SL_ML_ENABLE_ENERGY_PROFILING
-    end_session_info.total_num_cycles += event_info.num_cpu_cycles;
     // Check if end of inference
     if (number_operators_model_-1 == operator_num_in_model_) {
         number_of_inferences_++;
         // Finalize averages for the inference
         if (number_of_inferences_ == SL_NUMBER_OF_SAMPLES_TO_PROCESS) {
+            // Total flash using
             end_session_info.total_flash_used_kb = flash_used_kb();
-            end_session_info.mean_inference_time_ms = inference_time_ms_ / static_cast<float>(SL_NUMBER_OF_SAMPLES_TO_PROCESS);
+            // Mean time calculate - combine divisions for better precision and performance
+            end_session_info.mean_inference_time_ms = (static_cast<float>(end_session_info.total_num_cycles) / event_info.clock_rate_hz) * 1000.0f;
+            // Energy consumption
 #ifdef SL_ML_ENABLE_ENERGY_PROFILING
             end_session_info.energy_joules = end_session_info.energy_joules /
                                             static_cast<float>(SL_NUMBER_OF_SAMPLES_TO_PROCESS);
 #endif // SL_ML_ENABLE_ENERGY_PROFILING
-            end_session_info.mean_mac_per_cycle = end_session_info.mean_mac_per_cycle /
-                        (static_cast<float>(SL_NUMBER_OF_SAMPLES_TO_PROCESS) * (static_cast<float>(number_operators_model_)));
+            // mean MAC - combine multiplications
+            const float divisor = static_cast<float>(SL_NUMBER_OF_SAMPLES_TO_PROCESS * number_operators_model_);
+            end_session_info.mean_mac_per_cycle = end_session_info.mean_mac_per_cycle / divisor;
 
             // prepare end track info to debug channel
 #if (SL_ML_ENABLE_PROFILER_DEBUG_MSG)
@@ -527,11 +539,11 @@ void SilabsProfiler::event_counter_begin()
 {
   dwt_enable_cyccnt();
 //#if defined(SL_CATALOG_MVP_PRESENT)
-    sli_mvp_perfcnt_reset_all();
-    sli_mvp_progcnt_reset();
+  sli_mvp_perfcnt_reset_all();
+  sli_mvp_progcnt_reset();
 //#endif
-    busy_cycles = get_cpu_cycles(); // DWT->CYCCNT;
-    wall_ticks   = WALL_TICKS_NOW();
+  wall_ticks   = WALL_TICKS_NOW();
+  cpu_cnt_start = get_cpu_cycles(); // DWT->CYCCNT;
 }
 
 /***************************************************************************//**
@@ -548,12 +560,12 @@ void SilabsProfiler::event_counter_end()
         mvp_programs = sli_mvp_progcnt_get();
     }
 //#endif
-
+  
   // Unsigned subtraction handles CYCCNT wraparound (mod 2^32)
-  busy_cycles  = (uint32_t)(cyccnt_end - busy_cycles);
+  uint32_t cpu_cycles_cnt  = (cyccnt_end - cpu_cnt_start);
   wall_ticks   = (wall_end   - wall_ticks);
 
-  uint32_t busy_cpu_cycles = busy_cycles-mvp_instructions;//+mvp_stall_cycles;
+  uint32_t busy_cpu_cycles = cpu_cycles_cnt-mvp_instructions;//+mvp_stall_cycles;
   float cpu_pct;
 
   uint32_t cpu_freq = get_cpu_freq();
@@ -576,12 +588,12 @@ void SilabsProfiler::event_counter_end()
 //#endif
   event_info.cpu_util_percent = cpu_pct;
   event_info.clock_rate_hz = (float)cpu_freq;
-    // Per cycle MACs
-  event_info.mac_per_cycle = event_info.macs / (float)busy_cycles;;
+  // Per cycle MACs
+  
+  event_info.mac_per_cycle = event_info.macs / static_cast<float>(cpu_cycles_cnt);
 #ifdef SL_ML_ENABLE_ENERGY_PROFILING
-  event_info.energy_joules = 0.0; //energyJ_from_cycles(busy_cycles); // TODO
+  event_info.energy_joules = 0.0; //energyJ_from_cycles(cpu_cycles_cnt); // TODO
 #endif // SL_ML_ENABLE_ENERGY_PROFILING
-  inference_time_ms_ += ((float)busy_cycles / cpu_freq) * 1000.0f;
 }
 
 } // namespace ml
