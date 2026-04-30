@@ -295,22 +295,28 @@ void SilabsProfiler::sli_print_ui32(const char* lead_str, uint32_t n, const char
 }
 
 /***************************************************************************//**
-*  @brief Convert cycle count to human-readable time and print it.
-*
-*  Converts cycle counts to seconds/ms/us using the stored cpu_freq_
-*  and prints a formatted message.
+*  @brief Convert sleeptimer tick delta to human-readable time and print it.
 ******************************************************************************/
-void SilabsProfiler::sli_print_time(const char* str, uint32_t time) {
-    cpu_freq_ = get_cpu_freq();
-    printf("  CPU core frequency: %.3f MHz\n", (float)cpu_freq_ / 1000000.0);
+void SilabsProfiler::sli_print_time(const char* str, uint32_t wall_ticks)
+{
+    uint32_t cpu_hz = get_cpu_freq();
+    printf("  CPU core frequency: %.3f MHz\n", (float)cpu_hz / 1000000.0f);
 
-    float duration = (float)time / (float)cpu_freq_;
-    if (duration > 1.0) {
+    const uint32_t hz = sl_sleeptimer_get_timer_frequency();
+    if (hz == 0u) {
+        printf("%s(n/a)\n", str);
+        return;
+    }
+
+    float duration = (float)wall_ticks / (float)hz;
+    if (duration > 1.0f) {
         printf("%s%.03f s\n", str, duration);
-    } else if (duration > 0.001) {
-        printf("%s%.03f ms\n", str, duration * 1000.0);
-    } else if (duration > 0.000001) {
-        printf("%s%.03f us\n", str, duration * 1000000.0);
+    } else if (duration > 0.001f) {
+        printf("%s%.03f ms\n", str, duration * 1000.0f);
+    } else if (duration > 0.000001f) {
+        printf("%s%.03f us\n", str, duration * 1000000.0f);
+    } else {
+        printf("%s0.000 s\n", str);
     }
 }
 /***************************************************************************
@@ -338,7 +344,7 @@ void SilabsProfiler::emit_end_event_info()
 #endif // SL_ML_ENABLE_ENERGY_PROFILING
     //printf("  Line Number        : %d\n", event_info.line_number);
     printf("  Processor ID       : %s\n", map_processor_id(event_info.processor_id));
-    this->sli_print_time("  Execution Time     : ", event_info.num_cpu_cycles);
+    this->sli_print_time("  Execution Time     : ", event_info.wall_ticks);
     printf("\n");
 //#endif
 #endif // SL_ML_ENABLE_PROFILER_DEBUG_MSG

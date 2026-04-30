@@ -15,7 +15,10 @@
  *
  ******************************************************************************/
 #include "em_device.h"
+#include "em_timer.h"
+#include "em_cmu.h"
 #include "sl_memory_manager.h"
+#include "sl_sleeptimer.h"
 
 #if defined(SL_COMPONENT_CATALOG_PRESENT)
 #include "sl_component_catalog.h"
@@ -28,6 +31,36 @@
 #include "sl_tflite_micro_model.h"
 #include "sl_tflite_micro_init.h"
 #include "model_profiler.h"
+
+#if defined(TIMER0)
+/***************************************************************************//**
+ * Same pattern as sl_ml_profiler_session_metrics.cc: clock + init TIMER before
+ * TIMER_CounterGet(). Override if TIMER0 is used elsewhere (e.g. use TIMER1).
+ ******************************************************************************/
+#ifndef SL_MODEL_PROFILER_TIMER_REF
+#define SL_MODEL_PROFILER_TIMER_REF    TIMER0
+#endif
+#ifndef SL_MODEL_PROFILER_TIMER_CLOCK
+#define SL_MODEL_PROFILER_TIMER_CLOCK  cmuClock_TIMER0
+#endif
+
+static void sli_model_profiler_hw_timer_ensure_running(void)
+{
+  static bool initialized = false;
+  if (initialized) {
+    return;
+  }
+  CMU_ClockEnable(SL_MODEL_PROFILER_TIMER_CLOCK, true);
+
+  TIMER_Init_TypeDef init = TIMER_INIT_DEFAULT;
+  TIMER_Init(SL_MODEL_PROFILER_TIMER_REF, &init);
+  /* 24-bit TOP; timer_delta uses & 0x00FFFFFFUL in EndEvent. */
+  TIMER_TopSet(SL_MODEL_PROFILER_TIMER_REF, 0x00FFFFFFUL);
+  TIMER_Enable(SL_MODEL_PROFILER_TIMER_REF, true);
+
+  initialized = true;
+}
+#endif // TIMER0
 
 //#define SL_PRINT_MATRIX_DATA                 // Harvest matrix data while profiling.
 //#define SL_PRINT_MATRIX_DATA_HUMAN_READABLE
@@ -50,6 +83,9 @@ SLMicroInterpreter* interpreter = nullptr;
 size_t arena_size = 0;
 uint8_t *arena = nullptr;
 uint32_t cpu_freq;
+#if defined(TIMER0)
+uint32_t hw_timer_freq_hz = 0;
+#endif
 
 // Print uint32_t with thousand separators.
 void sli_ui32_print_ts(uint32_t n)
@@ -78,6 +114,26 @@ void sli_print_time(const char *str, uint32_t time)
     printf("%s%.02f ms\n", str, duration * 1000.0);
   } else if (duration > 0.000001) {
     printf("%s%.02f us\n", str, duration * 1000000.0);
+  }
+}
+
+/** @brief Print duration from sleeptimer tick count. */
+static void sli_print_wall_time_total(const char *str, uint64_t wall_ticks)
+{
+  uint32_t hz = sl_sleeptimer_get_timer_frequency();
+  if (hz == 0U) {
+    printf("%s(n/a)\n", str);
+    return;
+  }
+  double duration = (double)wall_ticks / (double)hz;
+  if (duration > 1.0) {
+    printf("%s%.02f s\n", str, duration);
+  } else if (duration > 0.001) {
+    printf("%s%.02f ms\n", str, duration * 1000.0);
+  } else if (duration > 0.000001) {
+    printf("%s%.02f us\n", str, duration * 1000000.0);
+  } else {
+    printf("%s0.00 s\n", str);
   }
 }
 
@@ -182,7 +238,8 @@ void harvest_output_matrix(int operation_index)
 class SlProfiler : public tflite::MicroProfilerInterface {
 public:
   SlProfiler() : cpu_cycles(0), total_cpu_cycles_(0), total_mvp_instructions_(0),
-    total_mvp_programs_(0), total_mvp_stall_cycles_(0), operation_index_(0)
+    total_mvp_programs_(0), total_mvp_stall_cycles_(0), operation_index_(0),
+    wall_tick_start_(0U), total_wall_ticks_(0U)
   {
   }
 
@@ -199,6 +256,7 @@ public:
     sli_mvp_perfcnt_reset_all();
     sli_mvp_progcnt_reset();
 #endif
+    wall_tick_start_ = sl_sleeptimer_get_tick_count64();
     cpu_cycles = DWT->CYCCNT;
     return 0;
   }
@@ -213,7 +271,12 @@ public:
 
     cpu_cycles = DWT->CYCCNT - cpu_cycles;
     total_cpu_cycles_ += cpu_cycles;
-    sli_print_time("Execution time:    ", cpu_cycles);
+    {
+      uint64_t wall_end = sl_sleeptimer_get_tick_count64();
+      uint64_t wd = wall_end - wall_tick_start_;
+      total_wall_ticks_ += wd;
+      sli_print_wall_time_total("Execution time:   ", wd);
+    }
     sli_print_ui32("CPU cycle count:   ", cpu_cycles, "\n");
 
 #if defined(SL_CATALOG_MVP_PRESENT)
@@ -258,6 +321,11 @@ public:
     return operation_index_;
   }
 
+  uint64_t total_wall_ticks(void)
+  {
+    return total_wall_ticks_;
+  }
+
 private:
   uint32_t cpu_cycles;
   uint32_t total_cpu_cycles_;
@@ -265,6 +333,8 @@ private:
   uint32_t total_mvp_programs_;
   uint32_t total_mvp_stall_cycles_;
   int operation_index_;
+  uint64_t wall_tick_start_;
+  uint64_t total_wall_ticks_;
   TF_LITE_REMOVE_VIRTUAL_DELETE
 };
 
@@ -277,9 +347,20 @@ bool model_profiler_init(void)
   printf("\n--------------------------------------------\n");
   printf("Model profiler.\n");
 
+  sl_sleeptimer_init();
+
   // The app runs on HFXO.
   cpu_freq = SystemHCLKGet();
   printf("CPU core frequency: %.1f MHz\n", (float)cpu_freq / 1000000.0);
+  printf("Sleeptimer frequency: %lu Hz\n",
+         (unsigned long)sl_sleeptimer_get_timer_frequency());
+
+#if defined(TIMER0)
+  sli_model_profiler_hw_timer_ensure_running();
+  hw_timer_freq_hz = CMU_ClockFreqGet(SL_MODEL_PROFILER_TIMER_CLOCK);
+  printf("HW TIMER frequency: %.1f MHz (TIMER_CounterGet for op timing)\n",
+         (float)hw_timer_freq_hz / 1000000.0f);
+#endif
 
   // Load the model.
   printf("--------------------------------------------\n");
@@ -354,7 +435,7 @@ void model_profiler_process_action(void)
   printf("--------------------------------------------\n");
   printf("--------------------------------------------\n");
   printf("Profiling summary:\n");
-  sli_print_time("Total execution time:   ", profiler.total_cpu_cycles());
+  sli_print_wall_time_total("Total execution time (all ops): ", profiler.total_wall_ticks());
   sli_print_ui32("Total CPU cycle count:  ", profiler.total_cpu_cycles(), "\n");
 #if defined(SL_CATALOG_MVP_PRESENT)
   auto total_mvp_instructions = profiler.total_mvp_instructions();

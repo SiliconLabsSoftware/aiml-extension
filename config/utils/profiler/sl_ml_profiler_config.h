@@ -33,7 +33,7 @@
 // <i> If this is enabled, profiler firmware loads model dynamically with fixed address location.
 // <i> Make sure update flash memory address location based on model size in slcc file.
 // <i> Default: 1
-#define SL_ML_ENABLE_DYNAMIC_MODEL_LOAD                           (0)
+#define SL_ML_ENABLE_DYNAMIC_MODEL_LOAD                           (1)
 // </e>
 
 // <e SL_ML_ENABLE_PROFILER_DEBUG_MSG> Enables output debug messages and dynamic model

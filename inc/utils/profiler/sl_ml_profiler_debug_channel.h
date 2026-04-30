@@ -64,6 +64,7 @@ typedef struct {
     uint32_t total_ram_used_kb;       // size in KB (uint32, LE)
     float    mean_mac_per_cycle;      // float (IEEE-754, f32, LE)
     float    mean_inference_time_ms;  // float (IEEE-754, f32, LE)
+    uint64_t total_wall_ticks;         // sleeptimer ticks summed (uint64, LE)
 #ifdef SL_ML_ENABLE_ENERGY_PROFILING
     float    energy_joules;           // float (IEEE-754, f32, LE)
 #endif // SL_ML_ENABLE_ENERGY_PROFILING
@@ -89,6 +90,7 @@ typedef struct {
     float    cpu_util_percent;    // float (IEEE-754, f32, LE)
     float    clock_rate_hz;       // float (IEEE-754, f32, LE)
     float    mac_per_cycle;       // float (IEEE-754, f32, LE)
+    uint32_t    wall_ticks;        // per-op wall time in sleeptimer ticks (uint32, LE)
 #ifdef SL_ML_ENABLE_ENERGY_PROFILING
     float    energy_joules;       // float (IEEE-754, f32, LE)
 #endif // SL_ML_ENABLE_ENERGY_PROFILING

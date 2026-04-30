@@ -65,7 +65,6 @@ uint32_t SilabsProfiler::BeginEvent(const char* tag) {
     emit_counter_packet_info();
     // Prepare start event info to debug channel
     emit_start_event_info();
-
     event_counter_begin();
     return 0;
 }

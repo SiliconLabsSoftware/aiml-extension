@@ -25,6 +25,7 @@ source:
 - path: app.c
 - path: model_profiler.cc
 component:
+- id: sleeptimer
 - id: clock_manager
 - id: memory_manager
 - id: sl_main
@@ -46,6 +47,7 @@ config_file:
 define:
 - name: TF_LITE_STATIC_MEMORY
 - name: NDEBUG
+- name: SL_ML_MODEL_PROFILER
 configuration:
 - name: SL_BOARD_ENABLE_VCOM
   value: 1
@@ -55,6 +57,8 @@ configuration:
   value: 1
 - name: SL_TFLITE_MICRO_INTERPRETER_INIT_ENABLE
   value: 0
+- name: SL_MVP_POWER_MODE
+  value: 1
 toolchain_settings:
 - option: gcc_compiler_option
   value: -Wno-unused-parameter
@@ -74,8 +78,8 @@ tag:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 2.2.1
+  version: 2.2.2
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2025.12.2
+  version: 2025.12.3

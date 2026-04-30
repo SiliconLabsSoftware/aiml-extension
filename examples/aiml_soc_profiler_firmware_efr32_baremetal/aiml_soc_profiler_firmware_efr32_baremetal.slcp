@@ -44,6 +44,8 @@ define:
 - name: NDEBUG
 - name: TF_LITE_STATIC_MEMORY
 configuration:
+- name: SL_MVP_POWER_MODE
+  value: 1
 - name: SL_BOARD_ENABLE_VCOM
   value: 1
 - name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
@@ -67,8 +69,6 @@ configuration:
   value: "SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_HFRCODPLL"
 - name: SL_ML_ENABLE_PROFILER_DEBUG_MSG
   value: 1
-- name: SL_ML_ENABLE_DYNAMIC_MODEL_LOAD
-  value: 1
 toolchain_settings:
 - option: gcc_compiler_option
   value: -Wno-unused-parameter
@@ -88,8 +88,8 @@ tag:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 2.2.1
+  version: 2.2.2
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2025.12.2
+  version: 2025.12.3

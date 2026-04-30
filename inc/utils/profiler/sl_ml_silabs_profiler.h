@@ -19,14 +19,12 @@
 
 #include <stdbool.h>
 #include "em_device.h"
-#include "em_cmu.h"
 #include "em_system.h"
 #include "em_emu.h"
 #include <stdio.h>
 #include <cstdint>
 #include <stdint.h>
 #include <memory>
-
 #include "sl_ml_profiler_config.h"
 #include "sl_ml_profiler_interpreter.h"
 #include "sl_ml_profiler_debug_channel.h"
@@ -35,6 +33,10 @@
 
 #if defined(SL_BOARD_SI91X)
 #include "ml_clock_helper.h"
+#endif
+
+#if defined(SL_BOARD_EFX)
+#include "em_cmu.h"
 #endif
 
 #if defined(SL_COMPONENT_CATALOG_PRESENT)
@@ -102,8 +104,9 @@ namespace ml {
 #endif //SL_ML_ENABLE_PROFILER_DEBUG_MSG
 
 		// counter metrics
-		uint32_t cpu_cnt_start=0;
-  		uint32_t wall_ticks=0;
+		uint32_t cpu_cnt_start = 0;
+		uint64_t wall_tick_start_ = 0;
+		uint32_t wall_ticks_delta_ = 0; /* per-op delta for cpu_util */
 		uint32_t mvp_instructions=0;
 		uint32_t mvp_stall_cycles=0;
 		uint32_t mvp_programs=0;
@@ -178,10 +181,9 @@ namespace ml {
 		******************************************************************************/
 		void sli_print_ui32(const char* lead_str, uint32_t n, const char* lag_str);
 		/***************************************************************************//**
-		*  @brief Convert a cycle count to human-friendly time and print it.
-		*  Uses the profiler's cpu_freq to format seconds/ms/us.
+		*  @brief Convert sleeptimer tick delta to human-friendly time and print it.
 		******************************************************************************/
-		void sli_print_time(const char* str, uint32_t time);
+		void sli_print_time(const char* str, uint32_t wall_ticks);
 
 		TF_LITE_REMOVE_VIRTUAL_DELETE
 	};

@@ -20,6 +20,8 @@ requires:
     condition: [device_efx]
   - name: tensorflow_lite_micro
     condition: [device_efx]
+  - name: sleeptimer
+    condition: [device_efx]
   - name: sleeptimer_si91x
     condition: [device_si91x]
   - name: nn_util
