@@ -1,0 +1,38 @@
+/***************************************************************************//**
+ * @file sl_fe_audio_instances.h
+ * @brief Audio frontend per-instance descriptor declarations (autogen)
+ *******************************************************************************
+ * SPDX-License-Identifier: Zlib
+ *
+ * Declares @c extern const sl_fe_audio_<inst>_cfg for each component instance.
+ * Include this from one .c/.cc per translation unit that needs the symbols (including
+ * multiple TUs duplicates ROM for each static copy).
+ *
+ * Each instance pulls SL_FE_* symbols from sl_fe_audio_<inst>_config.h (per-model
+ * TFLite metadata). Model-scoped macros come from @c <inst>_generated_parameters.h
+ * (AIML compiler: @c ModelParametersHeaderSettings.filename in
+ * @c aiml/tool/compiler/app/api/_types.py).
+ ******************************************************************************/
+#ifndef SL_FE_AUDIO_INSTANCES_H
+#define SL_FE_AUDIO_INSTANCES_H
+
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+#include "sl_fe_audio_si91x.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+{% for inst in fe_audio_instance | sort %}
+{% set inst_u = (inst | upper) | replace('-', '_') %}
+{% set inst_c = inst | replace('-', '_') %}
+extern const sl_fe_audio_config_t sl_fe_audio_{{ inst_c }}_cfg;
+{% endfor %}
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // SL_FE_AUDIO_INSTANCES_H

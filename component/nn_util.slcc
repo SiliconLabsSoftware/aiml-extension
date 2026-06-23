@@ -1,0 +1,19 @@
+id: nn_util
+label: NN Utilities
+package: aiml
+description: >
+  This component provides some NN (neural network) utilities.
+category: Compute
+quality: production
+root_path: .
+metadata:
+    sbom:
+        license: Zlib
+source:
+  - path: src/utils/kernels/silabs/sl_nn_util.c
+include:
+  - path: inc/utils/kernels/silabs
+    file_list:
+      - path: sl_nn_util.h
+provides:
+  - name: nn_util

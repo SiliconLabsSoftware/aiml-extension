@@ -16,7 +16,8 @@ requires:
   - name: emlib_cmu
   - name: emlib_ldma
   - name: emlib_usart
-  - name: dmadrv
+  - name: dma_manager
+  - name: dma_channel
   - name: i2cspm
 config_file:
   - path: config/drivers/sl_ml_arducam_config.h

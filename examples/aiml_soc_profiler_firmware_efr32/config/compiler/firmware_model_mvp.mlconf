@@ -1,0 +1,13 @@
+model: firmware_model.tflite
+
+accelerator: mvpv1
+
+graph_optimizer:
+  enabled: true
+
+memory_optimizer:
+  enabled: true
+
+codegen:
+  generate_op_resolver: false
+  model_parameters_header_enabled: false

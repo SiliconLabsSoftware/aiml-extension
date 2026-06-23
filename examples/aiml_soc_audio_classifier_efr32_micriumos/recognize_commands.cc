@@ -20,19 +20,16 @@
 #include <limits>
 
 
-RecognizeCommands::RecognizeCommands(tflite::ErrorReporter* error_reporter,
-                                     int32_t average_window_duration_ms,
+RecognizeCommands::RecognizeCommands(int32_t average_window_duration_ms,
                                      uint8_t detection_threshold,
                                      int32_t suppression_ms,
                                      int32_t minimum_count,
                                      bool ignore_underscore)
-  : error_reporter_(error_reporter),
-  average_window_duration_ms_(average_window_duration_ms),
+  : average_window_duration_ms_(average_window_duration_ms),
   detection_threshold_(detection_threshold),
   suppression_ms_(suppression_ms),
   minimum_count_(minimum_count),
-  ignore_underscore_(ignore_underscore),
-  previous_results_(error_reporter)
+  ignore_underscore_(ignore_underscore)
 {
   previous_top_label_index_ = 0;
   previous_top_label_time_ = 0;
@@ -44,15 +41,14 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
 {
   int8_t current_top_index = 0;
   uint32_t current_top_score = 0;
-  uint8_t converted_scores[category_count];
+  uint8_t converted_scores[MAX_CATEGORY_COUNT];
 
   if ((latest_results->dims->size != 2)
       || (latest_results->dims->data[0] != 1)
       || (latest_results->dims->data[1] != category_count)) {
-    TF_LITE_REPORT_ERROR(
-      error_reporter_,
+    printf(
       "The results for recognition should contain %d elements, but there are "
-      "%d in an %d-dimensional shape",
+      "%d in an %d-dimensional shape\n",
       category_count, latest_results->dims->data[1],
       latest_results->dims->size);
     return kTfLiteError;
@@ -60,11 +56,10 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
 
   if ((!previous_results_.empty())
       && (current_time_ms < previous_results_.front().time_)) {
-    TF_LITE_REPORT_ERROR(
-      error_reporter_,
+    printf(
       "Results must be fed in increasing time order, but received a "
-      "timestamp of %d that was earlier than the previous one of %d",
-      current_time_ms, previous_results_.front().time_);
+      "timestamp of %d that was earlier than the previous one of %d\n",
+      (int)current_time_ms, (int)previous_results_.front().time_);
     return kTfLiteError;
   }
 
@@ -78,7 +73,7 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
       converted_scores[i] = (uint8_t)(latest_results->data.int8[i] + 128);
     }
   } else {
-      TF_LITE_REPORT_ERROR(error_reporter_, "Unsupported output tensor data type, must be int8 or float32");
+      printf("Unsupported output tensor data type, must be int8 or float32\n");
       return kTfLiteError;
   }
 
@@ -112,15 +107,24 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
         printf("Too few samples for averaging. This likely means the inference loop is taking too long.\n");
         printf("Either decrease the 'minimum_count' and/or increase 'average_window_duration_ms'\n");
       }
-      *found_command_index = previous_top_label_index_;
-      *score = 0;
+      // Report this frame's instantaneous argmax; keyword detection stays off until the window fills.
+      uint8_t inst_top = 0;
+      uint32_t inst_best = 0;
+      for (int i = 0; i < category_count; ++i) {
+        if (converted_scores[i] > inst_best) {
+          inst_best = converted_scores[i];
+          inst_top = (uint8_t)i;
+        }
+      }
+      *found_command_index = inst_top;
+      *score = (uint8_t)inst_best;
       *is_new_command = false;
       return kTfLiteOk;
     }
     consecutive_min_count = 0;
 
     // Calculate the average score across all the results in the window.
-    uint32_t average_scores[category_count];
+    uint32_t average_scores[MAX_CATEGORY_COUNT];
     for (int offset = 0; offset < previous_results_.size(); ++offset) {
       // Iterates the amount of times to achieve average_window_duration
       PreviousResultsQueue::Result previous_result =
@@ -172,7 +176,7 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
 
   int diff = current_time_ms - prev_time_ms;
   prev_time_ms = current_time_ms;
-  ptr += sprintf(ptr, "[%6ld] (%3d) ", current_time_ms, diff);
+  ptr += sprintf(ptr, "[%6d] (%3d) ", (int)current_time_ms, diff);
   for (int i = 0; i < category_count; ++i) {
     ptr += sprintf(ptr, "%3d ", converted_scores[i]);
   }
@@ -181,6 +185,6 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
 #endif
 
   *found_command_index = current_top_index;
-  *score = current_top_score;
+  *score = (uint8_t)current_top_score;
   return kTfLiteOk;
 }

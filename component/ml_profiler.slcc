@@ -43,4 +43,4 @@ source:
 define:
   - name: CIRCULAR_QUEUE_LEN_MAX
     value: 1
-  
+

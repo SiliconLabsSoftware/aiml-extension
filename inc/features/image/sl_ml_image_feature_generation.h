@@ -22,16 +22,14 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#if defined(SL_CATALOG_TFLITE_MICRO_PRESENT)
-#include "tensorflow/lite/c/common.h"
-#endif
+#include "ml/third_party/tflm/common.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /***************************************************************************//**
- * @addtogroup ml_image_feature_generation Image Feature Generator
+ * @addtogroup ml_image_feature_generation
  * The image feature generator process input image captured from camera 
  * and extracts required features to use with machine learning image classification
  * applications using a camera as an image source.
@@ -107,8 +105,13 @@ extern "C" {
  *    Set up the camera as an image source for feature generation.
  *
  * @return
- *    SL_STATUS_OK for success
- *    SL_STATUS_FAIL
+ *    SL_STATUS_OK if @ref sl_ml_initialize_arducam_camera succeeded. JLink
+ *    "image" stream registration is optional: on failure, a warning is printed
+ *    to the log and the function still returns SL_STATUS_OK; @ref sl_ml_dump_image
+ *    and PC-side visualization are inactive until a future successful registration.
+ *    If camera init failed, same status as @ref sl_ml_initialize_arducam_camera
+ *    (e.g. SL_STATUS_BUS_ERROR); @ref sl_ml_image_feature_generation_reset
+ *    was run before return.
  ******************************************************************************/
 sl_status_t sl_ml_image_feature_generation_init();
 
@@ -200,10 +203,11 @@ sl_status_t sl_ml_image_feature_generation_get_image_scaled(uint8_t* image_data,
  *    mean = ((float)image_data / (width*length)
  *
  * @param[out] mean
- *    Pointer to the mean to store the mean value of image.
+ *    Pointer to the running mean; reset to 0 at entry, then set to the sample mean.
  *
  * @param[out] mean2
- *    Pointer to the mean2 to store the mean square value of image.
+ *    Pointer to the Welford M2 accumulator; reset to 0 at entry, then set so that
+ *    population variance is mean2 / num_elements.
  *
  * @param[in] num_elements
  *    The number of elements corresponding to the size of the buffer; If this is
@@ -230,7 +234,7 @@ sl_status_t sl_ml_get_image_mean(uint8_t *in_cam_image, float *mean, float *mean
  *    float mean, mean value of image.
  *
  * @param[in] mean2
- *    float mean2, mean square value of image.
+ *    Welford M2 from @ref sl_ml_get_image_mean; population variance is mean2 / num_elements.
  *
  * @param[in] num_elements
  *    The number of elements corresponding to the size of the buffer; If this is
@@ -239,6 +243,9 @@ sl_status_t sl_ml_get_image_mean(uint8_t *in_cam_image, float *mean, float *mean
  *
  * @note
  *    This function overwrites the entire buffer.
+ *    std uses population variance: sqrtf(mean2 / num_elements). A small floor is applied
+ *    to the divisor so uniform or near-uniform crops (std ~ 0) do not produce Inf/NaN; negative
+ *    variance from float error is clamped to zero before sqrtf.
  *
  * @return
  *    SL_STATUS_OK for success

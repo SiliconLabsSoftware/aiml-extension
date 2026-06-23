@@ -1,8 +1,12 @@
-// 
+//
 /***************************************************************************//**
  * @file sl_tflite_micro_all_opcode_resolver.h
- * @brief Macro to instantiate and initialize opcode resolver with 
+ * @brief Macro to instantiate and initialize opcode resolver with
  * all ops available in micro_mutable_op_resolver.h
+ *
+ * @details AddCircularBuffer, AddDetectionPostprocess, and AddEthosU are not
+ * exposed on the Silicon Labs TFLM fork (commented in micro_mutable_op_resolver);
+ * they are omitted from this macro.
  *******************************************************************************
  * # License
  * <b>Copyright 2025 Silicon Laboratories Inc. www.silabs.com</b>
@@ -19,10 +23,10 @@
 #ifndef SL_TFLITE_MICRO_ALL_OPCODE_RESOLVER_H
 #define SL_TFLITE_MICRO_ALL_OPCODE_RESOLVER_H
 
-#include "tensorflow/lite/micro/micro_mutable_op_resolver.h"
+#include "ml/third_party/tflm/micro_mutable_op_resolver.h"
 
 #define SL_TFLITE_MICRO_OPCODE_RESOLVER(opcode_resolver) \
-static tflite::MicroMutableOpResolver<98> opcode_resolver; \
+static tflite::MicroMutableOpResolver<95> opcode_resolver; \
 opcode_resolver.AddAbs(); \
 opcode_resolver.AddAdd(); \
 opcode_resolver.AddAddN(); \
@@ -36,7 +40,6 @@ opcode_resolver.AddBroadcastTo(); \
 opcode_resolver.AddCallOnce(); \
 opcode_resolver.AddCast(); \
 opcode_resolver.AddCeil(); \
-opcode_resolver.AddCircularBuffer(); \
 opcode_resolver.AddConcatenation(); \
 opcode_resolver.AddConv2D(); \
 opcode_resolver.AddCos(); \
@@ -44,11 +47,9 @@ opcode_resolver.AddCumSum(); \
 opcode_resolver.AddDepthToSpace(); \
 opcode_resolver.AddDepthwiseConv2D(); \
 opcode_resolver.AddDequantize(); \
-opcode_resolver.AddDetectionPostprocess(); \
 opcode_resolver.AddDiv(); \
 opcode_resolver.AddElu(); \
 opcode_resolver.AddEqual(); \
-opcode_resolver.AddEthosU(); \
 opcode_resolver.AddExp(); \
 opcode_resolver.AddExpandDims(); \
 opcode_resolver.AddFill(); \
@@ -121,6 +122,5 @@ opcode_resolver.AddVarHandle(); \
 opcode_resolver.AddWhile(); \
 opcode_resolver.AddZerosLike();
 //opcode_resolver.AddWindow();
-
 
 #endif // SL_TFLITE_MICRO_ALL_OPCODE_RESOLVER_H

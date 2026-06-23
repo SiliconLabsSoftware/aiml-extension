@@ -1,0 +1,15 @@
+model: blink.tflite
+
+graph_optimizer:
+  enabled: true
+
+memory_optimizer:
+  enabled: true
+
+# Per-region overrides; merge with platform defaults. size: 0 removes a region.
+memory_specification:
+  - type: PagingBuffer
+    size: 32768
+    section: ".bss"
+  - type: WeightsAndBiases2
+    size: 0

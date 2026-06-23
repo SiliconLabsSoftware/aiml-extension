@@ -10,14 +10,19 @@ metadata:
     license: Apache-2.0
     upstream:
       name: Flatbuffers
-      version: 07a8b5cb5a1085b7a3d7348ca547ec2643ca18c2
+      version: v25.9.23
       supplier: Google Inc.
-      url: https://github.com/google/flatbuffers
-      package_url: pkg:github/google/flatbuffers@07a8b5cb5a1085b7a3d7348ca547ec2643ca18c2
-      comment: Only "include/" folder copied from Flatbuffers GitHub repo, commit hash 07a8b5cb5a1085b7a3d7348ca547ec2643ca18c2
+      url: https://github.com/google/flatbuffers/tree/v25.9.23
+      package_url: pkg:github/google/flatbuffers@187240970746d00bbd26b0f5873ed54d2477f9f3
+      comment: Only "include/" folder copied from Flatbuffers GitHub repo, commit hash 187240970746d00bbd26b0f5873ed54d2477f9f3
 root_path: third_party/flatbuffers
 provides:
   - name: tensorflow_dependency_flatbuffers
+# IAR DLIB has no usable <optional>;
+define:
+  - name: FLATBUFFERS_USE_STD_OPTIONAL
+    value: 0
+    condition: [toolchain_iar]
 include:
   - path: include
     file_list:
@@ -26,11 +31,25 @@ include:
       - path: flatbuffers/base.h
       - path: flatbuffers/buffer.h
       - path: flatbuffers/buffer_ref.h
+      - path: flatbuffers/code_generator.h
+      - path: flatbuffers/code_generators.h
       - path: flatbuffers/default_allocator.h
       - path: flatbuffers/detached_buffer.h
+      - path: flatbuffers/file_manager.h
+      - path: flatbuffers/flex_flat_util.h
+      - path: flatbuffers/flexbuffers.h
       - path: flatbuffers/flatbuffer_builder.h
       - path: flatbuffers/flatbuffers.h
-      - path: flatbuffers/flexbuffers.h
+      - path: flatbuffers/flatc.h
+      - path: flatbuffers/grpc.h
+      - path: flatbuffers/hash.h
+      - path: flatbuffers/idl.h
+      - path: flatbuffers/minireflect.h
+      - path: flatbuffers/pch/flatc_pch.h
+      - path: flatbuffers/pch/pch.h
+      - path: flatbuffers/reflection.h
+      - path: flatbuffers/reflection_generated.h
+      - path: flatbuffers/registry.h
       - path: flatbuffers/stl_emulation.h
       - path: flatbuffers/string.h
       - path: flatbuffers/struct.h
@@ -40,5 +59,8 @@ include:
       - path: flatbuffers/vector_downward.h
       - path: flatbuffers/verifier.h
 source: []
+toolchain_settings:
+  - option: iar_compiler_option
+    value: --diag_suppress=Pe1675 #incompatible/suspicious type conversion in FlatBuffers
 ui_hints:
   visibility: never

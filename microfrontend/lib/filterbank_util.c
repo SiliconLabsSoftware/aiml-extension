@@ -89,7 +89,7 @@ int FilterbankPopulateState(const struct FilterbankConfig* config,
     free(center_mel_freqs);
     free(actual_channel_starts);
     free(actual_channel_widths);
-    fprintf(stderr, "Failed to allocate channel buffers\n");
+    printf("Failed to allocate channel buffers\n");
     return 0;
   }
 
@@ -170,7 +170,7 @@ int FilterbankPopulateState(const struct FilterbankConfig* config,
     free(center_mel_freqs);
     free(actual_channel_starts);
     free(actual_channel_widths);
-    fprintf(stderr, "Failed to allocate weights or unweights\n");
+    printf("Failed to allocate weights or unweights\n");
     return 0;
   }
 
@@ -206,7 +206,7 @@ int FilterbankPopulateState(const struct FilterbankConfig* config,
   free(actual_channel_starts);
   free(actual_channel_widths);
   if (state->end_index > spectrum_size) {
-    fprintf(stderr, "Filterbank end_index is above spectrum size.\n");
+    printf("Filterbank end_index is above spectrum size.\n");
     return 0;
   }
   return 1;

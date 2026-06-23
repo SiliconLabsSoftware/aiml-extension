@@ -27,6 +27,4 @@ include:
 source:
   - path: src/features/image/sl_ml_image_feature_generation.cc
   - path: src/features/image/sl_ml_image_feature_generation_init.cc
-documentation:
-  docset: aiml
-  document: aiml/api/group-ml-image-feature-generation
+  - path: config/features/image/sl_ml_image_feature_generation_config.cc

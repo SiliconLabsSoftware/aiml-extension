@@ -22,15 +22,23 @@
 #include "audio_classifier.h"
 #include "recognize_commands.h"
 #include "config/audio_classifier_config.h"
-#include "sl_tflite_micro_model.h"
-#include "sl_tflite_micro_init.h"
-#include "sl_ml_audio_feature_generation.h"
+#include "sl_ml_audio_feature_generation_config.h"
+#include "sl_fe_audio.h"
+#include "sl_ml_model_keyword_spotting_on_off_v2.h"
 #include "sl_sleeptimer.h"
+#include "tflite_micro_model.hpp"
 #include <cmath>
+#include <cinttypes>
 
 #if SL_SIMPLE_LED_COUNT < 2
   #error "Sample application requires two leds"
 #endif
+
+// Activity LED: require some confidence before class-change can extend activity,
+// otherwise int8 argmax flicker toggles (previous_result != result) every frame.
+static constexpr uint8_t kActivityLedClassChangeMinScore = 70;
+
+using namespace npu_toolkit;
 
 // Pointer to RecognizeCommands object for handling recognitions.
 static RecognizeCommands *command_recognizer = nullptr;
@@ -47,18 +55,15 @@ static uint8_t previous_score = 0;
 static int32_t previous_score_timestamp = 0;
 static int previous_result = 0;
 
-// Category label variables
 int category_count = 0;
-const char* category_labels[] = CATEGORY_LABELS;
-static int category_label_count = sizeof(category_labels) / sizeof(category_labels[0]);
 
 static void audio_classifier_task(void *arg);
 static void handle_result(int32_t current_time, int result, uint8_t score, bool is_new_command);
 
 /***************************************************************************//**
- * Run model inference 
- * 
- * Copies the currently available data from the feature_buffer into the input 
+ * Run model inference
+ *
+ * Copies the currently available data from the feature_buffer into the input
  * tensor and runs inference, updating the global output tensor.
  *
  * @return
@@ -67,16 +72,17 @@ static void handle_result(int32_t current_time, int result, uint8_t score, bool 
 static sl_status_t run_inference()
 {
   // Update model input tensor
-  sl_status_t status = sl_ml_audio_feature_generation_fill_tensor(sl_tflite_micro_get_input_tensor());
-  if (status != SL_STATUS_OK){
+  sl_status_t status =
+      sl_ml_audio_feature_generation_fill_tensor(sl_ml_keyword_spotting_on_off_v2_model_handle.input_tensor(0));
+  if (status != SL_STATUS_OK) {
     return SL_STATUS_FAIL;
   }
   // Run the model on the spectrogram input and make sure it succeeds.
-  TfLiteStatus invoke_status = sl_tflite_micro_get_interpreter()->Invoke();
-  if (invoke_status != kTfLiteOk) {
+  if (sl_ml_model_run(&sl_ml_keyword_spotting_on_off_v2_model_handle) != SL_STATUS_OK) {
     return SL_STATUS_FAIL;
   }
 
+  (void)sl_ml_keyword_spotting_on_off_v2_model_handle.output_tensor(0);
   return SL_STATUS_OK;
 }
 
@@ -86,7 +92,8 @@ static sl_status_t run_inference()
  * @return
  *   SL_STATUS_OK on success, other value on failure.
  ******************************************************************************/
-static sl_status_t process_output(){
+static sl_status_t process_output()
+{
   // Determine whether a command was recognized based on the output of inference
   uint8_t result = 0;
   uint8_t score = 0;
@@ -99,11 +106,11 @@ static sl_status_t process_output(){
 
   // Process the latest result from the model output
   TfLiteStatus process_status = command_recognizer->ProcessLatestResults(
-      sl_tflite_micro_get_output_tensor(), current_time_stamp, &result, &score, &is_new_command);
+      sl_ml_keyword_spotting_on_off_v2_model_handle.output_tensor(0), current_time_stamp, &result, &score, &is_new_command);
 
   if (process_status == kTfLiteOk) {
     // Take an action based on the new result/score
-    handle_result(current_time_stamp, result, score, is_new_command);
+    handle_result((int32_t)current_time_stamp, result, score, is_new_command);
   } else {
     status = SL_STATUS_FAIL;
   }
@@ -147,18 +154,41 @@ void audio_classifier_init(void)
 void audio_classifier_task(void *arg)
 {
   RTOS_ERR err;
-  (void)&arg;
+  (void)arg;
 
   printf("Audio Classifier\r\n");
-  sl_ml_audio_feature_generation_init();
-  
-  // Instantiate CommandRecognizer  
-  static RecognizeCommands static_recognizer(sl_tflite_micro_get_error_reporter(), SMOOTHING_WINDOW_DURATION_MS,
+
+  printf("Loading model\n");
+  if (sl_ml_model_init(&sl_ml_keyword_spotting_on_off_v2_model_handle) != SL_STATUS_OK) {
+    printf("Failed to load model\n");
+    while (1)
+      ;
+  }
+
+  if (!audio_classifier_config_load_model_settings(sl_ml_keyword_spotting_on_off_v2_model_handle.flatbuffer)) {
+    printf("Failed to load app parameters from .tflite model\n");
+    while (1)
+      ;
+  }
+
+  if (!sl_ml_audio_feature_generation_load_model_settings(sl_ml_keyword_spotting_on_off_v2_model_handle.flatbuffer)) {
+    printf("Failed to load audio frontend parameters from .tflite model\n");
+    while (1)
+      ;
+  }
+
+  if (sl_ml_audio_feature_generation_init() != SL_STATUS_OK) {
+    printf("Failed to init audio feature generator\n");
+    while (1)
+      ;
+  }
+
+  static RecognizeCommands static_recognizer(SMOOTHING_WINDOW_DURATION_MS,
       DETECTION_THRESHOLD, SUPPRESSION_TIME_MS, MINIMUM_DETECTION_COUNT, IGNORE_UNDERSCORE_LABELS);
   command_recognizer = &static_recognizer;
 
-  const TfLiteTensor* input = sl_tflite_micro_get_input_tensor();
-  const TfLiteTensor* output = sl_tflite_micro_get_output_tensor();
+  const TfLiteTensor* input = sl_ml_keyword_spotting_on_off_v2_model_handle.input_tensor(0);
+  const TfLiteTensor* output = sl_ml_keyword_spotting_on_off_v2_model_handle.output_tensor(0);
 
   // Validate model tensors
   if ((output->dims->size == 2) && (output->dims->data[0] == 1)) {
@@ -171,21 +201,24 @@ void audio_classifier_task(void *arg)
       ;
   }
 
-  if (category_count != category_label_count) {
-    printf("WARNING: Number of categories(%d) is not equal to the number of labels(%d).\n"
+  if (category_count != static_cast<int>(SL_TFLITE_MODEL_CLASSES.size())) {
+    printf("WARNING: Number of categories(%d) is not equal to the number of labels(%ld).\n"
            "Make sure that CATEGORY_LABELS is configured correctly for the model in use.\n",
-           category_count, category_label_count);
+           category_count,
+           (long)SL_TFLITE_MODEL_CLASSES.size());
   }
 
-  // Validate input/output type of the tflite model
   if ((input->type != kTfLiteInt8) || (output->type != kTfLiteInt8)) {
-    printf("ERROR: Invalid input/output tensor type.\n"
-           "Application requires input and output tensors to be of type int8.\n");
-    while (1)
-      ;
+    if ((input->type != kTfLiteInt8 && input->type != kTfLiteUInt16 && input->type != kTfLiteFloat32)
+        || (output->type != kTfLiteInt8 && output->type != kTfLiteFloat32)) {
+      printf("ERROR: Invalid input/output tensor type.\n");
+      while (1)
+        ;
+    }
+    printf("NOTE: Model uses non-int8 tensors; continuing.\n");
   }
 
-  // Add EM1 requirement to allow microphone sampling 
+  // Add EM1 requirement to allow microphone sampling
   sl_power_manager_add_em_requirement(SL_POWER_MANAGER_EM1);
 
   while (1) {
@@ -215,7 +248,7 @@ static void handle_result(int32_t current_time, int result, uint8_t score, bool 
   const char *label = get_category_label(result);
 
   if (is_new_command) {
-    printf("Detected class=%d label=%s score=%d @%ldms\n", result, label, score, current_time);
+    printf("Detected class=%d label=%s score=%" PRIu8 " @%" PRId32 "ms\n", result, label, score, current_time);
     sl_led_turn_on(&DETECTION_LED);
     sl_led_turn_off(&ACTIVITY_LED);
     detected_timeout = current_time + SUPPRESSION_TIME_MS;
@@ -240,18 +273,22 @@ static void handle_result(int32_t current_time, int result, uint8_t score, bool 
     // Calculate the rate of difference in score between the two last results
     const int32_t time_delta = current_time - previous_score_timestamp;
     const int8_t score_delta = (int8_t)(score - previous_score);
-    const float diff = (time_delta > 0) ? std::fabs(score_delta) / time_delta : 0.0f;
+    const float diff =
+      (time_delta > 0) ? std::fabs(static_cast<float>(score_delta)) / time_delta : 0.0f;
 
     previous_score = score;
     previous_score_timestamp = current_time;
 
-    if (diff >= SENSITIVITY || (previous_result != result)) {
-      previous_result = result;
+    const bool meaningful_class_change =
+        (previous_result != result) && (score >= kActivityLedClassChangeMinScore);
+    if (diff >= SENSITIVITY || meaningful_class_change) {
       activity_timestamp = current_time + 500;
     } else if(current_time >= activity_timestamp) {
       activity_timestamp = 0;
       sl_led_turn_off(&ACTIVITY_LED);
     }
+
+    previous_result = result;
 
     if (activity_timestamp != 0) {
       if (current_time - activity_toggle_timestamp >= 100) {
@@ -274,8 +311,8 @@ static void handle_result(int32_t current_time, int result, uint8_t score, bool 
  ******************************************************************************/
 const char * get_category_label(int index)
 {
-  if ((index >= 0) && (index < category_label_count)) {
-    return category_labels[index];
+  if ((index >= 0) && (index < category_count)) {
+    return CATEGORY_LABELS[index];
   } else {
     return "?";
   }

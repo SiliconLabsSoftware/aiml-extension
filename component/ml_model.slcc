@@ -1,0 +1,26 @@
+﻿id: ml_model
+package: aiml
+label: ML Model
+description: Machine Learning Model
+category: Machine Learning
+quality: production
+metadata:
+  sbom:
+    license: MSLA
+instantiable:
+  prefix: inst
+provides:
+  - name: ml_model
+    allow_multiple: true
+requires:
+  - name: ml_compiler
+  - name: tensorflow_lite_micro
+config_file:
+  - path: config/compiler/{{instance}}.mlconf
+    file_id: ml_compiler_config
+    directory: tflite
+  - path: config/compiler/dummy.tflite
+    directory: tflite
+template_contribution:
+  - name: component_catalog
+    value: ml_model

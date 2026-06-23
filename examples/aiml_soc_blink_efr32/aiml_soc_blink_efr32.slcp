@@ -1,0 +1,103 @@
+project_name: aiml_soc_blink_efr32
+package: aiml_app
+quality: production
+label: AI/ML - SoC Blink EFR32
+description: >
+  This application demonstrates a model trained to replicate a sine function.
+  The model is continuously fed with values ranging from 0 to 2pi, and the
+  output of the model is used to control the intensity of an LED.
+category: AI/ML Application
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+- name: Capability
+  value: [Machine Learning]
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: timestamp.h
+source:
+- path: app.cc
+config_file:
+- path: config/compiler/blink.mlconf
+  directory: tflite
+  override:
+    component: ml_model
+    instance: blink
+    file_id: ml_compiler_config
+- path: tflite_models/tflite/blink.tflite
+  directory: tflite
+component:
+- id: ml_model
+  instance:
+  - blink
+- id: sl_main
+- id: dma_manager
+- id: dma_channel
+- id: memory_manager
+- id: device_init
+- id: clock_manager
+- id: cpp_support
+- id: iostream_recommended_stream
+- id: iostream_retarget_stdio
+- id: pwm
+  instance:
+  - led0
+- id: sleeptimer
+define:
+- name: DEBUG_EFM
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_usart]
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_uart]
+- name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_eusart]
+- name: SL_MVP_OPTIMIZE_SPEED
+  value: 1
+  condition: [device_has_mvp]
+toolchain_settings:
+- option: gcc_linker_option
+  value: -u _printf_float
+- option: gcc_compiler_option
+  value: -Wno-maybe-uninitialized
+- option: llvm_linker_option
+  value: -u _printf_float
+- option: llvm_compiler_option
+  value: -Wno-implicit-exception-spec-mismatch
+- option: llvm_compiler_option
+  value: -Wno-uninitialized
+- option: gcc_compiler_option
+  value: "-mfp16-format=ieee"
+- option: llvm_compiler_option
+  value: -Wno-unknown-warning-option
+- option: llvm_compiler_option
+  value: -Wno-unknown-pragmas
+- option: llvm_compiler_option
+  value: -Wno-vla-cxx-extension
+readme:
+- path: readme.md
+ui_hints:
+  highlight: readme.md
+tag:
+- hardware:component:led:1+
+- hardware:device:ram:16
+- hardware:device:flash:160
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 3.0.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2026.6.0

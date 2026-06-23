@@ -21,30 +21,29 @@
 #include "sl_simple_led_instances.h"
 #include "voice_control_light.h"
 #include "recognize_commands.h"
-#include "recognize_commands_config.h"
-#include "sl_tflite_micro_model.h"
-#include "sl_tflite_micro_init.h"
-#include "sl_ml_audio_feature_generation.h"
+#include "config/voice_control_light_config.h"
+#include "sl_ml_model_keyword_spotting_on_off_v2.h"
+#include "sl_fe_audio.h"
+#include "sl_ml_audio_feature_generation_config.h"
 #include "sl_sleeptimer.h"
+#include <cinttypes>
+#include "tflite_micro_model.hpp"
 
 /*******************************************************************************
  *******************************   DEFINES   ***********************************
  ******************************************************************************/
-#ifndef INFERENCE_INTERVAL_MS
-#define INFERENCE_INTERVAL_MS 200
-#endif
-
 #ifndef TASK_STACK_SIZE
 #define TASK_STACK_SIZE       512
 #endif
 
 #ifndef TASK_PRIORITY
 #define TASK_PRIORITY         20
-#endif 
+#endif
 
 /*******************************************************************************
  ***************************  LOCAL VARIABLES   ********************************
  ******************************************************************************/
+using namespace npu_toolkit;
 
 // Pointer to RecognizeCommands object for handling recognitions.
 static RecognizeCommands *command_recognizer = nullptr;
@@ -63,24 +62,25 @@ static CPU_STK stack[TASK_STACK_SIZE];
 static void voice_control_light_task(void *arg);
 
 /***************************************************************************//**
- * Run model inference 
- * 
- * Copies the currently available data from the feature_buffer into the input 
- * tensor and runs inference, updating the global output_tensor. 
+ * Run model inference
+ *
+ * Copies the currently available data from the feature_buffer into the input
+ * tensor and runs inference, updating the global output_tensor.
  ******************************************************************************/
 static sl_status_t run_inference()
 {
   // Update model input tensor
-  sl_status_t status = sl_ml_audio_feature_generation_fill_tensor(sl_tflite_micro_get_input_tensor());
-  if (status != SL_STATUS_OK){
+  sl_status_t status =
+      sl_ml_audio_feature_generation_fill_tensor(sl_ml_keyword_spotting_on_off_v2_model_handle.input_tensor(0));
+  if (status != SL_STATUS_OK) {
     return SL_STATUS_FAIL;
   }
   // Run the model on the spectrogram input and make sure it succeeds.
-  TfLiteStatus invoke_status = sl_tflite_micro_get_interpreter()->Invoke();
-  if (invoke_status != kTfLiteOk) {
+  if (sl_ml_model_run(&sl_ml_keyword_spotting_on_off_v2_model_handle) != SL_STATUS_OK) {
     return SL_STATUS_FAIL;
   }
 
+  (void)sl_ml_keyword_spotting_on_off_v2_model_handle.output_tensor(0);
   return SL_STATUS_OK;
 }
 
@@ -100,23 +100,23 @@ static sl_status_t process_output(){
 
   // Perform post processing and filtering of the model output to get a labeled output with a score value.
   TfLiteStatus process_status = command_recognizer->ProcessLatestResults(
-      sl_tflite_micro_get_output_tensor(), current_time_stamp, &found_command_index, &score, &is_new_command);
+      sl_ml_keyword_spotting_on_off_v2_model_handle.output_tensor(0), current_time_stamp, &found_command_index, &score, &is_new_command);
 
   if (process_status != kTfLiteOk) {
     return SL_STATUS_FAIL;
   }
 
   if (is_new_command) {
-        // Print heard command 
+        // Print heard command
     if (found_command_index == 0){
-        // command = "on" 
+        // command = "on"
         sl_led_turn_on(&sl_led_led0);
-        printf("Heard %s (%d) @%ldms\r\n", kCategoryLabels[found_command_index],
+        printf("Heard %s (%" PRIu8 ") @%" PRIu32 "ms\r\n", kCategoryLabels[found_command_index],
                          score, current_time_stamp);  
     } else if (found_command_index == 1){
-        // command = "off" 
+        // command = "off"
         sl_led_turn_off(&sl_led_led0);
-        printf("Heard %s (%d) @%ldms\r\n", kCategoryLabels[found_command_index],
+        printf("Heard %s (%" PRIu8 ") @%" PRIu32 "ms\r\n", kCategoryLabels[found_command_index],
                          score, current_time_stamp);  
     }
   }
@@ -162,25 +162,43 @@ void voice_control_light_init(void)
 void voice_control_light_task(void *arg)
 {
   RTOS_ERR err;
-  (void)&arg;
+  (void)arg;
 
   printf("Voice Control Light\r\n");
+
+  if (sl_ml_model_init(&sl_ml_keyword_spotting_on_off_v2_model_handle) != SL_STATUS_OK) {
+    printf("Failed to load model\n");
+    while (1)
+      ;
+  }
+
+  if (!voice_control_light_config_load_model_settings(sl_ml_keyword_spotting_on_off_v2_model_handle.flatbuffer)) {
+    printf("Failed to load app parameters from .tflite model\n");
+    while (1)
+      ;
+  }
+
   printf("  threshold=%d\r\n", DETECTION_THRESHOLD);
   printf("  suppression time=%d ms\r\n", SUPPRESSION_TIME_MS);
   printf("Listening for keywords...\r\n");
+
+  if (!sl_ml_audio_feature_generation_load_model_settings(sl_ml_keyword_spotting_on_off_v2_model_handle.flatbuffer)) {
+    printf("Failed to load audio frontend parameters from .tflite model\n");
+    while (1)
+      ;
+  }
+
   sl_ml_audio_feature_generation_init();
-  
-  // Instantiate CommandRecognizer  
-  static RecognizeCommands static_recognizer(sl_tflite_micro_get_error_reporter(),
-                                             DETECTION_THRESHOLD,
+
+  static RecognizeCommands static_recognizer(DETECTION_THRESHOLD,
                                              SUPPRESSION_TIME_MS);
   command_recognizer = &static_recognizer;
 
-  // Add EM1 requirement to allow microphone sampling 
+  // Add EM1 requirement to allow microphone sampling
   sl_power_manager_add_em_requirement(SL_POWER_MANAGER_EM1);
 
   while (1) {
-    // Wait INFERENCE_INTERVAL_MS ms 
+    // Wait INFERENCE_INTERVAL_MS ms
     OSTimeDlyHMSM(0, 0, 0, INFERENCE_INTERVAL_MS, OS_OPT_TIME_PERIODIC, &err);
     EFM_ASSERT((RTOS_ERR_CODE_GET(err) == RTOS_ERR_NONE));
 

@@ -1,0 +1,105 @@
+project_name: aiml_soc_magic_wand_efr32
+package: aiml_app
+quality: production
+label: AI/ML - SoC Magic Wand EFR32
+description: >
+  This application demonstrates a model trained to recognize various hand gestures
+  with an accelerometer. The detected gestures are printed to the serial port.
+category: AI/ML Application
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+- name: Capability
+  value: [Machine Learning]
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: magic_wand.h
+  - path: accelerometer.h
+  - path: constants.h
+  - path: predictor.h
+source:
+- path: app.c
+- path: magic_wand.cc
+- path: accelerometer.cc
+- path: predictor.cc
+component:
+- id: ml_model
+  instance:
+  - magic_wand_model
+- id: sl_main
+- id: memory_manager
+- id: device_init
+- id: clock_manager
+- id: cpp_support
+- id: imu_driver
+- id: component_catalog
+- id: iostream_recommended_stream
+- id: simple_led
+  instance: [led0, led1]
+- id: gpio
+- id: sleeptimer
+- id: dma_manager
+- id: dma_channel
+- id: iostream_retarget_stdio
+define:
+- name: DEBUG_EFM
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_BOARD_ENABLE_SENSOR_IMU
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_usart]
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_uart]
+- name: SL_HEAP_SIZE
+  value: 0x3000
+toolchain_settings:
+- option: gcc_linker_option
+  value: -u _printf_float
+- option: llvm_linker_option
+  value: -u _printf_float
+- option: llvm_compiler_option
+  value: -Wno-implicit-exception-spec-mismatch
+- option: gcc_compiler_option
+  value: "-mfp16-format=ieee"
+- option: llvm_compiler_option
+  value: -Wno-unknown-warning-option
+- option: llvm_compiler_option
+  value: -Wno-unknown-pragmas
+- option: llvm_compiler_option
+  value: -Wno-vla-cxx-extension
+tag:
+- hardware:component:led:2+
+- hardware:component:imu
+- hardware:device:ram:40
+- hardware:device:flash:100
+readme:
+- path: readme.md
+ui_hints:
+  highlight: readme.md
+config_file:
+- path: config/compiler/magic_wand_model.mlconf
+  directory: tflite
+  override:
+    component: ml_model
+    file_id: ml_compiler_config
+    instance: magic_wand_model
+- path: config/tflite/magic_wand_model.tflite
+  directory: tflite
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 3.0.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2026.6.0

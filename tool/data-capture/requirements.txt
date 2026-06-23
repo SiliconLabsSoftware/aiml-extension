@@ -1,0 +1,4 @@
+numpy
+typer==0.15.1
+patool==1.12
+pyserial==3.5

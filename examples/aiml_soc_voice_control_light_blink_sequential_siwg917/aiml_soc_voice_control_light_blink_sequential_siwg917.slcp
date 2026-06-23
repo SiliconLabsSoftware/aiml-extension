@@ -1,0 +1,146 @@
+project_name: aiml_soc_voice_control_light_blink_sequential_siwg917
+package: aiml_app
+quality: experimental
+label: AI/ML - SoC Voice Control Light + Sine Blink sequential SiWG917
+description: >
+  This application uses a keyword spotting model to detect the spoken words "on" and "off"
+  from microphone audio on SiWG917. When "on" is detected, the firmware sequentially
+  loads a sine blink model to drive the indicator LED with software PWM for three cycles,
+  then returns to keyword spotting while keeping only one model initialized in RAM at a time.
+category: AI/ML Application
+filter:
+- name: Capability
+  value: [Machine Learning]
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+readme:
+- path: readme.md
+source:
+- path: voice_control_light.cc
+- path: recognize_commands.cc
+- path: app.cc
+- path: config/audio_classifier_config.cc
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: voice_control_light.h
+  - path: recognize_commands.h
+  - path: led_helper.hpp
+  - path: mic_helper.hpp
+toolchain_settings:
+- option: gcc_compiler_option
+  value: "-Wno-unused-parameter"
+- option: gcc_compiler_option
+  value: -Wall -Werror
+- option: gcc_linker_option
+  value: -u _printf_float
+- option: llvm_compiler_option
+  value: -Wall -Werror
+- option: llvm_linker_option
+  value: -u _printf_float
+- option: llvm_compiler_option
+  value: -Wno-implicit-exception-spec-mismatch
+- option: gcc_compiler_option
+  value: "-mfp16-format=ieee"
+- option: gcc_compiler_option
+  value: -Wno-unused-parameter
+component:
+- id: ml_model
+  instance:
+  - blink
+- id: ml_model
+  instance:
+  - keyword_spotting_on_off_v3
+- id: i2s_instance
+  instance: [i2s0]
+- id: si91x_mem_config_3
+- id: psram_core
+  condition:
+  - external_psram_8mb
+- id: psram_aps6404l_sqh
+  condition:
+  - external_psram_8mb
+- id: wiseconnect_toolchain_psram_linker
+  condition:
+  - external_psram_8mb
+- id: sl_si91x_rgb_led_917
+  instance: [led0]
+  condition: [brd2605a]
+- id: sl_si91x_led_917
+  instance: [led0]
+  condition: [brd4338a]
+- id: sleeptimer_si91x
+- id: syscalls
+- id: cmsis_dsp
+- id: emlib_common
+- id: sl_main
+- id: cpp_support
+- id: fe_audio
+  instance:
+  - keyword_spotting_on_off_v3
+define:
+- name: SUPPORT_CPLUSPLUS
+  value: 1
+config_file:
+- path: config/audio_classifier_config.h
+- path: config/compiler/blink.mlconf
+  directory: tflite
+  override:
+    component: ml_model
+    file_id: ml_compiler_config
+    instance: blink
+- path: config/compiler/keyword_spotting_on_off_v3.mlconf
+  directory: tflite
+  override:
+    component: ml_model
+    file_id: ml_compiler_config
+    instance: keyword_spotting_on_off_v3
+- path: tflite_models/tflite/keyword_spotting_on_off_v3.tflite
+  directory: tflite
+- path: tflite_models/tflite/blink.tflite
+  directory: tflite
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_TFLITE_MICRO_ARENA_SIZE
+  value: 2048
+- name: SL_I2S0_SCLK_PIN
+  value: 46
+- name: SL_I2S0_WSCLK_PIN
+  value: 47
+- name: SL_I2S0_DIN0_PIN
+  value: 48
+- name: RTE_I2S0_DIN0_PORT_ID
+  value: 2
+- name: RTE_I2S0_SCLK_PORT_ID
+  value: 2
+- name: RTE_I2S0_WSCLK_PORT_ID
+  value: 2
+ui_hints:
+  highlight:
+  - path: readme.md
+    focus: true
+post_build:
+- path: ../util/postbuild_profile/wiseconnect_soc.slpb
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 3.0.0
+- id: wiseconnect3_sdk
+  vendor: silabs
+  version: 4.1.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2026.6.0

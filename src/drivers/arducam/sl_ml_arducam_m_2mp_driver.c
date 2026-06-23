@@ -18,12 +18,26 @@
 #include "em_cmu.h"
 #include "em_gpio.h"
 #include "em_usart.h"
-#include "dmadrv.h"
+#include "sl_dma_manager.h"
+#include "sl_dma_channel.h"
 
 #include "sl_ml_arducam.h"
 #include "sl_ml_arducam_m_2mp_driver.h"
 
+static sl_dma_channel_handle_t tx_handle;
+static sl_dma_channel_handle_t rx_handle;
+static volatile bool is_first_dma_call;
+static volatile bool tx_done = false;
+static volatile bool dma_error = false;
 
+/* DMA channel indices may be 0; track successful sl_dma_channel_init instead of channel != 0. */
+static bool s_dma_rx_channel_in_use;
+static bool s_dma_tx_channel_in_use;
+
+static void sli_on_dma_rx_complete_irq_handler(sl_dma_channel_handle_t *handle,
+                                                void *user_data,
+                                                bool error,
+                                                bool aborted);
 #define SL_CONCAT(A, B, C) A ## B ## C
 /* Generate the cmu clock symbol based on instance. */
 #define I2C_CLOCK(N) SL_CONCAT(cmuClock_I2C, N, )
@@ -31,8 +45,8 @@
 
 #define USART_CLOCK(N) SL_CONCAT(cmuClock_USART, N, )
 #define USART_PORT(N) SL_CONCAT(USART, N, )
-#define USART_RX_DMA_SIGNAL(N) SL_CONCAT(dmadrvPeripheralSignal_USART, N, _RXDATAV)
-#define USART_TX_DMA_SIGNAL(N) SL_CONCAT(dmadrvPeripheralSignal_USART, N, _TXBL)
+#define USART_RX_DMA_SIGNAL(N) SL_CONCAT(SL_DMA_SIGNAL_USART, N, _RXDATAV)
+#define USART_TX_DMA_SIGNAL(N) SL_CONCAT(SL_DMA_SIGNAL_USART, N, _TXBL)
 
 #if defined(_SILICON_LABS_32B_SERIES_2)
 #define ENABLE_SPI_INTERRUPT() LDMA->IEN_SET = (1 << arducam_context.dma_rx_channel)
@@ -42,7 +56,18 @@
 #define DISABLE_SPI_INTERRUPT() LDMA->IEN &= ~(1 << arducam_context.dma_rx_channel)
 #endif
 
+static void tx_cb(sl_dma_channel_handle_t *handle, void *user_data,
+                   bool error, bool aborted)
+{
+  (void)handle;
+  (void)user_data;
 
+  if (!error && !aborted) {
+    tx_done = true;
+  } else {
+    dma_error = true;
+  }
+}
 /***************************************************************************//**
  *  Driver function to initialize arducam camera
  ******************************************************************************/
@@ -110,16 +135,44 @@ sl_status_t slx_ml_arducam_driver_init(const arducam_config_t* config)
     // Enable USART
     USART_Enable(USART_PORT(ARDUCAM_USART_PERIPHERAL_NO), usartEnable);
 
-    // Allocate a DMA channel for burst reads
-    DMADRV_Init();
-    if(DMADRV_AllocateChannel(&arducam_context.dma_rx_channel, NULL) != 0)
+    // Allocate DMA channels for burst reads
+    status = sl_dma_manager_allocate_channel(NULL, &arducam_context.dma_rx_channel);
+    if (status != SL_STATUS_OK)
     {
         return SL_STATUS_NO_MORE_RESOURCE;
     }
-    if(DMADRV_AllocateChannel(&arducam_context.dma_tx_channel, NULL) != 0)
+    status = sl_dma_channel_init(&rx_handle, NULL, arducam_context.dma_rx_channel,
+                                  sli_on_dma_rx_complete_irq_handler, NULL);
+    if (status != SL_STATUS_OK)
     {
+        sl_dma_manager_free_channel(NULL, arducam_context.dma_rx_channel);
+        return status;
+    }
+    sl_dma_channel_set_peripheral_signal(&rx_handle,
+                                          USART_RX_DMA_SIGNAL(ARDUCAM_USART_PERIPHERAL_NO));
+    s_dma_rx_channel_in_use = true;
+
+    status = sl_dma_manager_allocate_channel(NULL, &arducam_context.dma_tx_channel);
+    if (status != SL_STATUS_OK)
+    {
+        sl_dma_channel_deinit(&rx_handle);
+        sl_dma_manager_free_channel(NULL, arducam_context.dma_rx_channel);
+        s_dma_rx_channel_in_use = false;
         return SL_STATUS_NO_MORE_RESOURCE;
     }
+    status = sl_dma_channel_init(&tx_handle, NULL, arducam_context.dma_tx_channel,
+                                  tx_cb, NULL);
+    if (status != SL_STATUS_OK)
+    {
+        sl_dma_manager_free_channel(NULL, arducam_context.dma_tx_channel);
+        sl_dma_channel_deinit(&rx_handle);
+        sl_dma_manager_free_channel(NULL, arducam_context.dma_rx_channel);
+        s_dma_rx_channel_in_use = false;
+        return status;
+    }
+    sl_dma_channel_set_peripheral_signal(&tx_handle,
+                                          USART_TX_DMA_SIGNAL(ARDUCAM_USART_PERIPHERAL_NO));
+    s_dma_tx_channel_in_use = true;
 
 
     // ---------------------------------------------------
@@ -139,7 +192,7 @@ sl_status_t slx_ml_arducam_driver_init(const arducam_config_t* config)
     {
         GPIO_PinOutClear(ARDUCAM_I2C_SCL_PORT, ARDUCAM_I2C_SCL_PIN);
         ARDUCAM_DELAY_US(100);
-        GPIO_PinOutSet(ARDUCAM_I2C_SCL_PORT, ARDUCAM_I2C_SDA_PIN);
+        GPIO_PinOutSet(ARDUCAM_I2C_SCL_PORT, ARDUCAM_I2C_SCL_PIN);
         ARDUCAM_DELAY_US(100);
     }
 
@@ -227,16 +280,20 @@ sl_status_t slx_ml_arducam_driver_deinit()
     CMU_ClockEnable(I2C_CLOCK(ARDUCAM_I2C_PERIPHERAL_NO), false);
     CMU_ClockEnable(USART_CLOCK(ARDUCAM_USART_PERIPHERAL_NO), false);
 
-    if(arducam_context.dma_rx_channel != 0)
+    if (s_dma_rx_channel_in_use)
     {
-        DMADRV_FreeChannel(arducam_context.dma_rx_channel);
+        sl_dma_channel_deinit(&rx_handle);
+        sl_dma_manager_free_channel(NULL, arducam_context.dma_rx_channel);
         arducam_context.dma_rx_channel = 0;
+        s_dma_rx_channel_in_use = false;
     }
 
-    if(arducam_context.dma_tx_channel != 0)
+    if (s_dma_tx_channel_in_use)
     {
-        DMADRV_FreeChannel(arducam_context.dma_tx_channel);
+        sl_dma_channel_deinit(&tx_handle);
+        sl_dma_manager_free_channel(NULL, arducam_context.dma_tx_channel);
         arducam_context.dma_tx_channel = 0;
+        s_dma_tx_channel_in_use = false;
     }
 
     return SL_STATUS_OK;
@@ -346,8 +403,6 @@ sl_status_t slx_ml_arducam_driver_spi_write_reg(uint8_t addr, uint8_t data)
 
     GPIO_PinOutSet(ARDUCAM_USART_CS_PORT,  ARDUCAM_USART_CS_PIN);
 
-    ARDUCAM_DEBUG("SPI TX: 0x%02X = 0x%02X", addr, data);
-
     arducam_context.is_spi_active = false;
 
     ENABLE_SPI_INTERRUPT();
@@ -380,12 +435,6 @@ sl_status_t slx_ml_arducam_driver_spi_read_reg(uint8_t addr, uint8_t *data_ptr)
     //ARDUCAM_DELAY_US(5);
 
     GPIO_PinOutSet(ARDUCAM_USART_CS_PORT,  ARDUCAM_USART_CS_PIN);
-
-    //if(addr !=ARDUCHIP_REG_STATUS || (*data_ptr & CAP_DONE_MASK) != 0)
-    {
-        ARDUCAM_DEBUG("SPI RX: 0x%02X = 0x%02X", addr, *data_ptr);
-    }
-   
 
     arducam_context.is_spi_active = false;
 
@@ -435,10 +484,10 @@ sl_status_t slx_ml_arducam_driver_spi_burst_read(uint8_t *buffer, uint32_t lengt
 
     if(arducam_context.is_spi_active)
     {
+        ENABLE_SPI_INTERRUPT();
         return SL_STATUS_INVALID_STATE;
     }
 
-    // NOTE: The SPI interrupt will automatically be enabled
     arducam_context.is_spi_active = true;
 
     GPIO_PinOutClear(ARDUCAM_USART_CS_PORT, ARDUCAM_USART_CS_PIN);
@@ -452,7 +501,12 @@ sl_status_t slx_ml_arducam_driver_spi_burst_read(uint8_t *buffer, uint32_t lengt
 
     arducam_context.dma_length_remaining = length;
     arducam_context.dma_rx_ptr = buffer;
-    sli_on_dma_rx_complete_irq_handler(0, 0, (void*)1);
+    is_first_dma_call = true;
+
+    /* Must re-enable LDMA IRQ for the RX channel before DMA runs; polled SPI helpers do this, burst read must too. */
+    ENABLE_SPI_INTERRUPT();
+
+    sli_on_dma_rx_complete_irq_handler(&rx_handle, NULL, false, false);
 
 
     return SL_STATUS_OK;
@@ -530,16 +584,32 @@ sl_status_t sli_do_i2c_transfer(I2C_TransferSeq_TypeDef *seq)
 /***************************************************************************//**
  *   Callback function for signalling completion for DMA.
  ******************************************************************************/
-bool sli_on_dma_rx_complete_irq_handler(unsigned int channel, unsigned int sequenceNo, void *userParam)
+void sli_on_dma_rx_complete_irq_handler(sl_dma_channel_handle_t *handle,
+                                         void *user_data,
+                                         bool error,
+                                         bool aborted)
 {
 #define MAX_DMA_LENGTH ((_LDMA_CH_CTRL_XFERCNT_MASK >> _LDMA_CH_CTRL_XFERCNT_SHIFT)+1)
     static uint8_t dummy_tx_buffer = 0;
+    sl_status_t status;
 
-    if(userParam == NULL)
-    {
-        arducam_context.dma_rx_ptr += MAX_DMA_LENGTH;
-        arducam_context.dma_length_remaining -= MIN(MAX_DMA_LENGTH, arducam_context.dma_length_remaining);
+    (void)user_data;
+
+    if (error || aborted) {
+        GPIO_PinOutSet(ARDUCAM_USART_CS_PORT, ARDUCAM_USART_CS_PIN);
+        arducam_context.is_spi_active = false;
+        dma_error = true;
+        return;
     }
+
+    if (!is_first_dma_call)
+    {
+        /* Advance by the chunk that just completed; last chunk may be < MAX_DMA_LENGTH. */
+        uint32_t completed = MIN(MAX_DMA_LENGTH, arducam_context.dma_length_remaining);
+        arducam_context.dma_rx_ptr += completed;
+        arducam_context.dma_length_remaining -= completed;
+    }
+    is_first_dma_call = false;
 
     if(arducam_context.dma_length_remaining == 0)
     {
@@ -547,45 +617,36 @@ bool sli_on_dma_rx_complete_irq_handler(unsigned int channel, unsigned int seque
         arducam_context.state = CAMERA_STATE_READ_COMPLETE;
         arducam_context.is_spi_active = false;
         slx_ml_arducam_poll();
-        return false;
+        return;
     }
-
 
     const uint32_t chunk_length = MIN(MAX_DMA_LENGTH, arducam_context.dma_length_remaining);
 
-    LDMA_TransferCfg_t rx_cfg = LDMA_TRANSFER_CFG_PERIPHERAL(USART_RX_DMA_SIGNAL(ARDUCAM_USART_PERIPHERAL_NO));
-    LDMA_Descriptor_t rx_desc = LDMA_DESCRIPTOR_LINKREL_P2M_BYTE(
-        &USART_PORT(ARDUCAM_USART_PERIPHERAL_NO)->RXDATA,
-        arducam_context.dma_rx_ptr,
-        chunk_length,
-        0
-    );
-    rx_desc.xfer.link = 0;
-    rx_desc.xfer.doneIfs = 1;
+    status = sl_dma_channel_submit_transfer_p2m(&rx_handle,
+                                                 (void *)&USART_PORT(ARDUCAM_USART_PERIPHERAL_NO)->RXDATA,
+                                                 arducam_context.dma_rx_ptr,
+                                                 chunk_length,
+                                                 SL_DMA_CTRL_SIZE_BYTE,
+                                                 NULL);
+    if (status != SL_STATUS_OK)
+    {
+        GPIO_PinOutSet(ARDUCAM_USART_CS_PORT, ARDUCAM_USART_CS_PIN);
+        arducam_context.is_spi_active = false;
+        dma_error = true;
+        return;
+    }
 
-
-    LDMA_TransferCfg_t tx_cfg = LDMA_TRANSFER_CFG_PERIPHERAL(USART_TX_DMA_SIGNAL(ARDUCAM_USART_PERIPHERAL_NO));
-    LDMA_Descriptor_t tx_desc = LDMA_DESCRIPTOR_LINKREL_M2P_BYTE(
-        &dummy_tx_buffer,
-        &USART_PORT(ARDUCAM_USART_PERIPHERAL_NO)->TXDATA,
-        chunk_length,
-        0
-    );
-    tx_desc.xfer.link = 0;
-    tx_desc.xfer.doneIfs = 0;
-    tx_desc.xfer.srcInc = ldmaCtrlSrcIncNone;
-
-    // Start receive DMA
-    DMADRV_LdmaStartTransfer(
-        arducam_context.dma_rx_channel, &rx_cfg,
-        &rx_desc, sli_on_dma_rx_complete_irq_handler, NULL
-    );
-    
-    // Start transmit DMA
-    DMADRV_LdmaStartTransfer(
-        arducam_context.dma_tx_channel, &tx_cfg,
-        &tx_desc, NULL, NULL
-    );
-
-    return false;
+    status = sl_dma_channel_submit_transfer_m2p(&tx_handle,
+                                                 (void *)&dummy_tx_buffer,
+                                                 (void *)&USART_PORT(ARDUCAM_USART_PERIPHERAL_NO)->TXDATA,
+                                                 chunk_length,
+                                                 SL_DMA_CTRL_SIZE_BYTE,
+                                                 NULL);
+    if (status != SL_STATUS_OK)
+    {
+        GPIO_PinOutSet(ARDUCAM_USART_CS_PORT, ARDUCAM_USART_CS_PIN);
+        arducam_context.is_spi_active = false;
+        dma_error = true;
+        return;
+    }
 }

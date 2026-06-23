@@ -20,8 +20,8 @@
 
 #include <cstdint>
 
-#include "tensorflow/lite/c/common.h"
-#include "tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h"
+#include "ml/third_party/tflm/common.h"
+#include "ml/third_party/tflm/micro_log.h"
 
 constexpr int kMaxCategoryCount = 4;
 extern const char* kCategoryLabels[kMaxCategoryCount];
@@ -34,8 +34,8 @@ extern const char* kCategoryLabels[kMaxCategoryCount];
 // there are hard limits on the number of results it can store.
 class PreviousResultsQueue {
 public:
-  PreviousResultsQueue(tflite::ErrorReporter * error_reporter)
-    : error_reporter_(error_reporter), front_index_(0), size_(0) {
+  PreviousResultsQueue()
+    : front_index_(0), size_(0) {
   }
 
   // Data structure that holds an inference result, and the time when it
@@ -76,9 +76,7 @@ public:
   void push_back(const Result& entry)
   {
     if (size() >= kMaxResults) {
-      TF_LITE_REPORT_ERROR(
-        error_reporter_,
-        "Couldn't push_back latest result, too many already!");
+      MicroPrintf("Couldn't push_back latest result, too many already!");
       return;
     }
     size_ += 1;
@@ -88,8 +86,7 @@ public:
   Result pop_front()
   {
     if (size() <= 0) {
-      TF_LITE_REPORT_ERROR(error_reporter_,
-                           "Couldn't pop_front result, none present!");
+      MicroPrintf("Couldn't pop_front result, none present!");
       return Result();
     }
     Result result = front();
@@ -107,8 +104,7 @@ public:
   Result& from_front(int offset)
   {
     if ((offset < 0) || (offset >= size_)) {
-      TF_LITE_REPORT_ERROR(error_reporter_,
-                           "Attempt to read beyond the end of the queue!");
+      MicroPrintf("Attempt to read beyond the end of the queue!");
       offset = size_ - 1;
     }
     int index = front_index_ + offset;
@@ -119,7 +115,6 @@ public:
   }
 
 private:
-  tflite::ErrorReporter* error_reporter_;
   static constexpr int kMaxResults = 50;
   Result results_[kMaxResults];
 
@@ -139,18 +134,7 @@ private:
 // of data over time.
 class RecognizeCommands {
 public:
-  // labels should be a list of the strings associated with each one-hot score.
-  // The window duration controls the smoothing. Longer durations will give a
-  // higher confidence that the results are correct, but may miss some commands.
-  // The detection threshold has a similar effect, with high values increasing
-  // the precision at the cost of recall. The minimum count controls how many
-  // results need to be in the averaging window before it's seen as a reliable
-  // average. This prevents erroneous results when the averaging window is
-  // initially being populated for example. The suppression argument disables
-  // further recognitions for a set time after one has been triggered, which can
-  // help reduce spurious recognitions.
-  explicit RecognizeCommands(tflite::ErrorReporter* error_reporter,
-                             uint8_t detection_threshold,
+  explicit RecognizeCommands(uint8_t detection_threshold,
                              int32_t suppression_ms);
 
   // Call this with the results of running a model on sample data.
@@ -161,7 +145,6 @@ public:
 
 private:
   // Configuration
-  tflite::ErrorReporter* error_reporter_;
   uint8_t detection_threshold_;
   int32_t suppression_ms_;
 

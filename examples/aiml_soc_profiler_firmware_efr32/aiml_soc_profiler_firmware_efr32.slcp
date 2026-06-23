@@ -1,0 +1,108 @@
+project_name: aiml_soc_profiler_firmware_efr32
+package: aiml_app
+quality: production
+label: AI/ML - ML Profiler Firmware
+description: >
+  Firmware for TensorFlow Lite for Microcontrollers plus the ML profiler on EFR32.
+  The default flatbuffer is compiled for the selected board by the ml_compiler.
+category: AI/ML Application
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+- name: Capability
+  value: [Machine Learning]
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: sl_ml_profiler_firmware.h
+source:
+- path: app.c
+- path: sl_ml_profiler_firmware.cc
+component:
+- id: ml_profiler
+- id: ml_model
+  instance:
+  - firmware_model
+- id: sl_assert
+- id: sl_main
+- id: memory_manager
+- id: cpp_support
+- id: device_init
+- id: clock_manager
+- id: iostream_recommended_stream
+- id: iostream_retarget_stdio
+- id: sleeptimer
+- id: dma_manager
+- id: dma_channel
+config_file:
+- path: config/compiler/firmware_model_mvp.mlconf
+  directory: tflite
+  override:
+    component: ml_model
+    file_id: ml_compiler_config
+    instance: firmware_model
+- path: tflite_models/tflite/firmware_model.tflite
+  directory: tflite
+define:
+- name: NDEBUG
+configuration:
+- name: SL_MVP_POWER_MODE
+  value: 1
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_usart]
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_CLOCK_MANAGER_HFRCO_DPLL_EN
+  value: 1
+- name: SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE
+  value: "SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE_HFRCODPLL"
+- name: SL_ML_PROFILER_DEBUG_MODEL_BASE_ADDR
+  value: 0x080BB800UL
+- name: SL_MVP_OPTIMIZE_SPEED
+  value: 1
+- name: SL_ML_ENABLE_DYNAMIC_MODEL_LOAD
+  value: 1
+- name: SL_ML_ENABLE_PROFILER_DEBUG_MSG
+  value: 1
+toolchain_settings:
+- option: optimize
+  value: speed
+- option: gcc_linker_option
+  value: -u _printf_float
+- option: llvm_linker_option
+  value: -u _printf_float
+- option: llvm_compiler_option
+  value: -Wno-implicit-exception-spec-mismatch
+- option: gcc_compiler_option
+  value: "-mfp16-format=ieee"
+- option: llvm_linker_option
+  value: "-mfp16-format=ieee"
+- option: llvm_compiler_option
+  value: -Wno-unknown-warning-option
+- option: llvm_compiler_option
+  value: -Wno-unknown-pragmas
+- option: llvm_compiler_option
+  value: -Wno-vla-cxx-extension
+readme:
+- path: readme.md
+ui_hints:
+  highlight: readme.md
+tag:
+- hardware:device:ram:128
+- hardware:device:flash:400
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 3.0.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2026.6.0

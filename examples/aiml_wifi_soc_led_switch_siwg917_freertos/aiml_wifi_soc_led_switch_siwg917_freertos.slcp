@@ -1,0 +1,81 @@
+project_name: aiml_wifi_soc_led_switch_siwg917_freertos
+package: aiml_app
+quality: experimental
+label: AI/ML - SoC Wi-Fi UDP LED Switch (FreeRTOS)
+category: AI/ML Application
+description: >
+  Wi-Fi station application for SiWx917 under FreeRTOS that joins an access
+  point, listens on a UDP port, and controls the board LED when incoming
+  datagrams contain the substrings on or off.
+filter:
+- name: Capability
+  value: [Machine Learning]
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value:
+  - Beginner
+source:
+- path: app.c
+include:
+- path: .
+  file_list:
+  - path: app.h
+define:
+- name: SL_SI91X_PRINT_DBG_LOG
+component:
+- id: sl_main
+- id: freertos
+- id: freertos_heap_4
+- id: syscalls
+- id: si91x_memory_default_config
+- id: wifi
+- id: sl_si91x_internal_stack
+- id: wifi_resources
+- id: network_manager
+- id: basic_network_config_manager
+- id: bsd_socket
+- id: sl_gpio
+- id: sl_si91x_asynchronous_socket
+- id: sl_si91x_mem_pool_buffers_with_quota
+requires:
+- name: device_needs_ram_execution
+  condition:
+  - si91x_common_flash
+toolchain_settings:
+- option: gcc_linker_option
+  value: -u _printf_float
+- option: gcc_compiler_option
+  value: -Wall -Werror
+- option: gcc_compiler_option
+  value: "-mfp16-format=ieee"
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: "1"
+- name: DEFAULT_WIFI_CLIENT_PROFILE_SSID
+  value: "\"AIML_WIFI_SSID\""
+- name: DEFAULT_WIFI_CLIENT_CREDENTIAL
+  value: "\"MY_AP_PASSPHRASE\""
+readme:
+- path: readme.md
+
+other_file: []
+ui_hints:
+  highlight:
+  - path: readme.md
+    focus: true
+post_build:
+- path: ../util/postbuild_profile/wiseconnect_soc.slpb
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 3.0.0
+- id: wiseconnect3_sdk
+  vendor: silabs
+  version: 4.1.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2026.6.0

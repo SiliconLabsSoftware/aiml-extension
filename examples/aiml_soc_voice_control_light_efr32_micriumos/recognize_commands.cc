@@ -17,6 +17,7 @@
 
 #include "recognize_commands.h"
 
+#include <cstdio>
 #include <limits>
 
 // Labels used by the Voice Control tflite model
@@ -31,16 +32,14 @@ const char* kCategoryLabels[kMaxCategoryCount] = {
   "background",
 };
 
-RecognizeCommands::RecognizeCommands(tflite::ErrorReporter* error_reporter,
-                                     uint8_t detection_threshold,
-                                     int32_t suppression_ms)
-  : error_reporter_(error_reporter),
-  detection_threshold_(detection_threshold),
+RecognizeCommands::RecognizeCommands(uint8_t detection_threshold,
+                                   int32_t suppression_ms)
+  : detection_threshold_(detection_threshold),
   suppression_ms_(suppression_ms),
-  previous_results_(error_reporter)
+  previous_results_()
 {
   previous_top_label_index_ = 3; // "background"
-  previous_top_label_time_ = std::numeric_limits < int32_t > ::min();
+  previous_top_label_time_ = std::numeric_limits<int32_t>::min();
 }
 
 TfLiteStatus RecognizeCommands::ProcessLatestResults(
@@ -48,22 +47,22 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
   uint8_t* found_command_index, uint8_t* score, bool* is_new_command)
 {
 
-uint8_t category_count = latest_results->dims->data[1];
+int num_classes = latest_results->dims->data[1];
 int8_t current_top_index = 0;
 int32_t current_top_score = 0;
 uint8_t converted_scores[kMaxCategoryCount];
 
 // Convert the model output to uint8
 if (latest_results->type == kTfLiteInt8) {
-    for(int i = 0; i < category_count; ++i) {
+    for(int i = 0; i < num_classes; ++i) {
       converted_scores[i] = (uint8_t)(latest_results->data.int8[i] + 128);
     }
   } else {
-      TF_LITE_REPORT_ERROR(error_reporter_, "Unsupported output tensor data type, must be int8 or float32");
+      printf("Unsupported output tensor data type, must be int8 or float32\n");
       return kTfLiteError;
   }
 
-  for (int i = 0; i < category_count; i++) {
+  for (int i = 0; i < num_classes; i++) {
     if (converted_scores[i] > current_top_score) {
       current_top_score = converted_scores[i];
       current_top_index = i;
@@ -74,8 +73,8 @@ if (latest_results->type == kTfLiteInt8) {
   // soon afterwards is a bad result.
   int64_t time_since_last_top;
   if ((previous_top_label_index_ == 3 || previous_top_label_index_ == 2)
-      || (previous_top_label_time_ == std::numeric_limits < int32_t > ::min())) {
-    time_since_last_top = std::numeric_limits < int32_t > ::max();
+      || (previous_top_label_time_ == std::numeric_limits<int32_t>::min())) {
+    time_since_last_top = std::numeric_limits<int32_t>::max();
     // Reset timer if detecting background / unknown
   } else {
     time_since_last_top = current_time_ms - previous_top_label_time_;
@@ -90,6 +89,6 @@ if (latest_results->type == kTfLiteInt8) {
   }
 
   *found_command_index = current_top_index;
-  *score = current_top_score;
+  *score = (uint8_t)current_top_score;
   return kTfLiteOk;
 }

@@ -19,8 +19,6 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
-#include <stdio.h>
-
 
 #include "em_i2c.h"
 
@@ -37,12 +35,8 @@
 #define ARDUCAM_DELAY_US(us) sl_udelay_wait(us)
 #define ARDUCAM_DELAY_MS(us) sl_sleeptimer_delay_millisecond(us)
 
-//#define ARDUCAM_DEBUG_ENABLED
-#ifdef ARDUCAM_DEBUG_ENABLED
-#define ARDUCAM_DEBUG(fmt, ...) printf("ARDUCAM: " fmt "\n", ## __VA_ARGS__)
-#else
-#define ARDUCAM_DEBUG(...)
-#endif
+/** Disabled: no VCOM strings from Arducam layers using this macro. */
+#define ARDUCAM_DEBUG(...) ((void)0)
 
 #define ARRAY_COUNT(x) (sizeof(x) / sizeof(*x))
 
@@ -151,8 +145,9 @@ typedef struct
     volatile bool is_spi_active;            // Is the MCU actively using the SPI bus?
 
     bool add_dummy_byte_to_burst_read;      // Older Arducam versions do not require a dummy byte between the burst read command and RX data
-    unsigned int dma_rx_channel;            // SPI DMA RX channel
-    unsigned int dma_tx_channel;            // SPI DMA Tx channel
+    uint8_t dma_rx_channel;            // SPI DMA RX channel
+    uint8_t dma_tx_channel;            // SPI DMA Tx channel
+    /* Remaining burst length; RX DMA completion subtracts the completed chunk (last chunk may be < LDMA max). */
     uint32_t dma_length_remaining;
     uint8_t* dma_rx_ptr;
 
@@ -349,21 +344,3 @@ sl_status_t slx_ml_arducam_driver_spi_set_bit(uint8_t addr, uint8_t bits);
  ******************************************************************************/
 sl_status_t sli_do_i2c_transfer(I2C_TransferSeq_TypeDef *seq);
 
-/***************************************************************************//**
- * @brief
- *  Callback function for signalling completion for DMA.
- * 
- * @param[in] channel 
- *  channel ID to use.
- * 
- * @param[in] sequenceNo 
- *  Sequence number.
- * 
- * @param[in] userParam 
- *  An optional user parameter to feed to the callback function. May be NULL if
- *  not needed.
- * 
- * @return
- *  boolean value representing state.
- ******************************************************************************/
-bool sli_on_dma_rx_complete_irq_handler( unsigned int channel, unsigned int sequenceNo, void *userParam);

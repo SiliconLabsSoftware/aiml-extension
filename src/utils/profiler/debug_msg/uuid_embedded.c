@@ -75,7 +75,7 @@ void uuid_v4_generate(uint8_t out16[16])
 /* Convert 16-byte UUID to canonical string "8-4-4-4-12" (36 chars + NUL). */
 void uuid_to_string(const uint8_t u[16], char out37[37])
 {
-    static const char hex[16] = "0123456789abcdef";
+    static const char hex[] = "0123456789abcdef";
     int pos = 0;
     for (int i = 0; i < 16; ++i) {
         /* Insert hyphens after byte indices: 3,5,7,9 (0-based) */

@@ -43,11 +43,6 @@
     #include "sl_component_catalog.h"
 #endif
 
-#if defined(SL_CATALOG_MVP_PRESENT)
-    #include "sl_mvp.h"
-    #include "sl_nn_util.h"
-#endif
-
 namespace sl {
 namespace ml {
 	// Subclass tflite::MicroProfiler to get Invoke() hooks from model layers.
@@ -109,13 +104,13 @@ namespace ml {
 		uint32_t wall_ticks_delta_ = 0; /* per-op delta for cpu_util */
 		uint32_t mvp_instructions=0;
 		uint32_t mvp_stall_cycles=0;
-		uint32_t mvp_programs=0;
+		// flag to indicate kernel use from MVP
+		bool mvp_counter_enabled = false;
 
 		// ================ SESSION METRICS FUNCTIONS =====================
 		bool reset_profiler_metrics();
 		const char* core_name_from_cpuid();
 		sl_ml_mcu_id_t get_mcu_id();
-		uint32_t read_mvp_ipversion();
 		sl_ml_accelerator_id_t get_accelerator_id();
 		bool sector_is_blank(uint32_t sector_addr);
 		uint32_t flash_used_kb();

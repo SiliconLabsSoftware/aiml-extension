@@ -41,7 +41,7 @@ extern "C" {
 #endif
 
 /***************************************************************************//**
- * @addtogroup imu IMU - Inertial Measurement Unit
+ * @addtogroup imu
  * @brief Inertial Measurement Unit driver
  * @{
 

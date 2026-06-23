@@ -1,0 +1,26 @@
+id: ml_profiler_utils
+package: aiml
+label: Machine learning profiler utilities
+description: >
+  This component provides APIs profiler performance counters to 
+  Silicon Labs devices with MVP accelarators.
+category: Machine Learning|Model Profiler
+quality: production
+metadata:
+  sbom:
+    license: MSLA
+provides:
+  - name: ml_profiler_utils
+requires:
+  - name: toolchain_gcc
+    condition: [device_efx]
+  - name: cpp_support
+  - name: component_catalog
+include:
+  - path: inc/utils/profiler
+    file_list:
+      - path: sl_ml_mvp_counter.h
+source:
+  - path: src/utils/profiler/sl_ml_mvp_counter.cc
+ui_hints:
+  visibility: never

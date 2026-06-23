@@ -58,7 +58,6 @@ SilabsProfiler::~SilabsProfiler() = default;
 uint32_t SilabsProfiler::BeginEvent(const char* tag) {
 
     op_name_ = tag;
-    
     reset_profiler_metrics();
     update_start_event_info();
     // Prepare counter track info to debug channel

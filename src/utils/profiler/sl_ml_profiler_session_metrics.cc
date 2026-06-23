@@ -18,6 +18,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdio>  // printf in non-debug builds
+#include <cstring>
 #include <stdint.h>
 #if defined(SL_COMPONENT_CATALOG_PRESENT)
 #include "sl_component_catalog.h"
@@ -25,6 +26,8 @@
 #if defined(SL_CATALOG_MEMORY_MANAGER_PRESENT)
 #include "sl_memory_manager.h"
 #endif
+#include "ml/tflite_micro_model/tflite_micro_accelerator.hpp"
+#include "sl_ml_mvp_counter.h"
 // If you use Silicon Labs sleeptimer:
 // If you don't have sleeptimer, use your always-on timer instead and
 // provide equivalents for WALL_TICKS_NOW() and WALL_TICKS_PER_SEC().
@@ -74,59 +77,6 @@ constexpr float UA_PER_MHZ_ACTIVE = 49.1f; // microamps per MHz (active)
 constexpr float STATIC_MA         = 0.0f;  // baseline static current (mA)
 constexpr float VOLTAGE_V         = 3.3f;  // supply voltage (V)
 #endif // SL_ML_ENABLE_ENERGY_PROFILING
-
-/***************************************************************************//**
- * @brief SI91X MVP performance counter access (RUN and STALL).
- *
- * Configures and reads MVP counters on SI91X:
- * - Counter0: RUN cycles
- * - Counter1: STALL cycles
- ******************************************************************************/
-#if (!defined(SL_CATALOG_MVP_PRESENT))
-static inline void sli_mvp_perfcnt_reset_all() {
-  // Clear and configure counters to measure RUN and STALL
-  // Disable counters while configuring
-  MVP->CFG_CLR = MVP_CFG_PERFCNTEN;
-  // Select PERF0 = RUN, PERF1 = STALL
-  MVP->CFG_CLR = (_MVP_CFG_PERF0CNTSEL_MASK | _MVP_CFG_PERF1CNTSEL_MASK);
-  MVP->CFG_SET = (uint32_t)MVP_CFG_PERF0CNTSEL_RUN;
-  MVP->CFG_SET = (uint32_t)MVP_CFG_PERF1CNTSEL_STALL;
-  // Enable performance counters
-  MVP->CFG_SET = MVP_CFG_PERFCNTEN;
-}
-/***************************************************************************//**
- * @brief Reset MVP cycles and program count.
- ******************************************************************************/
-static inline void sli_mvp_progcnt_reset() {
-  // Reset sequence: briefly disable and re-enable perf counters
-  MVP->CFG_CLR = MVP_CFG_PERFCNTEN;
-  MVP->CFG_SET = MVP_CFG_PERFCNTEN;
-}
-
-/***************************************************************************//**
- * @brief provides instrunctions/stalls count for MVP accelerator.
- *
- * @return mvp cycles count.
- ******************************************************************************/
-static inline uint32_t sli_mvp_perfcnt_get(int counter_id) {
-  // Return the selected counter value
-  if (counter_id == 0) {
-    return (uint32_t)MVP->PERF[0].CNT;
-  } else if (counter_id == 1) {
-    return (uint32_t)MVP->PERF[1].CNT;
-  }
-  return 0u;
-}
-/***************************************************************************//**
- * @brief provides program count for MVP accelerator.
- *
- * @return mvp program count.
- ******************************************************************************/
-static inline uint32_t sli_mvp_progcnt_get() {
-  // SI91X does not expose a separate program counter; return PERF0 as proxy
-  return (uint32_t)MVP->PERF[0].CNT;
-}
-#endif
 
 namespace sl {
 namespace ml {
@@ -226,45 +176,32 @@ sl_ml_mcu_id_t SilabsProfiler::get_mcu_id(void)
 }
 /***************************************************************************//**
  * @brief
- *   Read MVP IP version from whichever alias is visible (TZ/non-TZ).
+ *   Resolve profiler accelerator id from TfLiteMicroAccelerator::name() 
  *
  * @return
- *   IPVERSION register value, or 0 if MVP is not present/visible.
- ******************************************************************************/
-uint32_t SilabsProfiler::read_mvp_ipversion(void)
-{
-  // On TrustZone-enabled Series 2 parts, MVP may be aliased as MVP_NS or MVP_S.
-#if defined(MVP_NS)
-  return MVP_NS->IPVERSION;
-#elif defined(MVP_S)
-  return MVP_S->IPVERSION;
-#elif defined(MVP)
-  return MVP->IPVERSION;
-#else
-  return 0u; // No MVP in this device / image
-#endif
-}
-/***************************************************************************//**
- * @brief
- *   Produce a friendly accelerator name based on the MVP IP version.
- *
- * @return
- *   "mvp1" if absent/unknown.
+ *   SL_ML_ACCELERATOR_ID_* value for the session packet.
  ******************************************************************************/
 sl_ml_accelerator_id_t SilabsProfiler::get_accelerator_id(void)
 {
-  // If there's no MVP peripheral accessible, report "none".
-#if !(defined(MVP) || defined(MVP_NS) || defined(MVP_S))
-  return SL_ML_ACCELERATOR_ID_INVALID; //"none";
-#else
-  // Silicon Labs peripherals expose an IPVERSION register whose value is the IP version.
-  uint32_t v = read_mvp_ipversion();
-  if (v == 0u)          return SL_ML_ACCELERATOR_ID_INVALID; // not present/visible
-  uint32_t major = v & 0xFFu;          // defensive: use low 8 bits
-  switch (major) {
-    case 1u:  return SL_ML_ACCELERATOR_ID_MVPv1;// "mvp1";
-    default:  return SL_ML_ACCELERATOR_ID_MVPv1;           // newer/unknown version
+  const char* accelerator_name = nullptr;
+  auto* accelerator = npu_toolkit::get_tflite_micro_accelerator();
+  if (accelerator != nullptr) {
+    accelerator_name = accelerator->name();
   }
+  if (accelerator_name != nullptr && accelerator_name[0] != '\0') {
+    constexpr size_t k_mvpv1_name_len = sizeof("mvpv1") - 1U;
+    if ((std::strncmp(accelerator_name, "mvpv1", k_mvpv1_name_len) == 0 &&
+         accelerator_name[k_mvpv1_name_len] == '\0') ||
+        (std::strncmp(accelerator_name, "MVPv1", k_mvpv1_name_len) == 0 &&
+         accelerator_name[k_mvpv1_name_len] == '\0')) {
+      mvp_counter_enabled = true;
+      return SL_ML_ACCELERATOR_ID_MVPv1;
+    }
+  }
+#if (defined(MVP) || defined(MVP_NS) || defined(MVP_S))
+  return SL_ML_ACCELERATOR_ID_MVPv1; 
+#else
+  return SL_ML_ACCELERATOR_ID_INVALID;
 #endif
 }
 /***************************************************************************//**
@@ -382,16 +319,13 @@ void SilabsProfiler::update_start_session_info(sl_ml_profiler_start_session_info
 void SilabsProfiler::update_end_session_info()
 {
     end_session_info.total_num_cycles += event_info.num_cpu_cycles;
-    end_session_info.total_num_stalls += event_info.num_cpu_stalls;
     end_session_info.total_acc_cycles += event_info.num_mvp_cycles;
     end_session_info.total_acc_stalls += event_info.num_mvp_stalls;
     end_session_info.total_wall_ticks += event_info.wall_ticks;
-    
     end_session_info.total_num_ops += event_info.ops;
     end_session_info.total_num_macs += event_info.macs;
     //end_session_info.total_ram_used_kb = 0; updated in emit_counter_packet_info()
     end_session_info.mean_mac_per_cycle += event_info.mac_per_cycle;
-    //end_session_info.mean_inference_time_ms = inference_time_ms_;
 #ifdef SL_ML_ENABLE_ENERGY_PROFILING
     end_session_info.energy_joules += event_info.energy_joules;
 #endif // SL_ML_ENABLE_ENERGY_PROFILING
@@ -465,13 +399,10 @@ std::size_t SilabsProfiler::heap_usage_bytes() {
  * @note Uses compiler-specific inline assembly to read SP when available.
  ******************************************************************************/
 std::size_t SilabsProfiler::stack_usage_bytes() {
-#if defined(__GNUC__) || defined(__clang__)
-  register char* sp asm("sp");
-#else // __GNUC__ //  __clang__
-  uint32_t sp = __get_MSP();  // current stack pointer
-#endif// __GNUC__ //  __clang__
-  if (sp >= __StackTop) return 0;
-  return static_cast<std::size_t>(__StackTop - sp);
+  uintptr_t sp_val = static_cast<uintptr_t>(__get_MSP());
+  uintptr_t top = reinterpret_cast<uintptr_t>(__StackTop);
+  if (sp_val >= top) return 0;
+  return static_cast<std::size_t>(top - sp_val);
 }
 #endif
 /***************************************************************************//**
@@ -485,7 +416,6 @@ float SilabsProfiler::get_memory_utilization_kb() {
     + bss_usage_bytes()
     + heap_usage_bytes()
     + stack_usage_bytes();
-
   return (total_b / 1024.0f); // integer KiB
 }
 
@@ -567,10 +497,11 @@ uint32_t SilabsProfiler::get_cpu_cycles()
 void SilabsProfiler::event_counter_begin()
 {
   dwt_enable_cyccnt();
-//#if defined(SL_CATALOG_MVP_PRESENT)
-  sli_mvp_perfcnt_reset_all();
-  sli_mvp_progcnt_reset();
-//#endif
+  if (mvp_counter_enabled) {
+    sli_ml_mvp_perfcnt_reset_all();
+    sli_ml_mvp_progcnt_reset();
+  }
+
   cpu_cnt_start = get_cpu_cycles(); // DWT->CYCCNT;
   wall_tick_start_ = WALL_TICKS_NOW();
 }
@@ -582,16 +513,15 @@ void SilabsProfiler::event_counter_end()
 {
   const uint64_t wall_end = WALL_TICKS_NOW();
   uint32_t cyccnt_end   = get_cpu_cycles(); //DWT->CYCCNT;
-  
-
-//#if defined(SL_CATALOG_MVP_PRESENT)
-    mvp_instructions = sli_mvp_perfcnt_get(0);
+  mvp_instructions = 0;
+  mvp_stall_cycles = 0;
+  if (mvp_counter_enabled) {
+    mvp_instructions = sli_ml_mvp_perfcnt_get(0);
     if (mvp_instructions > 0) {
-        mvp_stall_cycles = sli_mvp_perfcnt_get(1);
-        mvp_programs = sli_mvp_progcnt_get();
+      mvp_stall_cycles = sli_ml_mvp_perfcnt_get(1);
     }
-//#endif
-  
+  }
+
   // Unsigned subtraction handles CYCCNT wraparound (mod 2^32)
   uint32_t cpu_cycles_cnt  = (cyccnt_end - cpu_cnt_start);
   const uint64_t wall_delta64 = wall_end - wall_tick_start_;
@@ -616,10 +546,10 @@ void SilabsProfiler::event_counter_end()
   event_info.wall_ticks = wall_ticks_delta_;
   event_info.num_cpu_cycles = cpu_cycles_cnt;
   event_info.num_cpu_stalls = 0; // TODO
-//#if defined(SL_CATALOG_MVP_PRESENT)
+
   event_info.num_mvp_cycles = mvp_instructions;
   event_info.num_mvp_stalls = mvp_stall_cycles;
-//#endif
+  
   event_info.cpu_util_percent = cpu_pct;
   event_info.clock_rate_hz = (float)cpu_freq;
   // Per cycle MACs

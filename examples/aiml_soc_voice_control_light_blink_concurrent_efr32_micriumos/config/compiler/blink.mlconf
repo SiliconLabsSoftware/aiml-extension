@@ -1,0 +1,7 @@
+model: blink.tflite
+
+graph_optimizer:
+  enabled: true
+
+memory_optimizer:
+  enabled: true

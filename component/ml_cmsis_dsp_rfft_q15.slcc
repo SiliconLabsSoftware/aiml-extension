@@ -29,7 +29,5 @@ requires:
 source:
   - path: src/dsp/sl_ml_fft.cc
     condition: [device_cortexm]
-  - path: src/dsp/sl_ml_fft_stub.cc
-    condition: [simulation]
 ui_hints:
   visibility: never

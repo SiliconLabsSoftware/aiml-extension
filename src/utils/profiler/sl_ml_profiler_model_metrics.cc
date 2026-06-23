@@ -18,13 +18,8 @@
  ******************************************************************************/
 #include "sl_ml_silabs_profiler.h"
 #include <cstring>   // for memset
-#if defined(SL_BOARD_SI91X)
 #include "ml/third_party/tflm/micro_allocator.h"
-#endif
-#if defined(SL_BOARD_EFX)
-#include "tensorflow/lite/schema/schema_utils.h"
-#include "tensorflow/lite/schema/schema_generated.h"
-#endif
+
 using namespace tflite;
 
 namespace sl {
@@ -178,7 +173,7 @@ void SilabsProfiler::calculate_fully_connected(const tflite::Operator* op)
     }
 
     //printf("MACs: %llu\n", (unsigned long long)macs);
-    printf("OPs: %llu\n",  (unsigned long long)ops);
+    //printf("OPs: %llu\n",  (unsigned long long)ops);
     NoteShapesAndCounters(input_tensor, output_tensor, macs, ops);
 }
 
@@ -463,8 +458,8 @@ void SilabsProfiler::calculate_quantize(const tflite::Operator* op)
     uint64_t macs = 0;
     uint64_t ops  = FlatSize(input) * 4ULL; // divide + add + min + max
 
-    printf("MACs: %llu\n", (unsigned long long)macs);
-    printf("OPs: %llu\n",  (unsigned long long)ops);
+    //printf("MACs: %llu\n", (unsigned long long)macs);
+    //printf("OPs: %llu\n",  (unsigned long long)ops);
     NoteShapesAndCounters(input, output, macs, ops);
 }
 
@@ -485,8 +480,8 @@ void SilabsProfiler::calculate_dequantize(const tflite::Operator* op)
     uint64_t macs = 0;
     uint64_t ops  = FlatSize(input) * 2ULL; // multiply + subtract
 
-    printf("MACs: %llu\n", (unsigned long long)macs);
-    printf("OPs: %llu\n",  (unsigned long long)ops);
+    //printf("MACs: %llu\n", (unsigned long long)macs);
+    //printf("OPs: %llu\n",  (unsigned long long)ops);
     NoteShapesAndCounters(input, output, macs, ops);
 }
 
@@ -533,8 +528,8 @@ void SilabsProfiler::calculate_reshape(const tflite::Operator* op)
         ops = FlatSize(input); // memcpy-like
     }
 
-    printf("MACs: %llu\n", (unsigned long long)macs);
-    printf("OPs: %llu\n",  (unsigned long long)ops);
+    //printf("MACs: %llu\n", (unsigned long long)macs);
+    //printf("OPs: %llu\n",  (unsigned long long)ops);
     NoteShapesAndCounters(input, output, macs, ops);
 }
 
@@ -565,8 +560,8 @@ void SilabsProfiler::calculate_mean(const tflite::Operator* op)
         }
     }
 
-    printf("MACs: %llu\n", (unsigned long long)macs);
-    printf("OPs: %llu\n",  (unsigned long long)ops);
+    //printf("MACs: %llu\n", (unsigned long long)macs);
+    //printf("OPs: %llu\n",  (unsigned long long)ops);
     NoteShapesAndCounters(input, output, macs, ops);
 }
 
@@ -593,8 +588,8 @@ void SilabsProfiler::calculate_resize_nearest_neighbor(const tflite::Operator* o
     uint64_t macs = 0;
     uint64_t ops  = static_cast<uint64_t>(out_h) * out_w * out_c * kNearestFlopsApprox;
 
-    printf("MACs: %llu\n", (unsigned long long)macs);
-    printf("OPs: %llu\n",  (unsigned long long)ops);
+    //printf("MACs: %llu\n", (unsigned long long)macs);
+    //printf("OPs: %llu\n",  (unsigned long long)ops);
     NoteShapesAndCounters(input, output, macs, ops);
 }
 
@@ -615,8 +610,8 @@ void SilabsProfiler::calculate_relu(const tflite::Operator* op)
     uint64_t macs = 0;
     uint64_t ops  = FlatSize(input) * 2ULL; // clamp lower/upper
 
-    printf("MACs: %llu\n", (unsigned long long)macs);
-    printf("OPs: %llu\n",  (unsigned long long)ops);
+    //printf("MACs: %llu\n", (unsigned long long)macs);
+    //printf("OPs: %llu\n",  (unsigned long long)ops);
     NoteShapesAndCounters(input, output, macs, ops);
 }
 
@@ -670,16 +665,7 @@ bool SilabsProfiler::update_start_event_info()
     if (!interpreter_profiler || !model_profiler) {
         return false;
     }
-#if defined(SL_BOARD_EFX)
-    const tflite::SubGraph* subgraph = model_profiler->subgraphs()->Get(0);
-    /*const auto* tensor = subgraph->tensors()->Get(operator_num_in_model_);
-    const char *full_layer_name = tensor->name()->c_str();
-    printf("%s\n", full_layer_name);*/
-    const tflite::Operator* op = subgraph->operators()->Get(operator_num_in_model_);
-    const auto& op_code = model_profiler->operator_codes()->Get(op->opcode_index());
-    const tflite::BuiltinOperator builtin_code =
-        static_cast<tflite::BuiltinOperator>(tflite::GetBuiltinCode(op_code));
-#elif defined(SL_BOARD_SI91X) //SL_BOARD_EFX
+    // ================== MODEL GRAPH START ===============================
     const int subgraph_index = interpreter_profiler->graph_.GetCurrentSubgraphIndex();
     const auto* subgraph = model_profiler->subgraphs()->Get(subgraph_index);
     if (subgraph == nullptr || subgraph->operators() == nullptr) {
@@ -702,9 +688,7 @@ bool SilabsProfiler::update_start_event_info()
 
     //if (node_and_registration != nullptr && node_and_registration->registration != nullptr) {
     tflite::BuiltinOperator builtin_code = static_cast<tflite::BuiltinOperator>(node_and_registration->registration->builtin_code);
-#else //SL_BOARD_SI91X
-    return false;
-#endif // SL_BOARD_XXX
+    // ================== MODEL GRAPH END ===============================
 
     if (builtin_code == tflite::BuiltinOperator_FULLY_CONNECTED) {
         calculate_fully_connected(op);

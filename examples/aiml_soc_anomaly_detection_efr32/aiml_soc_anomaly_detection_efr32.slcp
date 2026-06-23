@@ -1,0 +1,106 @@
+project_name: aiml_soc_anomaly_detection_efr32
+package: aiml_app
+quality: production
+label: AI/ML - SoC Anomaly Detection EFR32
+description: >
+  This application demonstrates a model trained to recognize anomalies in device handling
+  to mimic detecting use-cases such as device tampering. It uses the accelerometer and
+  gyroscope input to detect sudden jerks. The detected output is printed to the serial port.
+category: AI/ML Application
+filter:
+- name: Device Type
+  value: [SoC]
+- name: MCU
+  value: [32-bit MCU]
+- name: Project Difficulty
+  value: [Advanced]
+- name: Capability
+  value: [Machine Learning]
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: anomaly_detection.h
+  - path: imu.h
+  - path: constants.h
+  - path: predictor.h
+source:
+- path: app.c
+- path: anomaly_detection.cc
+- path: imu.cc
+- path: predictor.cc
+component:
+- id: ml_model
+  instance:
+  - imu_model_optimized
+- id: sl_main
+- id: memory_manager
+- id: device_init
+- id: clock_manager
+- id: cpp_support
+- id: imu_driver
+- id: component_catalog
+- id: iostream_recommended_stream
+- id: simple_led
+  instance: [led0, led1]
+- id: gpio
+- id: sleeptimer
+- id: iostream_retarget_stdio
+- id: dma_manager
+- id: dma_channel
+define:
+- name: DEBUG_EFM
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_BOARD_ENABLE_SENSOR_IMU
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_usart]
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+  condition: [iostream_uart]
+- name: SL_HEAP_SIZE
+  value: 0x3000
+toolchain_settings:
+- option: gcc_linker_option
+  value: -u _printf_float
+- option: gcc_compiler_option
+  value: "-mfp16-format=ieee"
+- option: llvm_linker_option
+  value: -u _printf_float
+- option: llvm_compiler_option
+  value: -Wno-implicit-exception-spec-mismatch
+- option: llvm_compiler_option
+  value: -Wno-unknown-warning-option
+- option: llvm_compiler_option
+  value: -Wno-unknown-pragmas
+- option: llvm_compiler_option
+  value: -Wno-vla-cxx-extension
+tag:
+- hardware:component:led:2+
+- hardware:component:imu
+- hardware:device:ram:40
+- hardware:device:flash:100
+readme:
+- path: readme.md
+ui_hints:
+  highlight: readme.md
+config_file:
+- path: config/compiler/imu_model_optimized.mlconf
+  directory: tflite
+  override:
+    component: ml_model
+    file_id: ml_compiler_config
+    instance: imu_model_optimized
+- path: config/tflite/imu_model_optimized.tflite
+  directory: tflite
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 3.0.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2026.6.0

@@ -1,6 +1,6 @@
 /***************************************************************************//**
  * @file sl_ml_profiler_interpreter.h
- * @brief Header file for interpreter declaration.
+ * @brief Interpreter and profiler model wrapper declarations for the ML profiler.
  *******************************************************************************
  * # License
  * <b>Copyright 2025 Silicon Laboratories Inc. www.silabs.com</b>
@@ -17,22 +17,25 @@
 #ifndef SL_ML_PROFILER_INTERPRETER_H
 #define SL_ML_PROFILER_INTERPRETER_H
 
-#if defined(SL_BOARD_SI91X)
+namespace sl {
+namespace ml {
+class SilabsProfiler;
+} // namespace ml
+} // namespace sl
+
 // Macro to access private members - allows access to graph_
 #define private public
 #define protected public
 #include "micro_interpreter.h"
 #undef private
 #undef protected
+
 #include "micro_profiler_interface.h"
 #include "tflite_micro_model.hpp"
 #include "ml/tflite_micro_model/tflite_micro_model_helper.hpp"
-#endif
 
-#if defined(SL_BOARD_EFX)
-#include "sl_tflite_micro_init.h"
-//#include "sl_tflite_micro_model.h"
-#endif
+using namespace npu_toolkit;
+
 // Subtype of MicroInterpreter to access the TfLiteContext
 class SLMicroInterpreter : public tflite::MicroInterpreter {
 public:
@@ -44,4 +47,23 @@ public:
     return ctx.GetEvalTensor(&ctx, tensor_id);
   }
 };
-#endif //
+
+// Subtype of TfliteMicroModel
+class SLTfliteMicroModel : public npu_toolkit::TfliteMicroModel {
+public:
+  using TfliteMicroModel::TfliteMicroModel; // Inherit constructors
+
+  SLTfliteMicroModel(sl::ml::SilabsProfiler* profiler)
+    : _custom_profiler(profiler) {}
+
+  tflite::MicroInterpreter* create_interpreter() override;
+
+private:
+  sl::ml::SilabsProfiler* _custom_profiler;
+};
+
+#if (SL_ML_ENABLE_DYNAMIC_MODEL_LOAD == 1)
+bool load_dynamic_tflite_micro_model(SLTfliteMicroModel& model);
+#endif // SL_ML_ENABLE_DYNAMIC_MODEL_LOAD
+
+#endif // SL_ML_PROFILER_INTERPRETER_H

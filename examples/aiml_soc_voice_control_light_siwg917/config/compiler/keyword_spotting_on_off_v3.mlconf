@@ -1,0 +1,18 @@
+model: keyword_spotting_on_off_v3.tflite
+
+graph_optimizer:
+  enabled: true
+
+memory_optimizer:
+  enabled: true
+
+memory_specification:
+  - type: PagingBuffer
+    size: 32768
+    section: ".bss"
+  - type: WeightsAndBiases2
+    size: 0
+
+codegen:
+  model_parameters_header:
+    enabled: true

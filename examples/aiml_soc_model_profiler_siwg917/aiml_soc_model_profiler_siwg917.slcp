@@ -1,0 +1,100 @@
+project_name: aiml_soc_model_profiler_siwg917
+label: AI/ML - SoC Model Profiler SiWG917
+description: >
+  This application profiles a ML model. The ML model is loaded as a byte array
+  which is generated from a Tensorflow tflite model file. Profiling is performed
+  by running one inference with the model.
+category: AI/ML Application
+filter:
+- name: "Device Type"
+  value: ["SoC"]
+- name: "MCU"
+  value: ["32-bit MCU"]
+- name: "Project Difficulty"
+  value: ["Advanced"]
+- name: "Capability"
+  value: ["Machine Learning"]
+package: aiml_app
+quality: production
+readme:
+- path: readme.md
+include:
+- path: .
+  file_list:
+  - path: app.h
+  - path: model_profiler.h
+  - path: energy_profiling_utils.hpp
+source:
+- path: app.c
+- path: model_profiler.cc
+
+toolchain_settings:
+- option: gcc_compiler_option
+  value: -Wall -Werror
+- option: gcc_linker_option
+  value: -u _printf_float
+- option: llvm_compiler_option
+  value: -Wall -Werror
+- option: llvm_linker_option
+  value: -u _printf_float
+- option: llvm_compiler_option
+  value: -Wno-implicit-exception-spec-mismatch
+- option: gcc_compiler_option
+  value: "-mfp16-format=ieee"
+component:
+- id: ml_model
+  instance:
+  - soc_model_profiler
+- id: cpp_support
+- id: adc_instance
+  instance: [channel_1]
+- id: si91x_memory_default_config
+- id: sleeptimer_si91x
+- id: syscalls
+- id: emlib_common
+- id: sl_main
+- id: ml_profiler_utils
+- id: nn_util
+config_file:
+- path: config/compiler/soc_model_profiler.mlconf
+  directory: tflite
+  override:
+    component: ml_model
+    file_id: ml_compiler_config
+    instance: soc_model_profiler
+- path: tflite_models/tflite/soc_model_profiler.tflite
+  directory: tflite
+configuration:
+- name: SL_BOARD_ENABLE_VCOM
+  value: 1
+- name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+- name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
+  value: 1
+define:
+- name: NDEBUG
+- name: SL_ML_MODEL_PROFILER
+- name: SL_ML_ENABLE_SILABS_PROFILER
+- name: TFLITE_MICRO_LOGGER_ENABLED
+  value: 1
+- name: SUPPORT_CPLUSPLUS
+  value: 1
+ui_hints:
+  highlight:
+  - path: readme.md
+    focus: true
+post_build:
+- path: ../util/postbuild_profile/wiseconnect_soc.slpb
+sdk_extension:
+- id: aiml
+  vendor: silabs
+  version: 3.0.0
+- id: wiseconnect3_sdk
+  vendor: silabs
+  version: 4.1.0
+sdk:
+  id: simplicity_sdk
+  vendor: silabs
+  version: 2026.6.0

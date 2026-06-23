@@ -56,7 +56,7 @@ int PcanGainControlPopulateState(const struct PcanGainControlConfig* config,
   state->num_channels = num_channels;
   state->gain_lut = malloc(kWideDynamicFunctionLUTSize * sizeof(int16_t));
   if (state->gain_lut == NULL) {
-    fprintf(stderr, "Failed to allocate gain LUT\n");
+    printf("Failed to allocate gain LUT\n");
     return 0;
   }
   state->snr_shift = config->gain_bits - input_correction_bits - kPcanSnrBits;

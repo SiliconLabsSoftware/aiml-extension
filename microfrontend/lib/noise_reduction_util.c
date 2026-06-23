@@ -42,7 +42,7 @@ int NoiseReductionPopulateState(const struct NoiseReductionConfig* config,
   state->num_channels = num_channels;
   state->estimate = calloc(state->num_channels, sizeof(*state->estimate));
   if (state->estimate == NULL) {
-    fprintf(stderr, "Failed to alloc estimate buffer\n");
+    printf("Failed to alloc estimate buffer\n");
     return 0;
   }
   return 1;

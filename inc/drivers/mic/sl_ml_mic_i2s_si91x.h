@@ -39,7 +39,7 @@ extern "C" {
 #endif
 
 /***************************************************************************//**
- * @defgroup sl_ml_mic_i2s_si91x Microphone I2S Driver for Machine Learning
+ * @addtogroup sl_ml_mic_i2s_si91x
  * @brief Microphone driver API for I2S interface on SI91x.
  * @{
  ******************************************************************************/
@@ -122,6 +122,19 @@ sl_status_t sl_ml_mic_start_streaming(void *buffer, uint32_t n_frames, sl_mic_bu
  ******************************************************************************/
 sl_status_t sl_ml_mic_stop(void);
 
+/***************************************************************************//**
+ * @brief
+ *    Process the microphone state machine for continuous transfers.
+ *
+ * @details
+ *    This function should be called in the main application loop to handle
+ *    the state machine for continuous DMA transfers. It manages the
+ *    RECEIVE_DATA and WAIT_STATE transitions to ensure continuous streaming.
+ *
+ * @retval SL_STATUS_OK Success.
+ * @retval SL_STATUS_INVALID_STATE Microphone is not streaming.
+ ******************************************************************************/
+sl_status_t sl_ml_mic_process_action(void);
 
 /** @} */
 

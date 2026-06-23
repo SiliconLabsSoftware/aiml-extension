@@ -18,22 +18,17 @@ requires:
   - name: component_catalog
   - name: sl_common
     condition: [device_efx]
-  - name: tensorflow_lite_micro
-    condition: [device_efx]
   - name: sleeptimer
     condition: [device_efx]
   - name: sleeptimer_si91x
     condition: [device_si91x]
-  - name: nn_util
-    condition: [device_si91x]
+  - name: ml_profiler_utils
 include:
   - path: inc/utils/profiler
     file_list:
       - path: sl_ml_silabs_profiler.h
       - path: sl_ml_profiler_interpreter.h
       - path: sl_ml_profiler_debug_channel.h
-      - path: sl_ml_profiler_helper.h
-        condition: [device_si91x]
   - path: inc/utils/profiler/debug_msg
     file_list:
       - path: sl_ml_start_session_packet.h
@@ -59,8 +54,7 @@ source:
   - path: src/utils/profiler/sl_ml_profiler_model_metrics.cc
   - path: src/utils/profiler/sl_ml_profiler_session_metrics.cc
   - path: src/utils/profiler/sl_ml_profiler_output.cc
-  - path: src/utils/profiler/sl_ml_profiler_helper.cc
-    condition: [device_si91x]
+  - path: src/utils/profiler/sl_ml_profiler_interpreter.cc
   - path: src/utils/profiler/debug_msg/sl_ml_start_session_packet.c
   - path: src/utils/profiler/debug_msg/sl_ml_end_session_packet.c
   - path: src/utils/profiler/debug_msg/sl_ml_start_event_packet.c
@@ -69,9 +63,6 @@ source:
   - path: src/utils/profiler/debug_msg/sl_ml_end_track_packet.c
   - path: src/utils/profiler/debug_msg/sl_ml_counter_packet.c
   - path: src/utils/profiler/debug_msg/uuid_embedded.c
-documentation:
-  docset: aiml
-  document: aiml/api/group-ml-model-profiler
 define:
   - name: SL_ML_ENABLE_SILABS_PROFILER
   # - name: SL_ML_ENABLE_ENERGY_PROFILING

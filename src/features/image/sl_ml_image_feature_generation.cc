@@ -15,7 +15,7 @@
  *
  ******************************************************************************/
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdint.h>
 #include "sl_status.h"
 #include "sl_ml_image_feature_generation.h"
 #include "sl_ml_image_feature_generation_config.h"
@@ -33,17 +33,45 @@
 // Camera image data length
 #define SL_ML_CAM_IMG_LENGTH     (SL_ML_CAM_IMAGE_HEIGHT * SL_ML_CAM_IMAGE_WIDTH)
 //  RGB 565 buffer needs 2 bytes per pixel
-// Ping-pong buffer requires 2 buffer count
-#define SL_ML_CAM_INPUT_IMG_BUFFER_LENGTH     (SL_ML_CAM_IMG_LENGTH * 2 * 2)
+#define SL_ML_CAM_INPUT_IMG_BUFFER_LENGTH     (SL_ML_CAM_IMG_LENGTH * 2 * SL_ML_IMAGE_BUFFER_COUNT)
+
+#define SL_ML_CROP_OFFSET_X  ((SL_ML_CAM_IMAGE_WIDTH  - SL_ML_MODEL_INPUT_WIDTH)  / 2)
+#define SL_ML_CROP_OFFSET_Y  ((SL_ML_CAM_IMAGE_HEIGHT - SL_ML_MODEL_INPUT_HEIGHT) / 2)
+/** Minimum population std (same units as pixel 0..255) used as divisor floor; prevents Inf/NaN for uniform or near-uniform crops. */
+#define SL_ML_IMAGE_FEATURE_POP_STD_FLOOR  (1.0e-6f)
+// Crop LUT/non-LUT indices are uint16_t-based and cannot address more pixels.
+#define SL_ML_IMAGE_MAX_UINT16_INDEXED_PIXELS  ((uint32_t)UINT16_MAX)
+
 /*******************************************************************************
  ***************************  LOCAL VARIABLES   ********************************
  ******************************************************************************/
 
-//  Buffer camera image
+//  Buffer camera image (static; sizes from SL_ML_CAM_* / SL_ML_MODEL_INPUT_* in config, not model flatbuffer)
 static uint8_t image_buffer[SL_ML_CAM_INPUT_IMG_BUFFER_LENGTH];
 
-// Image crop buffer 
-static uint32_t crop_buffer[SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH];
+#if SL_ML_IMAGE_CROP_USE_LUT
+static uint16_t crop_buffer[SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH];
+#endif
+
+static sl_status_t sli_ml_validate_camera_index_range(void)
+{
+  const uint32_t camera_pixel_count =
+    ((uint32_t)SL_ML_CAM_IMAGE_WIDTH * (uint32_t)SL_ML_CAM_IMAGE_HEIGHT);
+  if (camera_pixel_count > SL_ML_IMAGE_MAX_UINT16_INDEXED_PIXELS) {
+    printf("ERROR: Invalid camera resolution %u x %u (%lu pixels). "
+           "uint16_t crop indices support at most %u pixels.\n",
+           (unsigned)SL_ML_CAM_IMAGE_WIDTH,
+           (unsigned)SL_ML_CAM_IMAGE_HEIGHT,
+           (unsigned long)camera_pixel_count,
+           (unsigned)SL_ML_IMAGE_MAX_UINT16_INDEXED_PIXELS);
+    printf("       Reduce SL_ML_CAM_IMAGE_WIDTH/SL_ML_CAM_IMAGE_HEIGHT to keep "
+           "(width * height) <= %u.\n",
+           (unsigned)SL_ML_IMAGE_MAX_UINT16_INDEXED_PIXELS);
+    return SL_STATUS_INVALID_RANGE;
+  }
+
+  return SL_STATUS_OK;
+}
 
 /*******************************************************************************
  **************************   GLOBAL FUNCTIONS   *******************************
@@ -54,6 +82,20 @@ static uint32_t crop_buffer[SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH];
  ******************************************************************************/
 sl_status_t sl_ml_image_feature_generation_fill_tensor(TfLiteTensor *input_tensor)
 {
+  if (input_tensor == NULL) {
+    return SL_STATUS_NULL_POINTER;
+  }
+
+  size_t n_elements = 0;
+
+  if (input_tensor->type == kTfLiteInt8) {
+    n_elements = input_tensor->bytes / sizeof(int8_t);
+  } else if (input_tensor->type == kTfLiteFloat32) {
+    n_elements = input_tensor->bytes / sizeof(float);
+  } else {
+    return SL_STATUS_INVALID_PARAMETER;
+  }
+
   uint8_t* cam_image_data;
   uint32_t image_size;
   // Retrieve the image from the camera
@@ -62,19 +104,23 @@ sl_status_t sl_ml_image_feature_generation_fill_tensor(TfLiteTensor *input_tenso
   sl_ml_dump_image(cam_image_data, image_size);
   // Convert color space to gray
   sl_ml_convert_rgb565_to_gray(cam_image_data);
-  
+
   sl_status_t status = SL_STATUS_OK;
   float mean = 0.0f;
   float mean2 = 0.0f;
+
   if (SL_ML_IMAGE_FEATURE_GENERATION_SAMPLEWISE_NORM_MEAN_AND_STD || (SL_ML_IMAGE_MEAN_THRESHOLD != 0))
   {
-    const int n_elements = input_tensor->bytes / sizeof(float);
-    sl_ml_get_image_mean(cam_image_data, &mean, &mean2,  n_elements);
+    status = sl_ml_get_image_mean(cam_image_data, &mean, &mean2, n_elements);
+    if (status != SL_STATUS_OK) {
+      slx_ml_arducam_release_image();
+      return status;
+    }
   }
 
   if ((SL_ML_IMAGE_MEAN_THRESHOLD != 0) && (mean < SL_ML_IMAGE_MEAN_THRESHOLD))
   {
-      printf("Image brightness if not sufficient. Skipping frame\n.");
+      printf("Image brightness is not sufficient. Skipping frame\n.");
       slx_ml_arducam_release_image();
       return SL_STATUS_INVALID_RANGE;
   }
@@ -83,11 +129,9 @@ sl_status_t sl_ml_image_feature_generation_fill_tensor(TfLiteTensor *input_tenso
       status = sli_ml_image_feature_generation_get_image_quantized(
         cam_image_data,
         input_tensor->data.int8,
-        input_tensor->bytes
+        n_elements
       );
   } else if(input_tensor -> type == kTfLiteFloat32) {
-    const int n_elements = input_tensor->bytes / sizeof(float);
-
     if(SL_ML_IMAGE_FEATURE_GENERATION_SAMPLEWISE_NORM_RESCALE != 0) {
       status = sl_ml_image_feature_generation_get_image_scaled(
         cam_image_data,
@@ -121,14 +165,14 @@ sl_status_t sl_ml_image_feature_generation_fill_tensor(TfLiteTensor *input_tenso
 
 void sl_ml_image_feature_generation_reset()
 {
-  // Clear buffers
+#if SL_ML_IMAGE_CROP_USE_LUT
   for (int i = 0; i < SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH; i++) {
     crop_buffer[i] = 0;
   }
+#endif
   for (int i = 0; i < SL_ML_CAM_INPUT_IMG_BUFFER_LENGTH; i++) {
     image_buffer[i] = 0;
   }
-  // De-init arducam
   slx_ml_arducam_deinit();
 }
 
@@ -142,6 +186,10 @@ void sl_ml_image_feature_generation_reset()
 sl_status_t sl_ml_initialize_arducam_camera()
 {
     sl_status_t status;
+    status = sli_ml_validate_camera_index_range();
+    if (status != SL_STATUS_OK) {
+      return status;
+    }
 
     // Initialize the camera
     arducam_config_t cam_config = ARDUCAM_DEFAULT_CONFIG;
@@ -153,7 +201,42 @@ sl_status_t sl_ml_initialize_arducam_camera()
     status = slx_ml_arducam_init(&cam_config, image_buffer, SL_ML_CAM_INPUT_IMG_BUFFER_LENGTH);
     if(status != SL_STATUS_OK)
     {
-        printf("Failed to initialize the camera\n");
+        printf("Failed to initialize the camera (sl_status_t=0x%08lX)", (unsigned long)status);
+        switch (status) {
+          case SL_STATUS_ALREADY_INITIALIZED:
+            printf(" = SL_STATUS_ALREADY_INITIALIZED: Camera driver already initialized.\n");
+            break;
+          case SL_STATUS_INVALID_PARAMETER:
+            printf(" = SL_STATUS_INVALID_PARAMETER: Image buffer too small for a single frame "
+                   "(need >= %u bytes per image).\n",
+                   (unsigned)(SL_ML_CAM_IMAGE_WIDTH * SL_ML_CAM_IMAGE_HEIGHT * 2));
+            break;
+          case SL_STATUS_NO_MORE_RESOURCE:
+            printf(" = SL_STATUS_NO_MORE_RESOURCE: DMA channel allocation failed. "
+                   "Check LDMA channel availability and sl_dma_manager configuration.\n");
+            break;
+          case SL_STATUS_BUS_ERROR:
+            printf(" = SL_STATUS_BUS_ERROR: I2C/SPI bus communication failed. "
+                   "Possible causes: Arduchip SPI register test mismatch, I2C NACK from sensor. "
+                   "Check MOSI/MISO/SCK/CS wiring, Pin Tool config, or try slower SPI (ARDUCAM_USART_SPI_BITRATE).\n");
+            break;
+          case SL_STATUS_NOT_SUPPORTED:
+            printf(" = SL_STATUS_NOT_SUPPORTED: OV2640 sensor not detected on I2C "
+                   "(PID mismatch). Check sensor wiring and I2C address.\n");
+            break;
+          case SL_STATUS_INVALID_STATE:
+            printf(" = SL_STATUS_INVALID_STATE: SPI peripheral was busy during register access.\n");
+            break;
+          case SL_STATUS_NULL_POINTER:
+            printf(" = SL_STATUS_NULL_POINTER: Internal register write sequence error (null action list).\n");
+            break;
+          case SL_STATUS_HAS_OVERFLOWED:
+            printf(" = SL_STATUS_HAS_OVERFLOWED: Internal register write sequence error (action index out of bounds).\n");
+            break;
+          default:
+            printf(" Unexpected error. Check wiring, I2C/SPI pin config, USART/DMA usage, and board Pin Tool.\n");
+            break;
+        }
         return status;
     }
 
@@ -215,33 +298,33 @@ void sl_ml_retrieve_next_camera_image(uint8_t** image_data, uint32_t *image_size
 
 /***************************************************************************//**
  *  Initialize LUT for crop image to required resolution.
+ *  No-op when SL_ML_IMAGE_CROP_USE_LUT == 0.
  ******************************************************************************/
 void sl_ml_image_crop_lut_init()
 {
+#if SL_ML_IMAGE_CROP_USE_LUT
+  if (sli_ml_validate_camera_index_range() != SL_STATUS_OK) {
+    return;
+  }
 
-  uint32_t i_store_index, i_dst_index;
-  // COmpute center point location in camera image
-  uint16_t i_center_x = (int16_t)(SL_ML_CAM_IMAGE_WIDTH/2);
-  uint16_t i_center_y = (int16_t)(SL_ML_CAM_IMAGE_HEIGHT/2);
-  // Compute starting point location on camera image
-  uint16_t i_start_x = (int16_t)(i_center_x - SL_ML_MODEL_INPUT_WIDTH/2);
-  uint16_t i_start_y = (int16_t)(i_center_y - SL_ML_MODEL_INPUT_HEIGHT/2);
-  // compute end point location on camera image
-  uint16_t i_end_x = (int16_t)(i_center_x + SL_ML_MODEL_INPUT_WIDTH/2);
-  uint16_t i_end_y = (int16_t)(i_center_y + SL_ML_MODEL_INPUT_HEIGHT/2);
+  uint16_t i_store_index, i_dst_index;
+  uint16_t i_center_x = (uint16_t)(SL_ML_CAM_IMAGE_WIDTH / 2);
+  uint16_t i_center_y = (uint16_t)(SL_ML_CAM_IMAGE_HEIGHT / 2);
+  uint16_t i_start_x  = (uint16_t)(i_center_x - SL_ML_MODEL_INPUT_WIDTH / 2);
+  uint16_t i_start_y  = (uint16_t)(i_center_y - SL_ML_MODEL_INPUT_HEIGHT / 2);
+  uint16_t i_end_x    = (uint16_t)(i_center_x + SL_ML_MODEL_INPUT_WIDTH / 2);
+  uint16_t i_end_y    = (uint16_t)(i_center_y + SL_ML_MODEL_INPUT_HEIGHT / 2);
 
   for (uint16_t i_row = i_start_y; i_row < i_end_y; i_row++)
   {
     for (uint16_t i_col = i_start_x; i_col < i_end_x; i_col++)
     {
-        // Compute crop index from camera resolution
-        i_store_index = i_col +i_row*SL_ML_CAM_IMAGE_WIDTH;
-        // compute index for buffer
-        i_dst_index = (i_col-i_start_x) +(i_row-i_start_y)*SL_ML_MODEL_INPUT_WIDTH;
+        i_store_index = i_col + i_row * SL_ML_CAM_IMAGE_WIDTH;
+        i_dst_index   = (i_col - i_start_x) + (i_row - i_start_y) * SL_ML_MODEL_INPUT_WIDTH;
         crop_buffer[i_dst_index] = i_store_index;
-
     }
   }
+#endif
 }
 
 /***************************************************************************//**
@@ -256,12 +339,21 @@ sl_status_t sl_ml_image_feature_generation_get_image_scaled(uint8_t *in_cam_imag
   if (scaler == 0) {
     return SL_STATUS_INVALID_PARAMETER;
   }
-  uint32_t read_index;
+
+#if SL_ML_IMAGE_CROP_USE_LUT
   for (int i = 0; i < SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH; i++) {
-    read_index = crop_buffer[i];
-    const float value = (float)in_cam_image[read_index];
-    buffer[i] = value * scaler;
+    buffer[i] = (float)in_cam_image[crop_buffer[i]] * scaler;
   }
+#else
+  int dst_idx = 0;
+  uint16_t cam_row_base = SL_ML_CROP_OFFSET_Y * SL_ML_CAM_IMAGE_WIDTH + SL_ML_CROP_OFFSET_X;
+  for (int row = 0; row < SL_ML_MODEL_INPUT_HEIGHT; row++) {
+    for (int col = 0; col < SL_ML_MODEL_INPUT_WIDTH; col++) {
+      buffer[dst_idx++] = (float)in_cam_image[cam_row_base + col] * scaler;
+    }
+    cam_row_base += SL_ML_CAM_IMAGE_WIDTH;
+  }
+#endif
 
   return SL_STATUS_OK;
 }
@@ -270,23 +362,40 @@ sl_status_t sl_ml_image_feature_generation_get_image_scaled(uint8_t *in_cam_imag
  ******************************************************************************/
 sl_status_t sl_ml_get_image_mean(uint8_t *in_cam_image, float *mean, float *mean2, size_t num_elements)
 {
-  uint32_t read_index;
   float count = 0.0f;
 
   if ((int)num_elements != SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH) {
     return SL_STATUS_INVALID_PARAMETER;
   }
-  // Calculate the mean and mean square
-  for(int i = SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH; i > 0; --i)
+
+  *mean = 0.0f;
+  *mean2 = 0.0f;
+
+#if SL_ML_IMAGE_CROP_USE_LUT
+  for (int i = SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH - 1; i >= 0; --i)
   {
-    read_index = crop_buffer[i];
-    const float value = (float)in_cam_image[read_index];
+    const float value = (float)in_cam_image[crop_buffer[i]];
     count += 1;
     const float delta = value - *mean;
     *mean += delta / count;
     const float delta2 = value - *mean;
     *mean2 += delta * delta2;
   }
+#else
+  uint16_t cam_row_base = SL_ML_CROP_OFFSET_Y * SL_ML_CAM_IMAGE_WIDTH + SL_ML_CROP_OFFSET_X;
+  for (int row = 0; row < SL_ML_MODEL_INPUT_HEIGHT; row++) {
+    for (int col = 0; col < SL_ML_MODEL_INPUT_WIDTH; col++) {
+      const float value = (float)in_cam_image[cam_row_base + col];
+      count += 1;
+      const float delta = value - *mean;
+      *mean += delta / count;
+      const float delta2 = value - *mean;
+      *mean2 += delta * delta2;
+    }
+    cam_row_base += SL_ML_CAM_IMAGE_WIDTH;
+  }
+#endif
+
   return SL_STATUS_OK;
 }
  /***************************************************************************//**
@@ -297,22 +406,28 @@ sl_status_t sl_ml_image_feature_generation_get_image_mean_std_normalized(uint8_t
   if ((int)num_elements != SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH) {
     return SL_STATUS_INVALID_PARAMETER;
   }
-  uint32_t read_index;
 
-  // Calculate the STD
-  const float variance = mean2 / (float)num_elements;
+  const float variance = fmaxf(mean2 / (float)num_elements, 0.0f);
   const float std = sqrtf(variance);
-  const float std_recip = 1.0f / std; // multiplication is faster than division
+  const float std_effective = fmaxf(std, SL_ML_IMAGE_FEATURE_POP_STD_FLOOR);
+  const float std_recip = 1.0f / std_effective;
 
-  // Subtract the mean and divide by the STD
+#if SL_ML_IMAGE_CROP_USE_LUT
   float* dst = buffer;
-  for(int i =0;i< SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH; i++)
+  for (int i = 0; i < SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH; i++)
   {
-    read_index = crop_buffer[i];
-    const float value = (float)in_cam_image[read_index];
-    const float x = value - mean;
-    *dst++ = x * std_recip;
+    *dst++ = ((float)in_cam_image[crop_buffer[i]] - mean) * std_recip;
   }
+#else
+  int dst_idx = 0;
+  uint16_t cam_row_base = SL_ML_CROP_OFFSET_Y * SL_ML_CAM_IMAGE_WIDTH + SL_ML_CROP_OFFSET_X;
+  for (int row = 0; row < SL_ML_MODEL_INPUT_HEIGHT; row++) {
+    for (int col = 0; col < SL_ML_MODEL_INPUT_WIDTH; col++) {
+      buffer[dst_idx++] = ((float)in_cam_image[cam_row_base + col] - mean) * std_recip;
+    }
+    cam_row_base += SL_ML_CAM_IMAGE_WIDTH;
+  }
+#endif
 
   return SL_STATUS_OK;
 }
@@ -334,20 +449,28 @@ sl_status_t sli_ml_image_feature_generation_get_image_quantized(uint8_t *in_cam_
   if ((int)num_elements != SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH) {
     return SL_STATUS_INVALID_PARAMETER;
   }
-  uint32_t read_index;
-  int32_t value;
+
+#if SL_ML_IMAGE_CROP_USE_LUT
   for (int i = 0; i < SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH; i++) {
-    read_index = crop_buffer[i];
-    value = in_cam_image[read_index];
-    value -= 128;
-    if (value < -128) {
-      value = -128;
-    }
-    if (value > 127) {
-      value = 127;
-    }
+    int32_t value = (int32_t)in_cam_image[crop_buffer[i]] - 128;
+    if (value < -128) { value = -128; }
+    if (value >  127) { value =  127; }
     buffer[i] = (int8_t)value;
   }
+#else
+  int dst_idx = 0;
+  uint16_t cam_row_base = SL_ML_CROP_OFFSET_Y * SL_ML_CAM_IMAGE_WIDTH + SL_ML_CROP_OFFSET_X;
+  for (int row = 0; row < SL_ML_MODEL_INPUT_HEIGHT; row++) {
+    for (int col = 0; col < SL_ML_MODEL_INPUT_WIDTH; col++) {
+      int32_t value = (int32_t)in_cam_image[cam_row_base + col] - 128;
+      if (value < -128) { value = -128; }
+      if (value >  127) { value =  127; }
+      buffer[dst_idx++] = (int8_t)value;
+    }
+    cam_row_base += SL_ML_CAM_IMAGE_WIDTH;
+  }
+#endif
+
   return SL_STATUS_OK;
 }
 
@@ -359,11 +482,21 @@ sl_status_t sl_ml_image_feature_generation_get_image_raw_float32(uint8_t *in_cam
   if ((int)num_elements != SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH) {
     return SL_STATUS_INVALID_PARAMETER;
   }
-  uint32_t read_index;
+
+#if SL_ML_IMAGE_CROP_USE_LUT
   for (int i = 0; i < SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH; i++) {
-    read_index = crop_buffer[i];
-    buffer[i] = (float)in_cam_image[read_index];
+    buffer[i] = (float)in_cam_image[crop_buffer[i]];
   }
+#else
+  int dst_idx = 0;
+  uint16_t cam_row_base = SL_ML_CROP_OFFSET_Y * SL_ML_CAM_IMAGE_WIDTH + SL_ML_CROP_OFFSET_X;
+  for (int row = 0; row < SL_ML_MODEL_INPUT_HEIGHT; row++) {
+    for (int col = 0; col < SL_ML_MODEL_INPUT_WIDTH; col++) {
+      buffer[dst_idx++] = (float)in_cam_image[cam_row_base + col];
+    }
+    cam_row_base += SL_ML_CAM_IMAGE_WIDTH;
+  }
+#endif
 
   return SL_STATUS_OK;
 }

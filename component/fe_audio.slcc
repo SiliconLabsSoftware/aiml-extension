@@ -1,0 +1,115 @@
+id: fe_audio
+package: aiml
+label: Audio Feature Generator
+description: >
+  Extracts mel-filterbank features from microphone audio using the TensorFlow Lite microfrontend. When you build with the Silicon Labs ML workflow,
+  frontend settings can be taken from the model instead of maintaining them entirely by hand.
+category: Machine Learning|Feature Generator
+quality: production
+root_path: feature_generator/audio
+metadata:
+  sbom:
+    license: Zlib AND Apache-2.0
+    upstream:
+      name: Microfrontend
+      version: 2.3.1
+      supplier: The Tensorflow Authors
+      url: https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/experimental/microfrontend
+      package_url: pkg:github/tensorflow/tensorflow@v2.3.1
+      comment: Microfrontend library to process audio that lives within the tensorflow repo on GitHub, version 2.3.1
+instantiable:
+  prefix: inst
+provides:
+  - name: fe_audio
+    allow_multiple: true
+requires:
+  - name: toolchain_gcc
+    condition: [device_efx]
+  - name: cpp_support
+  - name: frontend_fft_implementation
+  - name: component_catalog
+  - name: mic_driver
+    condition: [device_efx]
+  - name: mic_driver_si91x
+    condition: [device_si91x]
+  - name: sl_common
+    condition: [device_efx]
+recommends:
+  - id: ml_cmsis_dsp_rfft_q15
+define:
+  - name: SL_BOARD_SI91X
+    value: 1
+    condition: [device_si91x]
+config_file:
+  - path: config/sl_ml_audio_feature_generation_config.h
+  - path: config/sl_fe_audio_{{instance}}_config.h
+    condition: [device_si91x]
+template_file:
+  - path: inst/sl_fe_audio_instances.h.jinja
+    condition: [device_si91x]
+  - path: inst/sl_fe_audio_instances.c.jinja
+    condition: [device_si91x]
+include:
+  - path: inc
+    file_list:
+      - path: sl_fe_audio_si91x.h
+        condition: [device_si91x]
+      - path: sl_fe_audio.h
+        condition: [device_efx]
+  - path: ../..
+    file_list:
+      - path: microfrontend/lib/utils.h
+      - path: microfrontend/lib/activity_detection.h
+      - path: microfrontend/lib/activity_detection_util.h
+      - path: microfrontend/lib/bits.h
+      - path: microfrontend/lib/dc_notch_filter.h
+      - path: microfrontend/lib/dc_notch_filter_util.h
+      - path: inc/dsp/sl_ml_fft.h
+      - path: microfrontend/lib/filterbank.h
+      - path: microfrontend/lib/filterbank_util.h
+      - path: microfrontend/lib/frontend.h
+      - path: microfrontend/lib/frontend_util.h
+      - path: microfrontend/lib/log_lut.h
+      - path: microfrontend/lib/log_scale.h
+      - path: microfrontend/lib/log_scale_util.h
+      - path: microfrontend/lib/noise_reduction.h
+      - path: microfrontend/lib/noise_reduction_util.h
+      - path: microfrontend/lib/pcan_gain_control.h
+      - path: microfrontend/lib/pcan_gain_control_util.h
+      - path: microfrontend/lib/window.h
+      - path: microfrontend/lib/window_util.h
+source:
+  - path: src/sl_fe_audio.c
+    condition: [device_efx]
+  - path: src/sl_fe_audio_si91x.cc
+    condition: [device_si91x]
+  - path: config/sl_ml_audio_feature_generation_config.cc
+  - path: ../../microfrontend/lib/activity_detection_util.c
+  - path: ../../microfrontend/lib/activity_detection.c
+  - path: ../../microfrontend/lib/dc_notch_filter.c
+  - path: ../../microfrontend/lib/dc_notch_filter_util.c
+  - path: ../../microfrontend/lib/filterbank.c
+  - path: ../../microfrontend/lib/filterbank_util.c
+  - path: ../../microfrontend/lib/frontend.c
+  - path: ../../microfrontend/lib/frontend_util.c
+  - path: ../../microfrontend/lib/log_lut.c
+  - path: ../../microfrontend/lib/log_scale.c
+  - path: ../../microfrontend/lib/log_scale_util.c
+  - path: ../../microfrontend/lib/noise_reduction.c
+  - path: ../../microfrontend/lib/noise_reduction_util.c
+  - path: ../../microfrontend/lib/pcan_gain_control.c
+  - path: ../../microfrontend/lib/pcan_gain_control_util.c
+  - path: ../../microfrontend/lib/window.c
+  - path: ../../microfrontend/lib/window_util.c
+template_contribution:
+  - name: fe_audio_instance
+    value: '{{instance}}'
+    condition: [device_si91x]
+  - name: component_catalog
+    value: '{{instance}}'
+    condition: [device_si91x]
+  - name: component_catalog
+    value: fe_audio
+  - name: component_catalog
+    value: fe_audio_{{instance}}
+    condition: [device_si91x]

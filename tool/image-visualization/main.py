@@ -238,7 +238,7 @@ def parse_arguments() -> argparse.Namespace:
         "--camera-resolution",
         type=str,
         help="Input camera resolution Width x Height x bytes.",
-        default="160x120x2",
+        default="96x96x2",
     )
     parser.add_argument(
         "--target-shape",

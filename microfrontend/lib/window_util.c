@@ -38,7 +38,7 @@ int WindowPopulateState(const struct WindowConfig* config,
 
   state->coefficients = malloc(state->size * sizeof(*state->coefficients));
   if (state->coefficients == NULL) {
-    fprintf(stderr, "Failed to allocate window coefficients\n");
+    printf("Failed to allocate window coefficients\n");
     return 0;
   }
 
@@ -55,13 +55,13 @@ int WindowPopulateState(const struct WindowConfig* config,
   state->input_used = 0;
   state->input = malloc(state->size * sizeof(*state->input));
   if (state->input == NULL) {
-    fprintf(stderr, "Failed to allocate window input\n");
+    printf("Failed to allocate window input\n");
     return 0;
   }
 
   state->output = malloc(state->size * sizeof(*state->output));
   if (state->output == NULL) {
-    fprintf(stderr, "Failed to allocate window output\n");
+    printf("Failed to allocate window output\n");
     return 0;
   }
 

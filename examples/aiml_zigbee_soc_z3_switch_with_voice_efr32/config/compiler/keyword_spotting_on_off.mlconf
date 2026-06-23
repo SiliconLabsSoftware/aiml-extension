@@ -1,0 +1,7 @@
+model: keyword_spotting_on_off.tflite
+
+graph_optimizer:
+  enabled: true
+
+memory_optimizer:
+  enabled: true

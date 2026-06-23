@@ -1,0 +1,7 @@
+model: rock_paper_scissors.tflite
+
+graph_optimizer:
+  enabled: true
+
+memory_optimizer:
+  enabled: true

@@ -1,0 +1,54 @@
+# Per-instance MVP compiler config for ml_model components.
+# Keep model null so SLC does not validate a tflite path when the component is added.
+
+model: null
+output: null
+accelerator: auto
+verbose: false
+log_level: INFO
+enable_debugging: false
+platform: "auto"
+
+disabled_layers: []
+disabled_kernels: []
+
+graph_optimizer:
+  enabled: true
+  remove_constant_layers: true
+
+memory_optimizer:
+  enabled: true
+  weights_paging: single
+  buffer_reuse: false
+  debugging_forced_buffer_sizes: null
+
+# Per-region overrides. 
+# size: 0 removes a region.
+memory_specification:
+  - type: PagingBuffer
+    size: 32768
+    section: ".bss"
+  - type: WeightsAndBiases2
+    size: 0
+
+codegen:
+  enabled: true
+  shorten_paths: true
+  output_format: source
+  include_paths: []
+  linker_sections: {}
+  strip_strings: true
+  generate_op_resolver: true
+  prefix: model-stem
+  logger_enabled: false
+  model_header:
+    filename: "{prefix}_generated.hpp"
+    runtime_memory_size: null
+    model_memory_section: null
+    add_header_includes: true
+    generate_model_load_function: true
+    generate_op_resolver_instance: true
+  model_parameters_header:
+    enabled: false
+    prefix: "SL_TFLITE_MODEL_{prefix}_"
+    filename: "{prefix}_generated_parameters.h"

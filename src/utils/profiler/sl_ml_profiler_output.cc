@@ -1,5 +1,24 @@
+/***************************************************************************//**
+ * @file
+ * @brief profiler output
+ *******************************************************************************
+ * # License
+ * <b>Copyright 2026 Silicon Laboratories Inc. www.silabs.com</b>
+ *******************************************************************************
+ *
+ * The licensor of this software is Silicon Laboratories Inc. Your use of this
+ * software is governed by the terms of Silicon Labs Master Software License
+ * Agreement (MSLA) available at
+ * www.silabs.com/about-us/legal/master-software-license-agreement. This
+ * software is distributed to you in Source Code format and is governed by the
+ * sections of the MSLA applicable to Source Code.
+ *
+ ******************************************************************************/
+
 #include "sl_ml_silabs_profiler.h"
 #include "sl_ml_profiler_debug_channel.h"
+
+#include <cinttypes>
 
 namespace sl {
 namespace ml {
@@ -162,9 +181,9 @@ void SilabsProfiler::emit_start_session_info() {
     std::printf("  OPN          : %s\n", start_session_info.opn);
     std::printf("  Part Family  : %s\n", start_session_info.part_family);
     std::printf("  Model Name   : %s\n", start_session_info.model_name);
-    std::printf("  Flash (KB)   : %u\n", static_cast<unsigned>(start_session_info.flash_kb));
-    std::printf("  RAM (KB)     : %u\n", static_cast<unsigned>(start_session_info.ram_kb));
-    std::printf("  Arena (KB)   : %u\n", static_cast<unsigned>(start_session_info.arena_kb));
+    std::printf("  Flash (KB)   : %" PRIu16 "\n", start_session_info.flash_kb);
+    std::printf("  RAM (KB)     : %" PRIu16 "\n", start_session_info.ram_kb);
+    std::printf("  Arena (KB)   : %" PRIu16 "\n", start_session_info.arena_kb);
     std::printf("  MCU          : %s\n", map_mcu_id(start_session_info.mcu_id));
     std::printf("  Accelerator  : %s\n\n", map_accelerator_id(start_session_info.accel_id));
 #endif
@@ -180,13 +199,12 @@ void SilabsProfiler::emit_end_session_info()
 #else // SL_ML_ENABLE_PROFILER_DEBUG_MSG
     printf("\n=== SESSION END ===\n");
     this->sli_print_ui32("  Total CPU Cycles    : ", end_session_info.total_num_cycles, "\n");
-    this->sli_print_ui32("  Total CPU Stalls    : ", end_session_info.total_num_stalls, "\n");
     this->sli_print_ui32("  Total Acc Cycles    : ", end_session_info.total_acc_cycles, "\n");
     this->sli_print_ui32("  Total Acc Stalls    : ", end_session_info.total_acc_stalls, "\n");
     this->sli_print_ui32("  Total Operations    : ", end_session_info.total_num_ops, "\n");
     this->sli_print_ui32("  Total MACs          : ", end_session_info.total_num_macs, "\n");
-    printf("  Flash Used (KB)    : %lu\n", end_session_info.total_flash_used_kb);
-    printf("  RAM Used (KB)      : %lu\n", end_session_info.total_ram_used_kb);
+    printf("  Flash Used (KB)    : %" PRIu32 "\n", end_session_info.total_flash_used_kb);
+    printf("  RAM Used (KB)      : %" PRIu32 "\n", end_session_info.total_ram_used_kb);
     printf("  Mean MAC/Cycle     : %.4f\n", end_session_info.mean_mac_per_cycle);
     printf("  Mean Inference (ms): %.4f\n", end_session_info.mean_inference_time_ms);
 #ifdef SL_ML_ENABLE_ENERGY_PROFILING
@@ -276,11 +294,11 @@ void SilabsProfiler::emit_start_event_info()
 ******************************************************************************/
 void SilabsProfiler::sli_ui32_print_ts(uint32_t n) {
     if (n < 1000) {
-        printf("%lu", n);
+        printf("%" PRIu32, n);
         return;
     }
     sli_ui32_print_ts(n / 1000);
-    printf(",%03lu", n % 1000);
+    printf(",%03" PRIu32, n % 1000);
 }
 
 /***************************************************************************//**
@@ -289,9 +307,9 @@ void SilabsProfiler::sli_ui32_print_ts(uint32_t n) {
 *  Uses sli_ui32_print_ts to format the integer.
 ******************************************************************************/
 void SilabsProfiler::sli_print_ui32(const char* lead_str, uint32_t n, const char* lag_str) {
-    printf(lead_str);
+    printf("%s", lead_str);
     sli_ui32_print_ts(n);
-    printf(lag_str);
+    printf("%s", lag_str);
 }
 
 /***************************************************************************//**
@@ -331,11 +349,9 @@ void SilabsProfiler::emit_end_event_info()
 #else // SL_ML_ENABLE_PROFILER_DEBUG_MSG
     printf("\n=== EVENT END: %s ===\n", event_info.function_name);
     this->sli_print_ui32("  CPU Cycles         : ", event_info.num_cpu_cycles, "\n");
-    this->sli_print_ui32("  CPU Stalls         : ", event_info.num_cpu_stalls, "\n");
-//#if defined(SL_CATALOG_MVP_PRESENT)
     this->sli_print_ui32("  MVP Cycles         : ", event_info.num_mvp_cycles, "\n");
     this->sli_print_ui32("  MVP Stalls         : ", event_info.num_mvp_stalls, "\n");
-//#endif
+
     printf("  CPU Utilization   : %.2f%%\n", event_info.cpu_util_percent);
     printf("  Clock Rate (Hz)    : %.2f\n", event_info.clock_rate_hz);
     printf("  MAC/Cycle          : %.4f\n", event_info.mac_per_cycle);
@@ -346,7 +362,7 @@ void SilabsProfiler::emit_end_event_info()
     printf("  Processor ID       : %s\n", map_processor_id(event_info.processor_id));
     this->sli_print_time("  Execution Time     : ", event_info.wall_ticks);
     printf("\n");
-//#endif
+
 #endif // SL_ML_ENABLE_PROFILER_DEBUG_MSG
 }
 

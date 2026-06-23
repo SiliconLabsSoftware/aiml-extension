@@ -1,0 +1,21 @@
+id: ml_compiler
+package: aiml
+label: ML Model Compiler
+description: >
+  Host-side MVP model compiler integration for Simplicity projects. Configuration
+  overrides (graph optimization, weights/memory/register compression, memory planning, etc.)
+  are in config/compiler/sl_ml_mvp_compiler_config.mlconf (same keys as compiler_config.defaults.yaml)
+  and are merged after the YAML baseline when the adapter pack runs sml.
+  Registers with the Advanced Configurator (aiml/tool/compiler) for .tflite codegen when selected.
+category: Machine Learning|Compilation
+quality: production
+metadata:
+  sbom:
+    license: MSLA
+provides:
+  - name: ml_compiler
+template_contribution:
+  - name: component_catalog
+    value: ml_compiler
+define:
+  - name: SL_ML_ENABLE_MVP_COMPILATION

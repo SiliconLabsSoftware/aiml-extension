@@ -14,6 +14,7 @@
  * sections of the MSLA applicable to Source Code.
  *
  ******************************************************************************/
+#include <stdio.h>
 #include "sl_ml_arducam.h"
 #include "sl_ml_image_feature_generation_config.h"
 #include "sl_ml_image_feature_generation.h"
@@ -34,8 +35,26 @@ sl_status_t sl_ml_image_feature_generation_init()
     sl_ml_image_feature_generation_reset();
     return status;
   }
-  // Initializing jlink stream for writing
-  slx_ml_jlink_stream::slx_ml_register_stream("image", slx_ml_jlink_stream::Write);
-  
+  // JLink image stream is optional: failure is WARNING-only; inference and return value
+  // still reflect successful camera init (SL_STATUS_OK).
+  const sl_status_t jlink_status =
+      slx_ml_jlink_stream::slx_ml_register_stream("image", slx_ml_jlink_stream::Write);
+  if (jlink_status != SL_STATUS_OK) {
+    printf("WARNING: Failed to register JLink 'image' stream "
+           "(sl_status_t=0x%04lX).\n"
+           "  Image visualization will be unavailable.\n"
+           "  Possible causes:\n"
+           "    1. malloc failed - heap too small for ~8 KB stream buffer.\n"
+           "       Current image_buffer = %u bytes "
+           "(cam %dx%d, 2 bytes/px, %d ping-pong).\n"
+           "       Reduce SL_ML_CAM_IMAGE_WIDTH/HEIGHT to free heap.\n"
+           "    2. Stream 'image' already registered (duplicate init).\n",
+           (unsigned long)jlink_status,
+           (unsigned)(SL_ML_CAM_IMAGE_WIDTH * SL_ML_CAM_IMAGE_HEIGHT
+                      * 2 * SL_ML_IMAGE_BUFFER_COUNT),
+           SL_ML_CAM_IMAGE_WIDTH, SL_ML_CAM_IMAGE_HEIGHT,
+           SL_ML_IMAGE_BUFFER_COUNT);
+  }
+
   return SL_STATUS_OK;
 }

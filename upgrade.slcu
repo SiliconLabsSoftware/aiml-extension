@@ -1,0 +1,68 @@
+upgrade:
+  - sdk:
+      id: aiml
+      version: "3.0.0"
+    component:
+      - script: scripts/upgrade_add_ml_model.lua
+        description: |
+          Adds ml_model to every upgraded project.
+      - trigger:
+          id: tensorflow_lite_micro
+        description: |
+          Removes tensorflow_lite_micro; ml_model is added by default and pulls in the runtime as a dependency.
+          1. Use sl_ml_model_init, sl_ml_model_run, and sl_ml_model_deinit on sl_ml_<model>_model_handle from sl_ml_model_<model>.h.
+          2. Replace slx_ml_<model>_model_init/run or sl_tflite_micro_init / sl_tflite_micro_get_input_tensor as needed.
+          3. Regenerate the project.
+          4. For this upgrade to go through, please use the "Force Upgrade" option.
+        status: impossible
+        remove:
+          - id: tensorflow_lite_micro
+      - trigger:
+          id: nn_util
+          package: compute
+          vendor: silabs
+        description: nn_util moved to aiml; replacing compute nn_util with aiml nn_util.
+        status: automatic
+        remove:
+          - id: nn_util
+            package: compute
+            vendor: silabs
+        add:
+          - id: nn_util
+      - trigger:
+          id: nn_mvp
+          package: compute
+          vendor: silabs
+        description: nn_mvp moved to aiml; replacing compute nn_mvp with aiml nn_mvp.
+        status: automatic
+        remove:
+          - id: nn_mvp
+            package: compute
+            vendor: silabs
+        add:
+          - id: nn_mvp
+      - trigger:
+          id: mvp
+          package: compute
+          vendor: silabs
+        description: |
+          Legacy compute mvp required nn_mvp; math_mvp does not. Add aiml nn_mvp when
+          upgrading projects that used compute mvp for ML acceleration.
+        status: automatic
+        add:
+          - id: nn_mvp
+      - trigger:
+          id: tensorflow_lite_micro_accelerated_kernels
+        description: Adds aiml nn_util and nn_mvp required by MVP-accelerated kernels.
+        status: automatic
+        add:
+          - id: nn_util
+          - id: nn_mvp
+      - trigger:
+          id: ml_audio_feature_generation
+        description: Renamed to fe_audio. Si91x uses sl_ml_audio_feature_generation_init(&sl_fe_audio_<model>_cfg).
+        status: automatic
+        remove:
+          - id: ml_audio_feature_generation
+        add:
+          - id: fe_audio
