@@ -22,8 +22,9 @@
 #include "audio_classifier.h"
 #include "recognize_commands.h"
 #include "config/audio_classifier_config.h"
-#include "sl_ml_audio_feature_generation_config.h"
+
 #include "sl_fe_audio.h"
+#include "sl_fe_audio_instances.h"
 #include "sl_ml_model_keyword_spotting_on_off_v2.h"
 #include "sl_sleeptimer.h"
 #include "tflite_micro_model.hpp"
@@ -171,13 +172,7 @@ void audio_classifier_task(void *arg)
       ;
   }
 
-  if (!sl_ml_audio_feature_generation_load_model_settings(sl_ml_keyword_spotting_on_off_v2_model_handle.flatbuffer)) {
-    printf("Failed to load audio frontend parameters from .tflite model\n");
-    while (1)
-      ;
-  }
-
-  if (sl_ml_audio_feature_generation_init() != SL_STATUS_OK) {
+  if (sl_ml_audio_feature_generation_init(&sl_fe_audio_keyword_spotting_on_off_v2_cfg) != SL_STATUS_OK) {
     printf("Failed to init audio feature generator\n");
     while (1)
       ;

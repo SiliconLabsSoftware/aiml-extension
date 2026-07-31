@@ -26,7 +26,8 @@
 #include "sl_ml_model_blink.h"
 #include "sl_ml_tflite_micro_model.h"
 #include "sl_fe_audio.h"
-#include "sl_ml_audio_feature_generation_config.h"
+#include "sl_fe_audio_instances.h"
+
 #include "sl_sleeptimer.h"
 #include <cinttypes>
 #include "tflite_micro_model.hpp"
@@ -280,12 +281,7 @@ void voice_control_light_task(void *arg)
   printf("  suppression time=%d ms\r\n", SUPPRESSION_TIME_MS);
   printf("Listening for keywords...\r\n");
 
-  if (!sl_ml_audio_feature_generation_load_model_settings(sl_ml_keyword_spotting_on_off_v2_model_handle.flatbuffer)) {
-    printf("Failed to load audio frontend parameters from .tflite model\n");
-    while (1) {}
-  }
-
-  sl_ml_audio_feature_generation_init();
+  sl_ml_audio_feature_generation_init(&sl_fe_audio_keyword_spotting_on_off_v2_cfg);
 
   static RecognizeCommands static_recognizer(DETECTION_THRESHOLD,
                                              SUPPRESSION_TIME_MS);

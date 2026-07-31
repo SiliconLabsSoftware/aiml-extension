@@ -1,18 +1,11 @@
 /***************************************************************************//**
- * @file
- * @brief audio feature generation config
+ * @file sl_ml_audio_feature_generation_config.cc
+ * @brief Legacy symbol definitions for upgraded aiml 3.0.0 audio applications.
  *******************************************************************************
- * # License
- * <b>Copyright 2026 Silicon Laboratories Inc. www.silabs.com</b>
- *******************************************************************************
+ * SPDX-License-Identifier: Zlib
  *
- * The licensor of this software is Silicon Laboratories Inc. Your use of this
- * software is governed by the terms of Silicon Labs Master Software License
- * Agreement (MSLA) available at
- * www.silabs.com/about-us/legal/master-software-license-agreement. This
- * software is distributed to you in Source Code format and is governed by the
- * sections of the MSLA applicable to Source Code.
- *
+ * Defines only the globals still referenced by application code after SDK
+ * upgrade. New projects should use sl_fe_audio_<instance>_config.h instead.
  ******************************************************************************/
 
 #include "ml/tflite_micro_model/tflite_model_parameters.hpp"
@@ -53,109 +46,25 @@ bool get_param_default(const npu_toolkit::TfliteModelParameters& model_parameter
 #define GET_FLOAT(key, val) missing_params |= get_param(model_parameters, key, val);  printf("%s=%5.3f\n", key, val)
 #define GET_FLOAT_DEFAULT(key, val, default_val) get_param_default(model_parameters, key, val, default_val);  printf("%s=%5.3f\n", key, val)
 
-extern "C"
+int SL_ML_AUDIO_FEATURE_GENERATION_DUMP_RAW_SPECTROGRAM;
+int SL_ML_AUDIO_FEATURE_GENERATION_DUMP_QUANTIZED_SPECTROGRAM;
+int SL_ML_AUDIO_FEATURE_GENERATION_DUMP_AUDIO;
+int SL_TFLITE_MODEL_AUDIO_FEATURE_GENERATION_AUDIO_GAIN;
+int SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ENABLE;
+
+bool sl_ml_audio_feature_generation_load_model_settings(const void *tflite_flatbuffer)
 {
+  npu_toolkit::TfliteModelParameters model_parameters;
+  bool missing_params = false;
 
+  if (!npu_toolkit::TfliteModelParameters::load_from_tflite_flatbuffer(tflite_flatbuffer,
+                                                                       model_parameters)) {
+    return false;
+  }
 
-int   SL_TFLITE_MODEL_AUDIO_FEATURE_GENERATION_AUDIO_BUFFER_SIZE;
-int   SL_TFLITE_MODEL_AUDIO_FEATURE_GENERATION_AUDIO_GAIN;
-int   SL_ML_AUDIO_FEATURE_GENERATION_DUMP_RAW_SPECTROGRAM;
-int   SL_ML_AUDIO_FEATURE_GENERATION_DUMP_QUANTIZED_SPECTROGRAM;
-int   SL_ML_AUDIO_FEATURE_GENERATION_DUMP_AUDIO;
-int   SL_TFLITE_MODEL_FE_SAMPLE_RATE_HZ;
-int   SL_TFLITE_MODEL_FE_SAMPLE_LENGTH_MS;
-int   SL_TFLITE_MODEL_FE_WINDOW_SIZE_MS;
-int   SL_TFLITE_MODEL_FE_WINDOW_STEP_MS;
-int   SL_TFLITE_MODEL_FE_FFT_LENGTH;
-int   SL_TFLITE_MODEL_FE_FILTERBANK_N_CHANNELS;
-float SL_TFLITE_MODEL_FE_FILTERBANK_LOWER_BAND_LIMIT;
-float SL_TFLITE_MODEL_FE_FILTERBANK_UPPER_BAND_LIMIT;
-int   SL_TFLITE_MODEL_FE_NOISE_REDUCTION_ENABLE;
-int   SL_TFLITE_MODEL_FE_NOISE_REDUCTION_SMOOTHING_BITS;
-float SL_TFLITE_MODEL_FE_NOISE_REDUCTION_EVEN_SMOOTHING;
-float SL_TFLITE_MODEL_FE_NOISE_REDUCTION_ODD_SMOOTHING;
-float SL_TFLITE_MODEL_FE_NOISE_REDUCTION_MIN_SIGNAL_REMAINING;
-int   SL_TFLITE_MODEL_FE_PCAN_ENABLE;
-float SL_TFLITE_MODEL_FE_PCAN_STRENGTH;
-float SL_TFLITE_MODEL_FE_PCAN_OFFSET;
-int   SL_TFLITE_MODEL_FE_PCAN_GAIN_BITS;
-int   SL_TFLITE_MODEL_FE_LOG_SCALE_ENABLE;
-int   SL_TFLITE_MODEL_FE_LOG_SCALE_SHIFT;
-int   SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ENABLE;
-float SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ALPHA_A;
-float SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ALPHA_B;
-float SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ARM_THRESHOLD;
-float SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_TRIP_THRESHOLD;
-int   SL_TFLITE_MODEL_FE_DC_NOTCH_FILTER_ENABLE;
-float SL_TFLITE_MODEL_FE_DC_NOTCH_FILTER_COEFFICIENT;
-int   SL_TFLITE_MODEL_FE_QUANTIZE_DYNAMIC_SCALE_ENABLE;
-float SL_TFLITE_MODEL_FE_QUANTIZE_DYNAMIC_SCALE_RANGE_DB;
-float SL_TFLITE_MODEL_SAMPLEWISE_NORM_RESCALE;
-int   SL_TFLITE_MODEL_SAMPLEWISE_NORM_MEAN_AND_STD;
+  printf("AudioFeatureGenerator settings:\n");
+  GET_INT_DEFAULT("fe.activity_detection_enable", SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ENABLE, 0);
+  GET_INT("volume_gain", SL_TFLITE_MODEL_AUDIO_FEATURE_GENERATION_AUDIO_GAIN);
 
-
-bool sl_ml_audio_feature_generation_load_model_settings(const void* tflite_flatbuffer)
-{
-    npu_toolkit::TfliteModelParameters model_parameters;
-    bool missing_params = false;
-
-    if(!npu_toolkit::TfliteModelParameters::load_from_tflite_flatbuffer(tflite_flatbuffer, model_parameters))
-    {
-        return false;
-    }
-
-    printf("AudioFeatureGenerator settings:\n");
-    GET_INT("fe.sample_rate_hz", SL_TFLITE_MODEL_FE_SAMPLE_RATE_HZ);
-    GET_INT("fe.sample_length_ms", SL_TFLITE_MODEL_FE_SAMPLE_LENGTH_MS);
-    GET_INT("fe.window_size_ms", SL_TFLITE_MODEL_FE_WINDOW_SIZE_MS);
-    GET_INT("fe.window_step_ms", SL_TFLITE_MODEL_FE_WINDOW_STEP_MS);
-    GET_INT("fe.fft_length", SL_TFLITE_MODEL_FE_FFT_LENGTH);
-    GET_INT("fe.filterbank_n_channels", SL_TFLITE_MODEL_FE_FILTERBANK_N_CHANNELS);
-    GET_FLOAT("fe.filterbank_lower_band_limit", SL_TFLITE_MODEL_FE_FILTERBANK_LOWER_BAND_LIMIT);
-    GET_FLOAT("fe.filterbank_upper_band_limit", SL_TFLITE_MODEL_FE_FILTERBANK_UPPER_BAND_LIMIT);
-    GET_INT("fe.noise_reduction_enable", SL_TFLITE_MODEL_FE_NOISE_REDUCTION_ENABLE);
-    GET_INT("fe.noise_reduction_smoothing_bits", SL_TFLITE_MODEL_FE_NOISE_REDUCTION_SMOOTHING_BITS);
-    GET_FLOAT("fe.noise_reduction_even_smoothing", SL_TFLITE_MODEL_FE_NOISE_REDUCTION_EVEN_SMOOTHING);
-    GET_FLOAT("fe.noise_reduction_odd_smoothing", SL_TFLITE_MODEL_FE_NOISE_REDUCTION_ODD_SMOOTHING);
-    GET_FLOAT("fe.noise_reduction_min_signal_remaining", SL_TFLITE_MODEL_FE_NOISE_REDUCTION_MIN_SIGNAL_REMAINING);
-    GET_INT("fe.pcan_enable", SL_TFLITE_MODEL_FE_PCAN_ENABLE);
-    GET_FLOAT("fe.pcan_strength", SL_TFLITE_MODEL_FE_PCAN_STRENGTH);
-    GET_FLOAT("fe.pcan_offset", SL_TFLITE_MODEL_FE_PCAN_OFFSET);
-    GET_INT("fe.pcan_gain_bits", SL_TFLITE_MODEL_FE_PCAN_GAIN_BITS);
-    GET_INT("fe.log_scale_enable", SL_TFLITE_MODEL_FE_LOG_SCALE_ENABLE);
-    GET_INT("fe.log_scale_shift", SL_TFLITE_MODEL_FE_LOG_SCALE_SHIFT);
-    GET_INT_DEFAULT("fe.activity_detection_enable", SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ENABLE, 0);
-    GET_FLOAT_DEFAULT("fe.activity_detection_alpha_a", SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ALPHA_A, 0.f);
-    GET_FLOAT_DEFAULT("fe.activity_detection_alpha_b", SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ALPHA_B, 0.f);
-    GET_FLOAT_DEFAULT("fe.activity_detection_arm_threshold", SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ARM_THRESHOLD, 0.f);
-    GET_FLOAT_DEFAULT("fe.activity_detection_trip_threshold", SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_TRIP_THRESHOLD, 0.f);
-    GET_INT_DEFAULT("fe.dc_notch_filter_enable", SL_TFLITE_MODEL_FE_DC_NOTCH_FILTER_ENABLE, 0);
-    GET_FLOAT_DEFAULT("fe.dc_notch_filter_coefficient", SL_TFLITE_MODEL_FE_DC_NOTCH_FILTER_COEFFICIENT, 0.f);
-
-    GET_INT_DEFAULT("fe.quantize_dynamic_scale_enable", SL_TFLITE_MODEL_FE_QUANTIZE_DYNAMIC_SCALE_ENABLE, 0);
-    GET_FLOAT_DEFAULT("fe.quantize_dynamic_scale_range_db", SL_TFLITE_MODEL_FE_QUANTIZE_DYNAMIC_SCALE_RANGE_DB, 0.f);
-
-    // One second of mono int16 samples. Must round up to a multiple of 512: the EFR32 path
-    // writes and processes fixed 512-sample chunks as contiguous spans in the ring buffer
-    // (see sli_ml_audio_feature_generation_audio_buffer_write_chunk / update_features).
-    // Sizes like 8000 or 16000 would otherwise allow chunk-aligned indices to cross the
-    // buffer end and overflow.
-    {
-      const int rate_hz = SL_TFLITE_MODEL_FE_SAMPLE_RATE_HZ;
-      const int chunk = 512;
-      const int raw = rate_hz * 1;
-      SL_TFLITE_MODEL_AUDIO_FEATURE_GENERATION_AUDIO_BUFFER_SIZE =
-          ((raw + chunk - 1) / chunk) * chunk;
-    }
-    printf("fe.audio_buffer_size = %d\n", SL_TFLITE_MODEL_AUDIO_FEATURE_GENERATION_AUDIO_BUFFER_SIZE);
-
-    GET_INT("volume_gain", SL_TFLITE_MODEL_AUDIO_FEATURE_GENERATION_AUDIO_GAIN);
-
-    GET_FLOAT_DEFAULT("samplewise_norm.rescale", SL_TFLITE_MODEL_SAMPLEWISE_NORM_RESCALE, 0.f);
-    GET_INT_DEFAULT("samplewise_norm.mean_and_std", SL_TFLITE_MODEL_SAMPLEWISE_NORM_MEAN_AND_STD, 0);
-
-    return !missing_params;
+  return !missing_params;
 }
-
-
-} // extern "C"

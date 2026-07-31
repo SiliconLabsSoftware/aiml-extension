@@ -28,6 +28,18 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "IAR")
     --diag_suppress=Pe830  # Aggregate init / padding in third-party structs
     --diag_suppress=Pe111  # Unreachable statement in defensive upstream code
     --diag_suppress=Pe177  # Declared but never referenced in bundled headers
+    --diag_suppress=Pa082  # Volatile access ordering in platform-style helpers (IAR static analysis)
+    --diag_suppress=Pe188  # Enum mixed with scalar in drivers / TFLM glue
+    --diag_suppress=Pa089  # Enum vs enum in peripheral code paths
+    --diag_suppress=Pa134  # Identical operands in CMSIS-style macros
+    --diag_suppress=Pe068  # Signed/unsigned conversions in HAL code
+    --diag_suppress=Pa039  # Address of unaligned member (wireless structs)
+    --diag_suppress=Pa084  # Pointless comparison in driver tables
+    --diag_suppress=Pa205  # float promoted to double in sensor math
+    --diag_suppress=Pe546  # Transfer of control bypasses initialization (driver switch)
+    --diag_suppress=Pa167  # may_alias attribute not supported
+    --diag_suppress=Pe1215  # Deprecated API in SDK headers
+    --diag_suppress=Pe186  # Unsigned vs zero in socket code
   )
 endif()
 

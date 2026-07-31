@@ -5,3 +5,7 @@ graph_optimizer:
 
 memory_optimizer:
   enabled: true
+  
+codegen:
+  model_parameters_header:
+    enabled: true

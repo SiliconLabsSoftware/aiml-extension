@@ -9,6 +9,9 @@ description: >
 
 category: Machine Learning|TensorFlow
 quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     id: tflite-micro
@@ -37,3 +40,9 @@ template_contribution:
 define:
   - name: SL_BOARD_SI91X
     condition: [device_si91x]
+toolchain_settings:
+  - option: llvm_compiler_option
+    value: -Wno-unknown-pragmas
+    condition: [device_si91x]
+  - option: iar_compiler_option
+    value: --diag_suppress=Pe830 # placement new without matching operator delete in TFLM

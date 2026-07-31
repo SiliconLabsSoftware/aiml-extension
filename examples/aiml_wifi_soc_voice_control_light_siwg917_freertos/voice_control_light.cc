@@ -21,6 +21,7 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+#include <cinttypes>
 #include <cstdio>
 #include <new>
 
@@ -31,7 +32,7 @@
 #include "tflite_micro_model.hpp"
 
 static RecognizeCommands* command_recognizer = nullptr;
-static uint8_t command_recognizer_instance_buffer[sizeof(RecognizeCommands)] alignas(alignof(RecognizeCommands));
+alignas(alignof(RecognizeCommands)) static uint8_t command_recognizer_instance_buffer[sizeof(RecognizeCommands)];
 static int32_t detected_timeout = 0;
 static int32_t activity_timestamp = 0;
 static uint8_t previous_score = 0;
@@ -92,7 +93,7 @@ void voice_control_light_task_cpp() {
         // Determine if we should run inference
         // If the activity detection block is disabled, then always run inference
         // If the activity detection block is enabled, then ensure there is activity before running inference
-        const bool should_run_inference = (!SL_ML_FRONTEND_ACTIVITY_DETECTION_ENABLE ||
+        const bool should_run_inference = (!sl_ml_audio_feature_generation_is_activity_detection_enabled() ||
                                            (sl_ml_audio_feature_generation_activity_detected() == SL_STATUS_OK));
 
         if (should_run_inference) {
@@ -192,20 +193,20 @@ void handle_results(int32_t current_time, int result, uint8_t score, bool is_new
             sl_ml_audio_feature_generation_reset();
         }
 
-        printf("Detected class=%d label=%s score=%d @%ldms\n",
+        printf("Detected class=%d label=%s score=%" PRIu8 " @%" PRId32 "ms\n",
                result,
                label,
-               (int)score,
-               (long)current_time);
+               score,
+               current_time);
 
         char udp_msg[160];
         int n = snprintf(udp_msg,
                          sizeof(udp_msg),
-                         "Detected class=%d label=%s score=%d @%ldms\n",
+                         "Detected class=%d label=%s score=%" PRIu8 " @%" PRId32 "ms\n",
                          result,
                          label,
-                         (int)score,
-                         (long)current_time);
+                         score,
+                         current_time);
         if (n > 0) {
             size_t len = (size_t)n;
             if (len >= sizeof(udp_msg)) {
@@ -235,7 +236,7 @@ void handle_results(int32_t current_time, int result, uint8_t score, bool is_new
     // then inference is only done when activity is detected
     // in the audio stream. In this case, we control
     // the LEDs based on static timeouts
-    if (SL_ML_FRONTEND_ACTIVITY_DETECTION_ENABLE) {
+    if (sl_ml_audio_feature_generation_is_activity_detection_enabled()) {
         if (detected_timeout == 0 && score > 0 && previous_result != result) {
             activity_timestamp = current_time + 1000;
         } else if (current_time >= activity_timestamp) {
@@ -304,14 +305,7 @@ sl_status_t load_model() {
         return SL_STATUS_FAIL;
     }
 
-    // Initialize the audio feature generation using the parameters
-    // from the given .tflite model file
-    if (!sl_ml_audio_feature_generation_load_model_settings(sl_ml_keyword_spotting_on_off_v3_model_handle.flatbuffer)) {
-        printf("Failed to load audio feature generator parameters from .tflite model\n");
-        return SL_STATUS_FAIL;
-    }
-
-    // Load the other application-specific model parameters from the .tflite
+    // Load application-specific model parameters from the .tflite
     if (!audio_classifier_config_load_model_settings(sl_ml_keyword_spotting_on_off_v3_model_handle.flatbuffer)) {
         printf("Failed to load app parameters from .tflite model\n");
         return SL_STATUS_FAIL;
@@ -332,9 +326,9 @@ sl_status_t load_model() {
     }
 
     if (category_count != static_cast<int>(SL_TFLITE_MODEL_CLASSES.size())) {
-        printf("Number of categories(%d) is not equal to the number of labels(%ld)\n",
+        printf("Number of categories(%d) is not equal to the number of labels(%d)\n",
                category_count,
-               SL_TFLITE_MODEL_CLASSES.size());
+               static_cast<int>(SL_TFLITE_MODEL_CLASSES.size()));
         return SL_STATUS_FAIL;
     }
 

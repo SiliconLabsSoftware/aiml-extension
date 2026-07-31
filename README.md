@@ -10,7 +10,9 @@ The Silicon Labs AI/ML extension for [Simplicity SDK](https://github.com/Silicon
 - Software Reference
   - [Getting Started Guides](https://docs.silabs.com/machine-learning/latest/aiml-getting-started)
   - [Examples](https://docs.silabs.com/machine-learning/latest/aiml-additional-topics/sample-apps)
-  - [Migration Guide](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/aiml-extension-setup)
+  - Migration Guides
+    - [AI/ML 1.x to 2.x](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/aiml-extension-setup)
+    - [AI/ML 2.x to 3.x](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/aiml-3-migration)
   - [API Reference](https://docs.silabs.com/machine-learning/latest/aiml-reference-guide)
 - Hardware Reference
   - [EFR32xG24 Dev Kit Reference Manual](https://www.silabs.com/documents/public/reference-manuals/efr32xg24-rm.pdf)

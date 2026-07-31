@@ -5,6 +5,9 @@ description: >
   This component provides APIs to profile a model created for Silicon Labs devices.
 category: Machine Learning|Profiling
 quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: MSLA
@@ -13,7 +16,11 @@ provides:
 requires:
   - name: ml_profiler_implementation
   - name: toolchain_gcc
-    condition: [device_efx]
+    condition: [toolchain_gcc, device_efx]
+  - name: toolchain_iar
+    condition: [toolchain_iar, device_efx]
+  - name: toolchain_llvm
+    condition: [toolchain_llvm, device_efx]
   - name: cpp_support
   - name: iostream_debug
     condition: [device_efx]
@@ -40,6 +47,10 @@ include:
       - path: sl_ml_profiler_init.h
 source:
   - path: src/utils/profiler/sl_ml_profiler_init.cc
+toolchain_settings:
+  - option: gcc_compiler_option
+    value: "-mfp16-format=ieee"
+    condition: [device_has_mvp]
 define:
   - name: CIRCULAR_QUEUE_LEN_MAX
     value: 1

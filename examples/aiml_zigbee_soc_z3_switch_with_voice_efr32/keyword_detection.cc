@@ -27,10 +27,11 @@
 #include "keyword_detection.h"
 #include "recognize_commands.h"
 #include "config/keyword_detection_config.h"
-#include "sl_ml_audio_feature_generation_config.h"
+
 #include "sl_fe_audio.h"
+#include "sl_fe_audio_instances.h"
 #include "tflite_micro_model.hpp"
-#include "sl_ml_model_keyword_spotting_on_off.h"
+#include "sl_ml_model_keyword_spotting_on_off_v2.h"
 
 #include <cstdio>
 
@@ -65,7 +66,7 @@ static sl_sleeptimer_timer_handle_t inference_timer;
  *
  * Copies the currently available data from the feature buffer into the input
  * tensor and runs inference on the ML-compiler-generated
- * keyword_spotting_on_off model, updating the output tensor.
+ * keyword_spotting_on_off_v2 model, updating the output tensor.
  *
  * @return SL_STATUS_OK on success, other value on failure.
  ******************************************************************************/
@@ -73,16 +74,16 @@ static sl_status_t run_inference()
 {
   // Update model input tensor
   sl_status_t status =
-      sl_ml_audio_feature_generation_fill_tensor(sl_ml_keyword_spotting_on_off_model_handle.input_tensor(0));
+      sl_ml_audio_feature_generation_fill_tensor(sl_ml_keyword_spotting_on_off_v2_model_handle.input_tensor(0));
   if (status != SL_STATUS_OK) {
     return SL_STATUS_FAIL;
   }
   // Run the model on the spectrogram input and make sure it succeeds.
-  if (sl_ml_model_run(&sl_ml_keyword_spotting_on_off_model_handle) != SL_STATUS_OK) {
+  if (sl_ml_model_run(&sl_ml_keyword_spotting_on_off_v2_model_handle) != SL_STATUS_OK) {
     return SL_STATUS_FAIL;
   }
 
-  (void)sl_ml_keyword_spotting_on_off_model_handle.output_tensor(0);
+  (void)sl_ml_keyword_spotting_on_off_v2_model_handle.output_tensor(0);
   return SL_STATUS_OK;
 }
 
@@ -108,7 +109,7 @@ static sl_status_t process_output()
       sl_sleeptimer_tick_to_ms(sl_sleeptimer_get_tick_count());
 
   TfLiteStatus process_status = command_recognizer->ProcessLatestResults(
-      sl_ml_keyword_spotting_on_off_model_handle.output_tensor(0), (int32_t)current_time_stamp, &found_command_index, &score, &is_new_command);
+      sl_ml_keyword_spotting_on_off_v2_model_handle.output_tensor(0), (int32_t)current_time_stamp, &found_command_index, &score, &is_new_command);
 
   if (process_status != kTfLiteOk) {
     return SL_STATUS_FAIL;
@@ -177,8 +178,8 @@ void keyword_detection_init(void)
   sl_power_manager_add_em_requirement(SL_POWER_MANAGER_EM1);
 #endif
 
-  // Load compiled TFLM model (autogen from ml_compiler + keyword_spotting_on_off.tflite)
-  if (sl_ml_model_init(&sl_ml_keyword_spotting_on_off_model_handle) != SL_STATUS_OK) {
+  // Load compiled TFLM model (autogen from ml_compiler + keyword_spotting_on_off_v2.tflite)
+  if (sl_ml_model_init(&sl_ml_keyword_spotting_on_off_v2_model_handle) != SL_STATUS_OK) {
     printf("Failed to load keyword model\r\n");
     while (1) {
       ;
@@ -186,29 +187,21 @@ void keyword_detection_init(void)
   }
 
   // Application recognition parameters from flatbuffer metadata
-  if (!keyword_detection_config_load_model_settings(sl_ml_keyword_spotting_on_off_model_handle.flatbuffer)) {
+  if (!keyword_detection_config_load_model_settings(sl_ml_keyword_spotting_on_off_v2_model_handle.flatbuffer)) {
     printf("Failed to load app parameters from .tflite model\r\n");
     while (1) {
       ;
     }
   }
 
-  // Audio frontend (microfrontend) parameters from the same flatbuffer
-  if (!sl_ml_audio_feature_generation_load_model_settings(sl_ml_keyword_spotting_on_off_model_handle.flatbuffer)) {
-    printf("Failed to load audio frontend parameters from .tflite model\r\n");
-    while (1) {
-      ;
-    }
-  }
-
-  if (sl_ml_audio_feature_generation_init() != SL_STATUS_OK) {
+  if (sl_ml_audio_feature_generation_init(&sl_fe_audio_keyword_spotting_on_off_v2_cfg) != SL_STATUS_OK) {
     printf("Failed to init audio feature generator\r\n");
     while (1) {
       ;
     }
   }
 
-  const TfLiteTensor *output = sl_ml_keyword_spotting_on_off_model_handle.output_tensor(0);
+  const TfLiteTensor *output = sl_ml_keyword_spotting_on_off_v2_model_handle.output_tensor(0);
   // Validate model output shape [1, num_classes]
   if ((output->dims->size == 2) && (output->dims->data[0] == 1)) {
     category_count = output->dims->data[1];

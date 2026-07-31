@@ -40,7 +40,7 @@
 #include <stdbool.h>
 #include "ml/third_party/tflm/common.h"
 
-#include "microfrontend/lib/frontend_util.h"
+#include "sl_fe_audio_common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -175,25 +175,6 @@ extern "C" {
  * while retrieving them only needs to be done prior to inference.
  * @{
  ******************************************************************************/
-
-/** Per-model frontend + buffer/quantization parameters (fe_audio component instance). */
-typedef struct sl_fe_audio_config {
-  struct FrontendConfig frontend_config;
-  int sample_rate_hz;
-  unsigned fft_length;
-  unsigned sample_length_ms;
-  size_t audio_buffer_size;
-  size_t audio_buffer_chunk_size;
-  int audio_gain;
-  int quantize_dynamic_scale_enable;
-  float quantize_dynamic_scale_range_db;
-  uint16_t quantize_feature_range_min;
-  uint16_t quantize_feature_range_max;
-  /** Float tensor path: multiply uint16 features by this factor (0 = off). */
-  float samplewise_norm_rescale;
-  /** Float tensor path: per-buffer mean/std normalization. */
-  int samplewise_norm_mean_and_std;
-} sl_fe_audio_config_t;
 
 /***************************************************************************//**
  * @brief

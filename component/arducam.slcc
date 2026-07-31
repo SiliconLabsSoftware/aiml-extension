@@ -5,6 +5,9 @@ description: >
   Driver to retrieve images from an ArduCAM camera module
 category: Image
 quality: experimental
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: MSLA
@@ -33,4 +36,9 @@ source:
   - path: src/drivers/arducam/sl_ml_arducam.c
   - path: src/drivers/arducam/sl_ml_arducam_m_2mp_driver.c
   - path: src/drivers/arducam/sl_ml_ov2640.c
+toolchain_settings:
+  - option: iar_compiler_option
+    value: --diag_suppress=Pa093 # implicit float-to-integer conversion in camera timing setup
+  - option: iar_compiler_option
+    value: --diag_suppress=Pe111 # unreachable return path in ArduCAM register helper
 

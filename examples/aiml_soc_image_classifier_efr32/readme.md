@@ -67,7 +67,14 @@ The following default pin mappings are used by:
 
 ## Dumping images to PC
 
-This application streams camera frames over J-Link. Use the Python image visualization tool in SDK `aiml-extension`, `/tool/image-visualization/main.py` to preview frames on the PC and optionally save them as JPEG files.
+This application streams camera frames over J-Link. Use the Python image visualization tool (`tool\image-visualization\main.py`) from your installed Silicon Labs AI/ML SDK to preview frames on the PC and optionally save them as JPEG files.
+
+### Locating the tool
+
+1. In **Simplicity Studio**, open **Settings** → **SDKs**
+2. Select the **Simplicity SDK Suite** version you use. The suite expands to list its installed extension SDKs.
+3. Right-click **Silicon Labs AI/ML SDK** in that list → **Browse to Location**
+4. In the opened folder, go to `tool\image-visualization`
 
 ### Initial setup
 
@@ -79,11 +86,11 @@ This application streams camera frames over J-Link. Use the Python image visuali
      ```
      Replace `<user>` with your Windows account name.
 
-   - **Windows (system settings):** Settings → System → About → Advanced system settings → Environment Variables → edit **Path** → add the Simplicity Commander directory above.
+   - **Windows (system settings):**  Settings → System → About → Advanced system settings → Environment Variables → System variables → select Path variable → New → add the Simplicity Commander directory above.
 
    Download: [Simplicity Commander](https://www.silabs.com/software-and-tools/simplicity-studio/simplicity-commander?tab=getting-started)
 
-2. In SDK `aiml-extension`, from `/tool/image-visualization`, create and activate a virtual environment, then install dependencies:
+2. From `tool\image-visualization` (see **Locating the tool** above), create and activate a virtual environment, then install dependencies:
 
 ```console
 python -m venv .venv
@@ -94,7 +101,7 @@ pip install -r requirements.txt
 ### Usage
 
 1. Flash this application to the development board and reset or run the firmware.
-2. In SDK `aiml-extension`, from `/tool/image-visualization`, start the visualization tool:
+2. From `tool\image-visualization`, start the visualization tool:
 
 ```console
 python main.py
@@ -102,7 +109,7 @@ python main.py
 
 Live preview uses defaults `96x96x2` camera resolution and `84x84` target shape (matching the model input region). 
 
-See in SDK `aiml-extension`, `/tool/image-visualization/readme.md` for all command-line options, serial port settings, and notes on aligning the hand gesture with the on-screen target rectangle.
+See `tool\image-visualization\readme.md` in your SDK installation for all command-line options, serial port settings, and notes on aligning the hand gesture with the on-screen target rectangle.
 
 Press **Ctrl+C** in the terminal to stop the tool.
 

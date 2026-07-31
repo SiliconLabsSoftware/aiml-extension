@@ -49,6 +49,6 @@ codegen:
     generate_model_load_function: true
     generate_op_resolver_instance: true
   model_parameters_header:
-    enabled: false
+    enabled: true
     prefix: "SL_TFLITE_MODEL_{prefix}_"
     filename: "{prefix}_generated_parameters.h"

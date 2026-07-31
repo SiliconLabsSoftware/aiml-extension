@@ -9,6 +9,9 @@ description: >
 category: Compute
 quality: production
 root_path: .
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
     sbom:
         license: Zlib and MSLA

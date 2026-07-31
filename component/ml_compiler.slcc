@@ -9,6 +9,9 @@ description: >
   Registers with the Advanced Configurator (aiml/tool/compiler) for .tflite codegen when selected.
 category: Machine Learning|Compilation
 quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: MSLA
@@ -19,3 +22,6 @@ template_contribution:
     value: ml_compiler
 define:
   - name: SL_ML_ENABLE_MVP_COMPILATION
+toolchain_settings:
+  - option: iar_compiler_option
+    value: --diag_suppress=Pe830 # placement new without matching operator delete in autogen TFLM

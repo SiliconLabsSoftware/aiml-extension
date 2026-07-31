@@ -9,10 +9,10 @@
     <properties key="solutionReferenceId" value="aiml_soc_blink_efr32.aiml_soc_blink_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_blink_efr32/aiml_soc_blink_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_blink_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a brd2505a brd2506a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a brd2705a brd2505a brd2506a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -30,7 +30,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -46,10 +46,10 @@
     <properties key="solutionReferenceId" value="aiml_soc_model_profiler_efr32.aiml_soc_model_profiler_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_model_profiler_efr32/aiml_soc_model_profiler_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a brd2705a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -68,7 +68,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -89,7 +89,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="experimental"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -110,7 +110,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="experimental"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -129,7 +129,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -148,7 +148,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -166,7 +166,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[46].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -183,7 +183,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -200,7 +200,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[46].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -218,7 +218,7 @@
     <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
-    <properties key="toolchainCompatibility" value="gcc iar"/>
+    <properties key="toolchainCompatibility" value="gcc iar llvm"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="quality" value="production"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -235,7 +235,7 @@
     <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
-    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="toolchainCompatibility" value="gcc llvm"/>
     <properties key="quality" value="production"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -254,7 +254,7 @@
     <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd4343a brd4343b brd4339b brd4340b brd4342a brd4343q brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
-    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="toolchainCompatibility" value="gcc llvm"/>
     <properties key="quality" value="production"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -273,7 +273,7 @@
     <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
-    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="toolchainCompatibility" value="gcc llvm"/>
     <properties key="quality" value="production"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -295,7 +295,7 @@
     <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
-    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="toolchainCompatibility" value="gcc llvm"/>
     <properties key="quality" value="experimental"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -317,7 +317,7 @@
     <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
-    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="toolchainCompatibility" value="gcc llvm"/>
     <properties key="quality" value="experimental"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -336,7 +336,7 @@
     <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
-    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="toolchainCompatibility" value="gcc llvm"/>
     <properties key="quality" value="production"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -354,7 +354,7 @@
     <properties key="boardCompatibility" value="com.silabs.board.none brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
-    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="toolchainCompatibility" value="gcc llvm"/>
     <properties key="quality" value="production"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -373,7 +373,7 @@
     <properties key="boardCompatibility" value="com.silabs.board.none brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
-    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="toolchainCompatibility" value="gcc llvm"/>
     <properties key="quality" value="experimental"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>
@@ -392,7 +392,7 @@
     <properties key="boardCompatibility" value="com.silabs.board.none brd2605a"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
-    <properties key="toolchainCompatibility" value="gcc"/>
+    <properties key="toolchainCompatibility" value="gcc llvm"/>
     <properties key="quality" value="experimental"/>
     <properties key="category" value="AI/ML Application"/>
     <properties key="stockConfigCompatibility" value="com.silabs.ss.framework.project.toolchain.core.default"/>

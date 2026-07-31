@@ -11,12 +11,13 @@ author: Silicon Laboratories, Inc.
 component:
 - id: ml_model
   instance:
-  - keyword_spotting_on_off
+  - keyword_spotting_on_off_v2
 - id: sl_main
 - id: cli
   instance:
   - example
 - id: iostream_recommended_stream
+- id: iostream_retarget_stdio
 - id: printf
 - id: sl_assert
 - id: zigbee_debug_print
@@ -58,7 +59,8 @@ component:
 - id: zigbee_application_bootloader
 - id: fe_audio
   instance:
-  - keyword_spotting_on_off
+  - keyword_spotting_on_off_v2
+- id: power_manager
 - id: clock_manager
 - id: dma_manager
 - id: dma_channel
@@ -93,10 +95,6 @@ configuration:
   value: 0
   condition:
   - iostream_eusart
-- name: SL_ML_AUDIO_FEATURE_GENERATION_AUDIO_BUFFER_SIZE
-  value: 4096
-- name: SL_ML_AUDIO_FEATURE_GENERATION_AUDIO_GAIN
-  value: 2
 - name: SL_CLI_PROMPT_STRING
   value: '"zigbee_z3_switch_with_voice>"'
 - name: NVM3_DEFAULT_NVM_SIZE
@@ -121,21 +119,23 @@ source:
 - path: keyword_detection.cc
 - path: config/keyword_detection_config.cc
 config_file:
-- path: config/compiler/keyword_spotting_on_off.mlconf
+- path: config/compiler/keyword_spotting_on_off_v2.mlconf
   directory: tflite
   override:
     component: ml_model
     file_id: ml_compiler_config
-    instance: keyword_spotting_on_off
+    instance: keyword_spotting_on_off_v2
 - path: config/zcl/zcl_config.zap
   file_id: zap_configuration_file_id
   directory: zcl
 - path: config/keyword_detection_config.h
-- path: tflite_models/tflite/keyword_spotting_on_off.tflite
+- path: tflite_models/tflite/keyword_spotting_on_off_v2.tflite
   directory: tflite
 toolchain_settings:
 - option: gcc_linker_option
   value: -u _printf_float
+- option: gcc_compiler_option
+  value: "-Wno-unused-parameter"
 - option: gcc_compiler_option
   value: -Wno-stringop-overflow
 - option: gcc_compiler_option
@@ -156,6 +156,10 @@ toolchain_settings:
   value: -Wno-unknown-pragmas
 - option: llvm_compiler_option
   value: -Wno-vla-cxx-extension
+- option: iar_compiler_option
+  value: --diag_suppress=Pa217   # mbedTLS PSA struct bit-field overlap warning
+- option: llvm_compiler_option
+  value: -Wno-unused-parameter
 include:
 - path: .
   file_list:
@@ -187,8 +191,8 @@ filter:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 3.0.0
+  version: 3.0.1
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2026.6.0
+  version: 2026.6.1

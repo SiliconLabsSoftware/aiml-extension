@@ -29,6 +29,7 @@
  ******************************************************************************/
 #include <stddef.h>
 #include <stdint.h>
+#include <inttypes.h>
 #include <string.h>
 #include <assert.h>
 #include <stdio.h>
@@ -235,7 +236,7 @@ sl_status_t sl_ml_mic_start_streaming(
   );
 
   if (status != SL_STATUS_OK) {
-    printf("ERROR: I2S config failed with status: %ld\n", status);
+    printf("ERROR: I2S config failed with status: %" PRIu32 "\n", (uint32_t)status);
     return status;
   }
 
@@ -262,7 +263,7 @@ sl_status_t sl_ml_mic_start_streaming(
     mic_context.state = RECEIVE_DATA;
     mic_context.receive_complete = false;
   } else {
-    printf("ERROR: ULP I2S receive start failed with status: %ld\n", status);
+    printf("ERROR: ULP I2S receive start failed with status: %" PRIu32 "\n", (uint32_t)status);
   }
 
   return status;
@@ -336,7 +337,7 @@ sl_status_t sl_ml_mic_process_action(void)
     case RECEIVE_DATA: {
       sl_status_t status = start_ulp_receive();
       if (status != SL_STATUS_OK) {
-        printf("ERROR: Failed to start I2S receive, status: %ld\n", status);
+        printf("ERROR: Failed to start I2S receive, status: %" PRIu32 "\n", (uint32_t)status);
         mic_context.state = INVALID_STATE;
         return status;
       }
@@ -352,7 +353,7 @@ sl_status_t sl_ml_mic_process_action(void)
 
         sl_status_t status = start_ulp_receive();
         if (status != SL_STATUS_OK) {
-          printf("ERROR: Failed to restart I2S receive, status: %ld\n", status);
+          printf("ERROR: Failed to restart I2S receive, status: %" PRIu32 "\n", (uint32_t)status);
           mic_context.state = RECEIVE_DATA;
         }
       } else if (++wait_state_polls > WAIT_STATE_TIMEOUT_MS) {
@@ -414,7 +415,7 @@ sl_status_t sl_ml_mic_stop(void)
 
 void i2s_event_handler2(uint32_t event)
 {
-  
+  (void)event;
   #if defined(SL_I2S0_PERIPHERAL)
   if (mic_context.is_streaming && mic_context.callback != NULL) {
     int16_t* ptr = mic_context.sample_buffer.ptr;

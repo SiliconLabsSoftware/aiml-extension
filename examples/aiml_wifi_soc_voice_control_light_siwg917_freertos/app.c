@@ -45,7 +45,6 @@
  #include "sl_wifi_callback_framework.h"
  #include "app.h"
  #include "app_ml_bridge.h"
- #include "sl_si91x_core_utilities.h"
  #include "ml/platform/ml_clock_helper.h"
  #include "sl_sleeptimer.h"
  #include "FreeRTOS.h"
@@ -396,10 +395,10 @@ bool app_udp_notify_consume_and_send(void)
 
   printf("application_start: before sl_net_init\n");
   status = sl_net_init(SL_NET_WIFI_AP_INTERFACE, &throughput_configuration, NULL, NULL);
-  printf("application_start: after sl_net_init status=0x%lx\n", status);
+  printf("application_start: after sl_net_init status=0x%x\n", (unsigned int)status);
 
   if (status != SL_STATUS_OK) {
-    printf("Wi-Fi AP initialization failed: 0x%lx\n", status);
+    printf("Wi-Fi AP initialization failed: 0x%x\n", (unsigned int)status);
     return;
   }
 
@@ -410,7 +409,7 @@ bool app_udp_notify_consume_and_send(void)
 
   printf("application_start: before sl_wifi_get_firmware_version\n");
   status = sl_wifi_get_firmware_version(&firmware_version);
-  printf("application_start: after sl_wifi_get_firmware_version status=0x%lx\n", status);
+  printf("application_start: after sl_wifi_get_firmware_version status=0x%x\n", (unsigned int)status);
 
   if (status != SL_STATUS_OK) {
     return;
@@ -418,7 +417,7 @@ bool app_udp_notify_consume_and_send(void)
 
   printf("application_start: before sl_net_get_profile\n");
   status = sl_net_get_profile(SL_NET_WIFI_AP_INTERFACE, SL_NET_DEFAULT_WIFI_AP_PROFILE_ID, &ap_profile);
-  printf("application_start: after sl_net_get_profile status=0x%lx\n", status);
+  printf("application_start: after sl_net_get_profile status=0x%x\n", (unsigned int)status);
 
   if (status != SL_STATUS_OK) {
     return;
@@ -426,7 +425,7 @@ bool app_udp_notify_consume_and_send(void)
 
   printf("application_start: before sl_net_up\n");
   status = sl_net_up(SL_NET_WIFI_AP_INTERFACE, SL_NET_DEFAULT_WIFI_AP_PROFILE_ID);
-  printf("application_start: after sl_net_up status=0x%lx\n", status);
+  printf("application_start: after sl_net_up status=0x%x\n", (unsigned int)status);
   app_log_frt_heap("after sl_net_up");
 
   if (status != SL_STATUS_OK) {

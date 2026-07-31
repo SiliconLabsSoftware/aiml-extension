@@ -7,6 +7,9 @@ description: >
 category: Machine Learning|Feature Generator
 quality: production
 root_path: feature_generator/audio
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: Zlib AND Apache-2.0
@@ -24,7 +27,11 @@ provides:
     allow_multiple: true
 requires:
   - name: toolchain_gcc
-    condition: [device_efx]
+    condition: [toolchain_gcc, device_efx]
+  - name: toolchain_iar
+    condition: [toolchain_iar, device_efx]
+  - name: toolchain_llvm
+    condition: [toolchain_llvm, device_efx]
   - name: cpp_support
   - name: frontend_fft_implementation
   - name: component_catalog
@@ -41,14 +48,11 @@ define:
     value: 1
     condition: [device_si91x]
 config_file:
-  - path: config/sl_ml_audio_feature_generation_config.h
   - path: config/sl_fe_audio_{{instance}}_config.h
-    condition: [device_si91x]
+  - path: config/sl_ml_audio_feature_generation_config.h
 template_file:
   - path: inst/sl_fe_audio_instances.h.jinja
-    condition: [device_si91x]
   - path: inst/sl_fe_audio_instances.c.jinja
-    condition: [device_si91x]
 include:
   - path: inc
     file_list:
@@ -56,6 +60,7 @@ include:
         condition: [device_si91x]
       - path: sl_fe_audio.h
         condition: [device_efx]
+      - path: sl_fe_audio_common.h
   - path: ../..
     file_list:
       - path: microfrontend/lib/utils.h
@@ -83,6 +88,7 @@ source:
     condition: [device_efx]
   - path: src/sl_fe_audio_si91x.cc
     condition: [device_si91x]
+  - path: src/sl_fe_audio_common.c
   - path: config/sl_ml_audio_feature_generation_config.cc
   - path: ../../microfrontend/lib/activity_detection_util.c
   - path: ../../microfrontend/lib/activity_detection.c
@@ -101,15 +107,19 @@ source:
   - path: ../../microfrontend/lib/pcan_gain_control_util.c
   - path: ../../microfrontend/lib/window.c
   - path: ../../microfrontend/lib/window_util.c
+toolchain_settings:
+  - option: iar_compiler_option
+    value: --diag_suppress=Pa205 # implicit float-to-double conversions in microfrontend math
+  - option: iar_compiler_option
+    value: --diag_suppress=Pa093 # implicit float-to-integer conversions in microfrontend math
+  - option: iar_compiler_option
+    value: --diag_suppress=Pa082 # volatile audio buffer access order in feature generation
 template_contribution:
   - name: fe_audio_instance
     value: '{{instance}}'
-    condition: [device_si91x]
   - name: component_catalog
     value: '{{instance}}'
-    condition: [device_si91x]
   - name: component_catalog
     value: fe_audio
   - name: component_catalog
     value: fe_audio_{{instance}}
-    condition: [device_si91x]

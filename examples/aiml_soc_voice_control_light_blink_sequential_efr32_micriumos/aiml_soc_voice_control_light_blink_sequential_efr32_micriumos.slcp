@@ -103,10 +103,6 @@ configuration:
 - name: SL_IOSTREAM_UART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
   value: 1
   condition: [iostream_uart]
-- name: SL_ML_AUDIO_FEATURE_GENERATION_AUDIO_BUFFER_SIZE
-  value: 4096
-- name: SL_ML_AUDIO_FEATURE_GENERATION_AUDIO_GAIN
-  value: 2
 - name: SL_HEAP_SIZE
   value: 0x2000
 - name: SL_MVP_OPTIMIZE_SPEED
@@ -135,8 +131,8 @@ tag:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 3.0.0
+  version: 3.0.1
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2026.6.0
+  version: 2026.6.1

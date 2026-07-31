@@ -6,6 +6,9 @@ description: >
   Silicon Labs devices with MVP accelarators.
 category: Machine Learning|Model Profiler
 quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: MSLA
@@ -13,7 +16,11 @@ provides:
   - name: ml_profiler_utils
 requires:
   - name: toolchain_gcc
-    condition: [device_efx]
+    condition: [toolchain_gcc, device_efx]
+  - name: toolchain_iar
+    condition: [toolchain_iar, device_efx]
+  - name: toolchain_llvm
+    condition: [toolchain_llvm, device_efx]
   - name: cpp_support
   - name: component_catalog
 include:

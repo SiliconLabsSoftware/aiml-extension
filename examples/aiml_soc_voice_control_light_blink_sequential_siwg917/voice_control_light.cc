@@ -30,7 +30,7 @@
 
 // Handles keyword recognition smoothing and suppression.
 static RecognizeCommands* command_recognizer = nullptr;
-static uint8_t command_recognizer_instance_buffer[sizeof(RecognizeCommands)] alignas(alignof(RecognizeCommands));
+alignas(alignof(RecognizeCommands)) static uint8_t command_recognizer_instance_buffer[sizeof(RecognizeCommands)];
 static int32_t detected_timeout = 0;
 static int32_t activity_timestamp = 0;
 static int32_t activity_toggle_timestamp = 0;
@@ -173,7 +173,7 @@ void voice_control_light_task() {
         sl_ml_audio_feature_generation_update_features();
 
         // Run inference when activity detection is disabled or speech activity is present.
-        const bool should_run_inference = (!SL_ML_FRONTEND_ACTIVITY_DETECTION_ENABLE ||
+        const bool should_run_inference = (!sl_ml_audio_feature_generation_is_activity_detection_enabled() ||
                                            (sl_ml_audio_feature_generation_activity_detected() == SL_STATUS_OK));
 
         if (should_run_inference) {
@@ -283,7 +283,7 @@ void handle_results(int32_t current_time, int result, uint8_t score, bool is_new
     }
 
     // With activity detection enabled, use static timeouts between inference windows.
-    if (SL_ML_FRONTEND_ACTIVITY_DETECTION_ENABLE) {
+    if (sl_ml_audio_feature_generation_is_activity_detection_enabled()) {
         if (detected_timeout == 0 && score > 0 && previous_result != result) {
             activity_timestamp = current_time + 1000;
         } else if (current_time >= activity_timestamp) {
@@ -362,12 +362,6 @@ sl_status_t load_model() {
         return SL_STATUS_FAIL;
     }
 
-    // Initialize audio feature generation from the keyword model metadata.
-    if (!sl_ml_audio_feature_generation_load_model_settings(sl_ml_keyword_spotting_on_off_v3_model_handle.flatbuffer)) {
-        printf("Failed to load audio feature generator parameters from .tflite model\n");
-        return SL_STATUS_FAIL;
-    }
-
     // Load application-specific keyword detection parameters.
     if (!audio_classifier_config_load_model_settings(sl_ml_keyword_spotting_on_off_v3_model_handle.flatbuffer)) {
         printf("Failed to load app parameters from .tflite model\n");
@@ -389,9 +383,9 @@ sl_status_t load_model() {
     }
 
     if (category_count != static_cast<int>(SL_TFLITE_MODEL_CLASSES.size())) {
-        printf("Number of categories(%d) is not equal to the number of labels(%ld)\n",
+        printf("Number of categories(%d) is not equal to the number of labels(%d)\n",
                category_count,
-               SL_TFLITE_MODEL_CLASSES.size());
+               static_cast<int>(SL_TFLITE_MODEL_CLASSES.size()));
         return SL_STATUS_FAIL;
     }
 

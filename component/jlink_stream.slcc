@@ -4,6 +4,9 @@ label: JLink Stream
 description: Allows for transferring binary data between a Python script and the MCU
 category: Drivers
 quality: experimental
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: MSLA

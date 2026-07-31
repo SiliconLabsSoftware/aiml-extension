@@ -88,8 +88,8 @@ ui_hints:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 3.0.0
+  version: 3.0.1
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2026.6.0
+  version: 2026.6.1

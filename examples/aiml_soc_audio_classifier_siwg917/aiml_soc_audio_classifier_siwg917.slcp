@@ -101,10 +101,6 @@ configuration:
   value: 1
 - name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
   value: 1
-- name: SL_ML_AUDIO_FEATURE_GENERATION_AUDIO_BUFFER_SIZE
-  value: 4096
-- name: SL_ML_AUDIO_FEATURE_GENERATION_AUDIO_GAIN
-  value: 2
 - name: SL_I2S0_SCLK_PIN
   value: 46
 - name: SL_I2S0_WSCLK_PIN
@@ -128,11 +124,11 @@ post_build:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 3.0.0
+  version: 3.0.1
 - id: wiseconnect3_sdk
   vendor: silabs
-  version: 4.1.0
+  version: 4.1.1
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2026.6.0
+  version: 2026.6.1

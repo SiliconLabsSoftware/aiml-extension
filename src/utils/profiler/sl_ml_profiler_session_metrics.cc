@@ -37,6 +37,18 @@
 /***************************************************************************//**
  * @brief Linker symbols declared as arrays for memory map(addresses).
  ******************************************************************************/
+#if defined(__ICCARM__)
+#pragma section=".data"
+#pragma section=".bss"
+#pragma section="CSTACK"
+#pragma section="HEAP"
+#define DATA_START  (static_cast<const char*>(__section_begin(".data")))
+#define DATA_END    (static_cast<const char*>(__section_end(".data")))
+#define BSS_START   (static_cast<const char*>(__section_begin(".bss")))
+#define BSS_END     (static_cast<const char*>(__section_end(".bss")))
+#define STACK_TOP   (static_cast<const char*>(__section_end("CSTACK")))
+#define HEAP_LIMIT  (static_cast<const char*>(__section_end("HEAP")))
+#else
 extern char __data_start__[];
 extern char __data_end__[];
 extern char __bss_start__[];
@@ -47,6 +59,13 @@ extern char __HeapLimit[];   // end of heap (end of RAM)
 
 extern char __StackTop[];    // initial SP (top of stack)
 extern char __StackLimit[];  // stack low limit
+#define DATA_START  (__data_start__)
+#define DATA_END    (__data_end__)
+#define BSS_START   (__bss_start__)
+#define BSS_END     (__bss_end__)
+#define STACK_TOP   (__StackTop)
+#define HEAP_LIMIT  (__HeapLimit)
+#endif
 
 #if defined(SL_BOARD_SI91X)
 extern char __rom_start[];
@@ -297,8 +316,8 @@ void SilabsProfiler::update_start_session_info(sl_ml_profiler_start_session_info
                      : static_cast<uint16_t>(flash_kb_value);
   }
 
-  uintptr_t ram_base = (uintptr_t)__data_start__;
-  uintptr_t ram_top  = (uintptr_t)__HeapLimit;
+  uintptr_t ram_base = reinterpret_cast<uintptr_t>(DATA_START);
+  uintptr_t ram_top  = (uintptr_t)HEAP_LIMIT;
   {
     const uintptr_t ram_kb_value = (ram_top - ram_base) / 1024;
     info->ram_kb = (ram_kb_value > UINT16_MAX) 
@@ -373,13 +392,13 @@ void SilabsProfiler::update_end_session_info()
  ******************************************************************************/
 size_t SilabsProfiler::data_usage_bytes() {
   // return (size_t)(__bss_end__ - __data_start__);
-  return static_cast<std::size_t>(__data_end__ - __data_start__);
+  return static_cast<std::size_t>(DATA_END - DATA_START);
 }
 /***************************************************************************//**
  * @brief Bytes used by the .bss segment.
  ******************************************************************************/
 size_t SilabsProfiler::bss_usage_bytes() {
-  return static_cast<std::size_t>(__bss_end__ - __bss_start__);
+  return static_cast<std::size_t>(BSS_END - BSS_START);
 }
 /***************************************************************************//**
  * @brief Bytes used by the general-purpose heap (dynamic allocations).
@@ -400,7 +419,7 @@ std::size_t SilabsProfiler::heap_usage_bytes() {
  ******************************************************************************/
 std::size_t SilabsProfiler::stack_usage_bytes() {
   uintptr_t sp_val = static_cast<uintptr_t>(__get_MSP());
-  uintptr_t top = reinterpret_cast<uintptr_t>(__StackTop);
+  uintptr_t top = reinterpret_cast<uintptr_t>(STACK_TOP);
   if (sp_val >= top) return 0;
   return static_cast<std::size_t>(top - sp_val);
 }

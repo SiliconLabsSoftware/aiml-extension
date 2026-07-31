@@ -16,6 +16,7 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <stdint.h>
+#include <inttypes.h>
 #include "sl_status.h"
 #include "sl_ml_image_feature_generation.h"
 #include "sl_ml_image_feature_generation_config.h"
@@ -58,11 +59,11 @@ static sl_status_t sli_ml_validate_camera_index_range(void)
   const uint32_t camera_pixel_count =
     ((uint32_t)SL_ML_CAM_IMAGE_WIDTH * (uint32_t)SL_ML_CAM_IMAGE_HEIGHT);
   if (camera_pixel_count > SL_ML_IMAGE_MAX_UINT16_INDEXED_PIXELS) {
-    printf("ERROR: Invalid camera resolution %u x %u (%lu pixels). "
+    printf("ERROR: Invalid camera resolution %u x %u (%" PRIu32 " pixels). "
            "uint16_t crop indices support at most %u pixels.\n",
            (unsigned)SL_ML_CAM_IMAGE_WIDTH,
            (unsigned)SL_ML_CAM_IMAGE_HEIGHT,
-           (unsigned long)camera_pixel_count,
+           camera_pixel_count,
            (unsigned)SL_ML_IMAGE_MAX_UINT16_INDEXED_PIXELS);
     printf("       Reduce SL_ML_CAM_IMAGE_WIDTH/SL_ML_CAM_IMAGE_HEIGHT to keep "
            "(width * height) <= %u.\n",
@@ -201,7 +202,7 @@ sl_status_t sl_ml_initialize_arducam_camera()
     status = slx_ml_arducam_init(&cam_config, image_buffer, SL_ML_CAM_INPUT_IMG_BUFFER_LENGTH);
     if(status != SL_STATUS_OK)
     {
-        printf("Failed to initialize the camera (sl_status_t=0x%08lX)", (unsigned long)status);
+        printf("Failed to initialize the camera (sl_status_t=0x%08" PRIX32 ")", (uint32_t)status);
         switch (status) {
           case SL_STATUS_ALREADY_INITIALIZED:
             printf(" = SL_STATUS_ALREADY_INITIALIZED: Camera driver already initialized.\n");
@@ -372,8 +373,7 @@ sl_status_t sl_ml_get_image_mean(uint8_t *in_cam_image, float *mean, float *mean
   *mean2 = 0.0f;
 
 #if SL_ML_IMAGE_CROP_USE_LUT
-  for (int i = SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH - 1; i >= 0; --i)
-  {
+  for (int i = 0; i < SL_ML_MODEL_INPUT_IMG_BUFFER_LENGTH; i++) {
     const float value = (float)in_cam_image[crop_buffer[i]];
     count += 1;
     const float delta = value - *mean;

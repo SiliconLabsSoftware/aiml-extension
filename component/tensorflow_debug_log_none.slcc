@@ -5,6 +5,9 @@ description: >
   This component disables debug logging in TensorFlow Lite Micro.
 category: Machine Learning|TensorFlow|Debug
 quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: Zlib

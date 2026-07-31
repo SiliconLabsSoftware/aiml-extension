@@ -6,6 +6,9 @@ description: >
   and provides an implementation using IO Stream.
 category: Machine Learning|TensorFlow|Debug
 quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: Zlib

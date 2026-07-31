@@ -18,7 +18,7 @@ In SDK `aiml-extension`, `/tool/image-visualization`
      ```
      Replace `<user>` with your Windows account name.
 
-   - **Windows (system settings):** Settings → System → About → Advanced system settings → Environment Variables → select **Path** variable → New → add the Simplicity Commander install directory.
+   - **Windows (system settings):**  Settings → System → About → Advanced system settings → Environment Variables → System variables → select Path variable → New → add the Simplicity Commander directory above.
 
    - **Linux / macOS:** Add the Simplicity Commander install directory to `PATH` (for example in `~/.bashrc` or `~/.zshrc`: `export PATH="<install-dir>:$PATH"`), then open a new shell or `source` that file.
 

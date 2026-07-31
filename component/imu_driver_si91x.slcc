@@ -6,6 +6,9 @@ description: >
   accelerometer and gyroscope data acquisition for machine learning applications.
 category: Hardware
 quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: MSLA

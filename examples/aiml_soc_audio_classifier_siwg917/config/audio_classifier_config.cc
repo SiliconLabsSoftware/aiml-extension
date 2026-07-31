@@ -18,7 +18,7 @@
 
 #include "ml/tflite_micro_model/tflite_micro_logger.hpp"
 #include "ml/tflite_micro_model/tflite_model_parameters.hpp"
-#include "sl_ml_audio_feature_generation_config.h"
+
 #include "tflite_micro_model.hpp"
 
 extern "C" {
@@ -53,24 +53,12 @@ bool audio_classifier_config_load_model_settings(const void* tflite_flatbuffer) 
     model_parameters.get("minimum_count", SL_TFLITE_MODEL_MINIMUM_COUNT);
     model_parameters.get("sensitivity", SL_TFLITE_MODEL_SENSITIVITY);
     model_parameters.get("latency_ms", SL_TFLITE_MODEL_INFERENCE_INTERVAL_MS);
-    model_parameters.get("dump_audio", SL_ML_AUDIO_FEATURE_GENERATION_DUMP_AUDIO);
-    model_parameters.get("dump_raw_spectrograms", SL_ML_AUDIO_FEATURE_GENERATION_DUMP_RAW_SPECTROGRAM);
-    model_parameters.get("dump_spectrograms", SL_ML_AUDIO_FEATURE_GENERATION_DUMP_QUANTIZED_SPECTROGRAM);
     model_parameters.get("verbose_model_output_logs", SL_TFLITE_MODEL_VERBOSE_MODEL_OUTPUT_LOGS);
 
 #ifdef AUDIO_CLASSIFIER_VERBOSE
     SL_TFLITE_MODEL_VERBOSE_MODEL_OUTPUT_LOGS = 1;
 #endif
 
-#ifdef AUDIO_CLASSIFIER_DUMP_AUDIO
-    SL_ML_AUDIO_FEATURE_GENERATION_DUMP_AUDIO = 1;
-#endif
-#ifdef AUDIO_CLASSIFIER_DUMP_SPECTROGRAMS
-    SL_ML_AUDIO_FEATURE_GENERATION_DUMP_QUANTIZED_SPECTROGRAM = 1;
-#endif
-#ifdef AUDIO_CLASSIFIER_DUMP_RAW_SPECTROGRAMS
-    SL_ML_AUDIO_FEATURE_GENERATION_DUMP_RAW_SPECTROGRAM = 1;
-#endif
 
     if (model_parameters.get("detection_threshold_list", SL_TFLITE_DETECTION_THRESHOLD_LIST)) {
         if (SL_TFLITE_DETECTION_THRESHOLD_LIST.size() != SL_TFLITE_MODEL_CLASSES.size()) {
@@ -96,10 +84,6 @@ bool audio_classifier_config_load_model_settings(const void* tflite_flatbuffer) 
     printf("sensitivity=%4.2f\n", SL_TFLITE_MODEL_SENSITIVITY);
     printf("verbose_model_output_logs=%d\n", SL_TFLITE_MODEL_VERBOSE_MODEL_OUTPUT_LOGS);
     printf("latency_ms=%d\n", SL_TFLITE_MODEL_INFERENCE_INTERVAL_MS);
-    printf("volume_gain=%d\n", SL_ML_AUDIO_FEATURE_GENERATION_AUDIO_GAIN);
-    printf("dump_audio=%d\n", SL_ML_AUDIO_FEATURE_GENERATION_DUMP_AUDIO);
-    printf("dump_raw_spectrograms=%d\n", SL_ML_AUDIO_FEATURE_GENERATION_DUMP_RAW_SPECTROGRAM);
-    printf("dump_spectrograms=%d\n", SL_ML_AUDIO_FEATURE_GENERATION_DUMP_QUANTIZED_SPECTROGRAM);
 
     return true;
 }

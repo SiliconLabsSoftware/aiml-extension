@@ -1,9 +1,12 @@
-﻿id: ml_model
+id: ml_model
 package: aiml
 label: ML Model
 description: Machine Learning Model
 category: Machine Learning
 quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: MSLA

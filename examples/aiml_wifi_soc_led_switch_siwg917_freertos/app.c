@@ -271,7 +271,7 @@ static void data_callback(uint32_t sock_no,
 
   if (first_data_frame) {
     first_data_frame = 0;
-    printf("\r\nSocket ID : %ld\r\n", sock_no);
+    printf("\r\nSocket ID : %lu\r\n", (unsigned long)sock_no);
     printf("\r\nSTA UDP on port %d — payload substring 'on' / 'off' controls LED\r\n", LISTENING_PORT);
   }
   app_apply_socket_payload_led(buffer, length);
@@ -300,14 +300,14 @@ static void application_start(void *argument)
 
   status = sl_net_init(SL_NET_WIFI_CLIENT_INTERFACE, &wifi_client_configuration, NULL, NULL);
   if (status != SL_STATUS_OK) {
-    printf("\r\nFailed to start Wi-Fi Client interface: 0x%lx\r\n", status);
+    printf("\r\nFailed to start Wi-Fi Client interface: 0x%lx\r\n", (unsigned long)status);
     return;
   }
   printf("\r\nWi-Fi client interface init success\r\n");
 
   status = sl_wifi_get_mac_address(SL_WIFI_CLIENT_INTERFACE, &mac_addr);
   if (status != SL_STATUS_OK) {
-    printf("\r\nFailed to get mac address: 0x%lx\r\n", status);
+    printf("\r\nFailed to get mac address: 0x%lx\r\n", (unsigned long)status);
     return;
   }
   printf("\r\nDevice MAC address: %x:%x:%x:%x:%x:%x\r\n",
@@ -320,7 +320,7 @@ static void application_start(void *argument)
 
   status = sl_wifi_get_firmware_version(&firmware_version);
   if (status != SL_STATUS_OK) {
-    printf("\r\nFailed to fetch firmware version: 0x%lx\r\n", status);
+    printf("\r\nFailed to fetch firmware version: 0x%lx\r\n", (unsigned long)status);
     return;
   } else {
     print_firmware_version(&firmware_version);
@@ -328,14 +328,14 @@ static void application_start(void *argument)
 
   status = sl_net_up(SL_NET_WIFI_CLIENT_INTERFACE, SL_NET_DEFAULT_WIFI_CLIENT_PROFILE_ID);
   if (status != SL_STATUS_OK) {
-    printf("\r\nFailed to connect to AP: 0x%lx\r\n", status);
+    printf("\r\nFailed to connect to AP: 0x%lx\r\n", (unsigned long)status);
     return;
   }
   printf("\r\nWi-Fi client connected\r\n");
 
   status = sl_net_get_profile(SL_NET_WIFI_CLIENT_INTERFACE, SL_NET_DEFAULT_WIFI_CLIENT_PROFILE_ID, &profile);
   if (status != SL_STATUS_OK) {
-    printf("Failed to get client profile: 0x%lx\r\n", status);
+    printf("Failed to get client profile: 0x%lx\r\n", (unsigned long)status);
     return;
   }
   printf("\r\nSuccess to get client profile\r\n");
@@ -352,7 +352,7 @@ static void application_start(void *argument)
 
   sl_status_t cfg_status = sl_si91x_config_socket(socket_config);
   if (cfg_status != SL_STATUS_OK) {
-    printf("Socket config failed: %ld\r\n", cfg_status);
+    printf("Socket config failed: 0x%lx\r\n", (unsigned long)cfg_status);
   }
   printf("\r\nSocket config Done\r\n");
 

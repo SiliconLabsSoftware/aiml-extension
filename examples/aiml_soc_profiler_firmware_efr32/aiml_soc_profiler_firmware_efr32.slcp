@@ -81,10 +81,6 @@ toolchain_settings:
   value: -u _printf_float
 - option: llvm_compiler_option
   value: -Wno-implicit-exception-spec-mismatch
-- option: gcc_compiler_option
-  value: "-mfp16-format=ieee"
-- option: llvm_linker_option
-  value: "-mfp16-format=ieee"
 - option: llvm_compiler_option
   value: -Wno-unknown-warning-option
 - option: llvm_compiler_option
@@ -101,8 +97,8 @@ tag:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 3.0.0
+  version: 3.0.1
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2026.6.0
+  version: 2026.6.1

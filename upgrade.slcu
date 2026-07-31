@@ -66,3 +66,29 @@ upgrade:
           - id: ml_audio_feature_generation
         add:
           - id: fe_audio
+  - sdk:
+      id: aiml
+      version: 3.0.1
+    component:
+      - trigger: fe_audio
+        description: |
+          Audio feature generator now uses per-instance config (aiml 3.0.1).
+
+          EFR32:
+          1. Include sl_fe_audio_instances.h.
+          2. Replace sl_ml_audio_feature_generation_init() with
+             sl_ml_audio_feature_generation_init(&sl_fe_audio_<instance>_cfg).
+          3. Replace sl_ml_audio_feature_generation_frontend_init() with
+             sl_ml_audio_feature_generation_frontend_init(config).
+
+          All platforms (EFR + Si91x):
+          4. Remove calls to sl_ml_audio_feature_generation_load_model_settings().
+          5. Remove sl_ml_audio_feature_generation_config.h from your application;
+             use sl_fe_audio_<instance>_config.h instead (already in your project).
+          6. Replace SL_ML_FRONTEND_ACTIVITY_DETECTION_ENABLE with
+             sl_ml_audio_feature_generation_is_activity_detection_enabled() (Si91x).
+          7. Replace any SL_ML_FRONTEND_* or SL_ML_AUDIO_FEATURE_GENERATION_* macros
+             with the matching SL_FE_* macros in sl_fe_audio_<instance>_config.h.
+
+          <instance> is the name chosen for each fe_audio component instance.
+        status: user_verification

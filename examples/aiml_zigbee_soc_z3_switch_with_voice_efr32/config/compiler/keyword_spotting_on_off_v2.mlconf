@@ -1,4 +1,4 @@
-model: keyword_spotting_on_off.tflite
+model: keyword_spotting_on_off_v2.tflite
 
 graph_optimizer:
   enabled: true

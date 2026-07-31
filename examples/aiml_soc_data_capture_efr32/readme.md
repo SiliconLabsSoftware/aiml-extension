@@ -10,7 +10,14 @@ This application collects raw motion data from an IMU sensor—including acceler
   - **Gyroscope**: x, y, z (°/s or rad/s)
   - **Orientation**: pitch, roll, yaw (degrees or radians)
 - Data is streamed to the serial port in real time.
-- A Python script main.py which is available at tool/data-capture (This tool is availble in AI/ML SDK whose location will be given by `slt where aiml`) reads the serial stream and writes the data to a CSV file (For the Script to run there are detailed steps on how to install venv for the python script to run. Follow the readme.md at tool/data-capture and proceed accordingly.)
+- A Python script `main.py` which is available at `tool\data-capture` reads the serial stream and writes the data to a CSV file. For the script to run there are detailed steps on how to install venv for the python script to run. Follow the `readme.md` at `tool\data-capture` and proceed accordingly.
+
+### Locating the AI/ML SDK
+
+1. In **Simplicity Studio**, open **Settings** → **SDKs**
+2. Select the **Simplicity SDK Suite** version you use. The suite expands to list its installed extension SDKs.
+3. Right-click **Silicon Labs AI/ML SDK** in that list → **Browse to Location**
+4. In the opened folder, go to `tool\data-capture`
 
 ## Usage
 

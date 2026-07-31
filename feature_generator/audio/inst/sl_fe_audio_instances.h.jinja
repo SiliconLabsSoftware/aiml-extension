@@ -19,7 +19,11 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#if defined(SL_BOARD_SI91X)
 #include "sl_fe_audio_si91x.h"
+#else
+#include "sl_fe_audio.h"
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -30,6 +34,23 @@ extern "C" {
 {% set inst_c = inst | replace('-', '_') %}
 extern const sl_fe_audio_config_t sl_fe_audio_{{ inst_c }}_cfg;
 {% endfor %}
+
+{% set sorted_instances = fe_audio_instance | sort %}
+{% if sorted_instances | length > 0 %}
+{% set first_inst_c = sorted_instances[0] | replace('-', '_') %}
+/***************************************************************************//**
+ * @brief
+ *    Return the first fe_audio instance config (lexicographic instance name).
+ *
+ * @details
+ *    Used by deprecated no-argument @ref sl_ml_audio_feature_generation_init and
+ *    @ref sl_ml_audio_feature_generation_frontend_init compatibility wrappers.
+ ******************************************************************************/
+static inline const sl_fe_audio_config_t *sl_fe_audio_get_default_config(void)
+{
+  return &sl_fe_audio_{{ first_inst_c }}_cfg;
+}
+{% endif %}
 
 #ifdef __cplusplus
 }

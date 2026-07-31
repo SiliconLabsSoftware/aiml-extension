@@ -29,10 +29,12 @@
  ******************************************************************************/
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 #include <math.h>
 #include <limits.h>
 #include <algorithm>
 #include "sl_fe_audio_si91x.h"
+#include "sl_fe_audio_common.h"
 #include "sl_status.h"
 #include "microfrontend/lib/frontend.h"
 #include "microfrontend/lib/frontend_util.h"
@@ -84,12 +86,6 @@ struct FrontendState frontend_state;
 
 extern "C" void sli_ml_audio_feature_generation_si91x_release(void);
 
-extern void register_dump_streams();
-extern void dump_audio(const int16_t *buffer, int length);
-extern void dump_raw_spectrogram(const uint16_t *buffer, int length);
-extern void dump_int8_spectrogram(const int8_t *buffer, int length);
-extern void dump_float_spectrogram(const float *buffer, int length);
-
 /*******************************************************************************
  **************************   LOCAL FUNCTIONS   ********************************
  ******************************************************************************/
@@ -102,54 +98,27 @@ static sl_status_t process_audio_buffer_chunk(const int16_t *audio_data, size_t 
 
 sl_status_t sl_ml_audio_feature_generation_frontend_init(const sl_fe_audio_config_t *config)
 {
-  if (config == NULL) {
-    return SL_STATUS_INVALID_PARAMETER;
-  }
-  if (config->sample_rate_hz <= 0 || config->frontend_config.window.step_size_ms == 0U
-      || config->sample_length_ms <= config->frontend_config.window.size_ms) {
-    return SL_STATUS_FAIL;
-  }
-  if (config->audio_buffer_size == 0U) {
-    return SL_STATUS_INVALID_PARAMETER;
+  size_t feature_buffer_element_count = 0U;
+  const sl_status_t status = sli_fe_audio_compute_feature_buffer_element_count(
+      config, &feature_buffer_element_count);
+  if (status != SL_STATUS_OK) {
+    return status;
   }
 
-  const unsigned wsize = (unsigned)config->frontend_config.window.size_ms;
-  const unsigned wstep = (unsigned)config->frontend_config.window.step_size_ms;
-
-  const unsigned nch = (unsigned)config->frontend_config.filterbank.num_channels;
-  if (nch == 0U) {
-    return SL_STATUS_INVALID_PARAMETER;
-  }
-
-  const unsigned slice_count = 1U + ((config->sample_length_ms - wsize) / wstep);
-  if (slice_count == 0U) {
-    return SL_STATUS_INVALID_PARAMETER;
-  }
-  if (slice_count > (SIZE_MAX / (size_t)nch)) {
-    return SL_STATUS_INVALID_PARAMETER;
-  }
-  const size_t fe_sz = (size_t)slice_count * (size_t)nch;
+  sli_ml_audio_feature_generation_si91x_release();
 
   audio_buffer = sl_ml_audio_feature_generation_audio_buffer;
   if (audio_buffer == NULL) {
     return SL_STATUS_NOT_INITIALIZED;
   }
 
-  if (feature_buffer != NULL) {
-    free(feature_buffer);
-    feature_buffer = NULL;
-  }
-
-  uint16_t *new_feat = (uint16_t *)calloc(fe_sz, sizeof(uint16_t));
+  uint16_t *new_feat = (uint16_t *)calloc(feature_buffer_element_count, sizeof(uint16_t));
   if (new_feat == NULL) {
-    feature_buffer_size = 0;
-    sli_fe_runtime_cfg_valid = false;
-    quantize_dynamic_scale_range = 0;
     return SL_STATUS_ALLOCATION_FAILED;
   }
 
   feature_buffer = new_feat;
-  feature_buffer_size = fe_sz;
+  feature_buffer_size = feature_buffer_element_count;
   audio_buffer_size = config->audio_buffer_size;
 
   sli_fe_runtime_cfg = *config;
@@ -157,16 +126,10 @@ sl_status_t sl_ml_audio_feature_generation_frontend_init(const sl_fe_audio_confi
 
   audio_volume_scaler = sli_fe_runtime_cfg.audio_gain;
 
-  if (sli_fe_runtime_cfg.quantize_dynamic_scale_enable != 0) {
-#define LN10_DIV_20 0.11512925465f
-    quantize_dynamic_scale_range =
-        (int)(sli_fe_runtime_cfg.quantize_dynamic_scale_range_db
-              * (float)(1U << (unsigned)sli_fe_runtime_cfg.frontend_config.log_scale.scale_shift)
-              * LN10_DIV_20);
-#undef LN10_DIV_20
-  } else {
-    quantize_dynamic_scale_range = 0;
-  }
+  quantize_dynamic_scale_range = sli_fe_audio_compute_dynamic_scale_range(
+      sli_fe_runtime_cfg.quantize_dynamic_scale_enable,
+      sli_fe_runtime_cfg.quantize_dynamic_scale_range_db,
+      (unsigned)sli_fe_runtime_cfg.frontend_config.log_scale.scale_shift);
 
   audio_buffer_read_index = 0;
   audio_buffer_write_index = 0;
@@ -176,10 +139,7 @@ sl_status_t sl_ml_audio_feature_generation_frontend_init(const sl_fe_audio_confi
   if (!FrontendPopulateState(&sli_fe_runtime_cfg.frontend_config,
                                &frontend_state,
                                sli_fe_runtime_cfg.sample_rate_hz)) {
-    free(feature_buffer);
-    feature_buffer = NULL;
-    feature_buffer_size = 0;
-    sli_fe_runtime_cfg_valid = false;
+    sli_ml_audio_feature_generation_si91x_release();
     return SL_STATUS_FAIL;
   }
 
@@ -286,13 +246,8 @@ sl_status_t sl_ml_audio_feature_generation_get_features_raw(uint16_t *buffer, si
   if (num_elements != feature_buffer_size) {
     return SL_STATUS_INVALID_PARAMETER;
   }
-  int read_index = (int)feature_buffer_read_index;
-  for (size_t i = 0; i < feature_buffer_size; i++) {
-    buffer[i] = feature_buffer[(size_t)read_index];
-    read_index = (read_index + 1) % (int)feature_buffer_size;
-  }
+  sli_fe_audio_features_to_u16(feature_buffer, feature_buffer_size, feature_buffer_read_index, buffer);
 
-  feature_buffer_read_index = (size_t)read_index;
   num_unfetched_slices = 0;
 
   return SL_STATUS_OK;
@@ -310,13 +265,8 @@ sl_status_t sl_ml_audio_feature_generation_get_features_raw_float32(float *buffe
     return SL_STATUS_INVALID_PARAMETER;
   }
 
-  int read_index = (int)feature_buffer_read_index;
-  for (size_t i = 0; i < feature_buffer_size; i++) {
-    buffer[i] = (float)feature_buffer[(size_t)read_index];
-    read_index = (read_index + 1) % (int)feature_buffer_size;
-  }
+  sli_fe_audio_features_to_f32(feature_buffer, feature_buffer_size, feature_buffer_read_index, buffer);
 
-  feature_buffer_read_index = (size_t)read_index;
   num_unfetched_slices = 0;
 
   return SL_STATUS_OK;
@@ -346,24 +296,9 @@ sl_status_t sli_ml_audio_feature_generation_get_features_quantized(int8_t *buffe
     return SL_STATUS_INVALID_PARAMETER;
   }
 
-  int read_index = (int)feature_buffer_read_index;
-  for (size_t i = 0; i < feature_buffer_size; i++) {
-    const int32_t value_scale = 256;
-    const int32_t value_div = (int32_t)range_max - (int32_t)range_min;
-    int32_t value = (((int32_t)feature_buffer[(size_t)read_index] - (int32_t)range_min) * value_scale + (value_div / 2))
-                    / value_div;
-    read_index = (read_index + 1) % (int)feature_buffer_size;
-    value -= 128;
-    if (value < -128) {
-      value = -128;
-    }
-    if (value > 127) {
-      value = 127;
-    }
-    buffer[i] = (int8_t)value;
-  }
+  sli_fe_audio_quantize_i8(feature_buffer, feature_buffer_size, feature_buffer_read_index,
+                           range_min, range_max, buffer);
 
-  feature_buffer_read_index = (size_t)read_index;
   num_unfetched_slices = 0;
 
   return SL_STATUS_OK;
@@ -392,33 +327,9 @@ sl_status_t sli_ml_audio_feature_generation_get_features_dynamically_quantized(i
     return SL_STATUS_INVALID_PARAMETER;
   }
 
-  int read_index = (int)feature_buffer_read_index;
+  sli_fe_audio_dynamic_quantize_i8(feature_buffer, feature_buffer_size, feature_buffer_read_index,
+                                   dynamic_range, buffer);
 
-  // Find the maximum value in the uint16 spectrogram
-  int32_t maxval = 0;
-  for (size_t i = 0; i < feature_buffer_size; i++) {
-    const int32_t value = (int32_t)feature_buffer[(size_t)read_index];
-    read_index = (read_index + 1) % (int)feature_buffer_size;
-    maxval = std::max(value, maxval);
-  }
-
-  read_index = (int)feature_buffer_read_index;
-  const int32_t minval = std::max(maxval - (int32_t)dynamic_range, (int32_t)0);
-  const int32_t val_range = std::max(maxval - minval, (int32_t)1);
-
-  // Scaling the uint16 spectrogram between -128 and +127 using the given range
-  for (size_t i = 0; i < feature_buffer_size; i++) {
-    int32_t value = (int32_t)feature_buffer[(size_t)read_index];
-    read_index = (read_index + 1) % (int)feature_buffer_size;
-    value -= minval;
-    value *= 255;
-    value /= val_range;
-    value -= 128;
-    value = std::min(std::max(value, (int32_t)-128), (int32_t)127);
-    buffer[i] = (int8_t)value;
-  }
-
-  feature_buffer_read_index = (size_t)read_index;
   num_unfetched_slices = 0;
 
   return SL_STATUS_OK;
@@ -440,14 +351,8 @@ sl_status_t sl_ml_audio_feature_generation_get_features_scaled(float *buffer, si
     return SL_STATUS_INVALID_PARAMETER;
   }
 
-  int read_index = (int)feature_buffer_read_index;
-  for (size_t i = 0; i < feature_buffer_size; i++) {
-    const float value = (float)feature_buffer[(size_t)read_index];
-    read_index = (read_index + 1) % (int)feature_buffer_size;
-    buffer[i] = value * scaler;
-  }
+  sli_fe_audio_scale_f32(feature_buffer, feature_buffer_size, feature_buffer_read_index, scaler, buffer);
 
-  feature_buffer_read_index = (size_t)read_index;
   num_unfetched_slices = 0;
 
   return SL_STATUS_OK;
@@ -465,47 +370,8 @@ sl_status_t sl_ml_audio_feature_generation_get_features_mean_std_normalized(floa
     return SL_STATUS_INVALID_PARAMETER;
   }
 
-  float mean = 0.0f;
-  float count = 0.0f;
-  float m2 = 0.0f;
-  int read_index = (int)feature_buffer_read_index;
+  sli_fe_audio_mean_std_normalize_f32(feature_buffer, feature_buffer_size, feature_buffer_read_index, buffer);
 
-  for (size_t i = feature_buffer_size; i > 0U; --i) {
-    const float value = (float)feature_buffer[(size_t)read_index];
-    read_index = (read_index + 1) % (int)feature_buffer_size;
-
-    count += 1.0f;
-
-    const float delta = value - mean;
-    mean += delta / count;
-    const float delta2 = value - mean;
-    m2 += delta * delta2;
-  }
-
-  read_index = (int)feature_buffer_read_index;
-  const float variance = m2 / count;
-  const float std = sqrtf(variance);
-  /* Constant (or near-constant) spectrogram: population std is zero; avoid 1/std. */
-  static const float k_std_epsilon = 1e-6f;
-
-  float *dst = buffer;
-  if (std < k_std_epsilon) {
-    for (size_t i = feature_buffer_size; i > 0U; --i) {
-      *dst++ = 0.0f;
-      read_index = (read_index + 1) % (int)feature_buffer_size;
-    }
-  } else {
-    const float std_recip = 1.0f / std;
-    for (size_t i = feature_buffer_size; i > 0U; --i) {
-      const float value = (float)feature_buffer[(size_t)read_index];
-      read_index = (read_index + 1) % (int)feature_buffer_size;
-      const float x = value - mean;
-
-      *dst++ = x * std_recip;
-    }
-  }
-
-  feature_buffer_read_index = (size_t)read_index;
   num_unfetched_slices = 0;
 
   return SL_STATUS_OK;
@@ -568,15 +434,11 @@ int sl_ml_audio_feature_generation_get_new_feature_slice_count()
 
 void sl_ml_audio_feature_generation_reset(void)
 {
-  if (feature_buffer != NULL) {
-    for (size_t i = 0; i < feature_buffer_size; i++) {
-      feature_buffer[i] = 0;
-    }
+  if (feature_buffer != NULL && feature_buffer_size > 0U) {
+    memset(feature_buffer, 0, feature_buffer_size * sizeof(uint16_t));
   }
   if (audio_buffer != NULL && audio_buffer_size > 0U) {
-    for (size_t i = 0; i < audio_buffer_size; i++) {
-      audio_buffer[i] = 0;
-    }
+    memset(audio_buffer, 0, audio_buffer_size * sizeof(int16_t));
   }
 
   // Reset ring-buffer indices
@@ -709,11 +571,6 @@ sl_status_t sl_ml_audio_feature_generation_init_with_buffer(int16_t *buffer,
     return SL_STATUS_INVALID_PARAMETER;
   }
 
-  if (config->sample_rate_hz <= 0 || config->frontend_config.window.step_size_ms == 0
-      || config->sample_length_ms <= config->frontend_config.window.size_ms) {
-    return SL_STATUS_FAIL;
-  }
-
   if (sli_ml_fe_si91x_pipeline_active) {
     const sl_status_t td = sl_ml_audio_feature_generation_deinit();
     if (td != SL_STATUS_OK) {
@@ -721,20 +578,20 @@ sl_status_t sl_ml_audio_feature_generation_init_with_buffer(int16_t *buffer,
     }
   }
 
-  mic_status = sl_ml_mic_init(config->sample_rate_hz, 1);
-  if (mic_status != SL_STATUS_OK) {
-    return mic_status;
-  }
-
   sl_ml_audio_feature_generation_audio_buffer = buffer;
 
-  /* Allocate the feature-generation ring buffer before DMA callbacks: streaming can
-   * invoke mic_buffer_ready_callback immediately. */
+  /* Validate @p config and allocate the feature ring before mic/DMA setup. */
   const sl_status_t fe_status = sl_ml_audio_feature_generation_frontend_init(config);
   if (fe_status != SL_STATUS_OK) {
-    (void)sl_ml_mic_deinit();
     sl_ml_audio_feature_generation_audio_buffer = NULL;
     return fe_status;
+  }
+
+  mic_status = sl_ml_mic_init(config->sample_rate_hz, 1);
+  if (mic_status != SL_STATUS_OK) {
+    sli_ml_audio_feature_generation_si91x_release();
+    sl_ml_audio_feature_generation_audio_buffer = NULL;
+    return mic_status;
   }
 
   sli_ml_fe_si91x_pipeline_active = true;
@@ -785,10 +642,6 @@ sl_status_t sl_ml_audio_feature_generation_init(const sl_fe_audio_config_t *conf
   }
   if (config->audio_buffer_size < 2U) {
     return SL_STATUS_INVALID_PARAMETER;
-  }
-  if (config->sample_rate_hz <= 0 || config->frontend_config.window.step_size_ms == 0U
-      || config->sample_length_ms <= config->frontend_config.window.size_ms) {
-    return SL_STATUS_FAIL;
   }
 
   int16_t *buffer = (int16_t *)malloc(config->audio_buffer_size * sizeof(int16_t));

@@ -13,6 +13,9 @@ description: >
   implementations.
 category: Machine Learning|TensorFlow|Kernels
 quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
 metadata:
   sbom:
     license: MSLA

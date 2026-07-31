@@ -20,7 +20,7 @@
 #include <limits>
 
 #include "ml/tflite_micro_model/tflite_micro_logger.hpp"
-#include "sl_ml_audio_feature_generation_config.h"
+
 #include "voice_control_light.h"
 
 extern const char* get_category_label(int index);
@@ -65,8 +65,8 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(const TfLiteTensor* latest_
         printf(
             "Results must be fed in increasing time order, but received a "
             "timestamp of %ld that was earlier than the previous one of %ld\n",
-            current_time_ms,
-            previous_results_.front().time_);
+            (long)current_time_ms,
+            (long)previous_results_.front().time_);
         return kTfLiteError;
     }
 
@@ -91,7 +91,7 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(const TfLiteTensor* latest_
         char* ptr = buffer;
 
         int diff = current_time_ms - base_timestamp_;
-        ptr += sprintf(ptr, "[%6ld] (%3d) ", current_time_ms, diff);
+        ptr += sprintf(ptr, "[%6ld] (%d) ", (long)current_time_ms, diff);
         for (int i = 0; i < category_count; ++i) {
             ptr += sprintf(ptr, "%3d ", converted_scores[i]);
         }
@@ -140,7 +140,7 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(const TfLiteTensor* latest_
         consecutive_min_count = 0;
 
         // Calculate the average score across all the results in the window.
-        int32_t average_scores[category_count];
+        int32_t average_scores[MAX_CATEGORY_COUNT];
         for (int offset = 0; offset < previous_results_.size(); ++offset) {
             // Iterates the amount of times to achieve average_window_duration
             PreviousResultsQueue::Result previous_result = previous_results_.from_front(offset);

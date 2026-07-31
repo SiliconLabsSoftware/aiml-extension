@@ -1,5 +1,5 @@
 id: aiml
-version: 3.0.0
+version: 3.0.1
 description: >
   AI/ML SDK for Simplicity SDK
 label: Silicon Labs AI/ML
@@ -10,5 +10,5 @@ upgrade_manifest:
   - path: upgrade.slcu
 documentation:
   - docset: machine-learning
-    version: 3.0.0
+    version: 3.0.1
 vendor: silabs

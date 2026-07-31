@@ -44,22 +44,11 @@
  #define DT 0.04f
  
  // SSI Master configuration
- #define SSI_MASTER_DIVISION_FACTOR         0         // Division Factor
- #define SSI_MASTER_INTF_PLL_CLK            180000000 // PLL Clock frequency
- #define SSI_MASTER_INTF_PLL_REF_CLK        40000000  // PLL Ref Clock frequency
- #define SSI_MASTER_SOC_PLL_CLK             20000000  // SOC PLL Clock frequency
- #define SSI_MASTER_SOC_PLL_REF_CLK         40000000  // SOC PLL REFERENCE CLOCK frequency
- #define SSI_MASTER_INTF_PLL_500_CTRL_VALUE 0xD900    // Interface PLL control value
- #define SSI_MASTER_SOC_PLL_MM_COUNT_LIMIT  0xA4      // SOC PLL count limit
  #define SSI_MASTER_BIT_WIDTH               8         // SSI bit width
  #define SSI_MASTER_BAUDRATE                10000000  // SSI baudrate
  #define SSI_MASTER_RECEIVE_SAMPLE_DELAY    0         // By default sample delay is 0
  #define DELAY_PERIODIC_MS1                 200       // sleeptimer1 periodic timeout in ms
- 
- // Clock configuration
- #define SOC_PLL_CLK  ((uint32_t)(180000000)) // 180MHz default SoC PLL Clock as source to Processor
- #define INTF_PLL_CLK ((uint32_t)(180000000)) // 180MHz default Interface PLL Clock as source to all peripherals
- 
+
  // Boolean definitions
  #define true  1
  #define false 0
@@ -105,7 +94,6 @@
  /*******************************************************************************
   **********************  Local Function prototypes   ***************************
   ******************************************************************************/
- static sl_status_t ssi_master_init_clock_configuration_structure(sl_ssi_clock_config_t *clock_config);
  static void ssi_master_callback_event_handler(uint32_t event);
  void on_data_available();
  void process_imu_data();
@@ -163,7 +151,6 @@
  {
    sl_status_t sl_status;
    sl_status_t status = SL_STATUS_FAIL;
-   sl_ssi_clock_config_t ssi_clock_config;
    sl_ssi_version_t ssi_version;
    uint8_t dev_id;
  
@@ -181,28 +168,28 @@
      // Enable GPIO ULP_CLK
      status = sl_si91x_gpio_driver_enable_clock((sl_si91x_gpio_select_clock_t)ULPCLK_GPIO);
      if (status != SL_STATUS_OK) {
-       printf("sl_si91x_gpio_driver_enable_clock, Error code: %lu\n", status);
+       printf("sl_si91x_gpio_driver_enable_clock, Error code: %lu\n", (unsigned long)status);
      }
      printf("GPIO driver clock enable is successful\n");
  
      // Set NPSS GPIO pin MUX
      status = sl_si91x_gpio_driver_set_uulp_npss_pin_mux(SENSOR_ENABLE_GPIO_PIN, NPSS_GPIO_PIN_MUX_MODE0);
      if (status != SL_STATUS_OK) {
-       printf("sl_si91x_gpio_driver_set_uulp_npss_pin_mux, Error code: %lu\n", status);
+       printf("sl_si91x_gpio_driver_set_uulp_npss_pin_mux, Error code: %lu\n", (unsigned long)status);
      }
      printf("GPIO driver uulp pin mux selection is successful\n");
  
      // Set NPSS GPIO pin direction
      status = sl_si91x_gpio_driver_set_uulp_npss_direction(SENSOR_ENABLE_GPIO_PIN, (sl_si91x_gpio_direction_t)GPIO_OUTPUT);
      if (status != SL_STATUS_OK) {
-       printf("sl_si91x_gpio_driver_set_uulp_npss_direction, Error code: %lu\n", status);
+       printf("sl_si91x_gpio_driver_set_uulp_npss_direction, Error code: %lu\n", (unsigned long)status);
      }
      printf("GPIO driver uulp pin direction selection is successful\n");
  
      // Set UULP GPIO pin
      status = sl_si91x_gpio_driver_set_uulp_npss_pin_value(SENSOR_ENABLE_GPIO_PIN, GPIO_PIN_SET);
      if (status != SL_STATUS_OK) {
-       printf("sl_si91x_gpio_driver_set_uulp_npss_pin_value, Error code: %lu\n", status);
+       printf("sl_si91x_gpio_driver_set_uulp_npss_pin_value, Error code: %lu\n", (unsigned long)status);
      }
      printf("GPIO driver set uulp pin value is successful\n");
    }
@@ -214,25 +201,10 @@
      printf("SSI version is fetched successfully\n");
      printf("API version is %d.%d.%d\n", ssi_version.release, ssi_version.major, ssi_version.minor);
  
-     // Clock configuration for the SSI driver
-     sl_status = ssi_master_init_clock_configuration_structure(&ssi_clock_config);
-     if (sl_status != SL_STATUS_OK) {
-       printf("SSI Clock get Configuration Failed, Error Code: %lu\n", sl_status);
-       break;
-     }
-     printf("SSI Clock get Configuration Success\n");
- 
-     sl_status = sl_si91x_ssi_configure_clock(&ssi_clock_config);
-     if (sl_status != SL_STATUS_OK) {
-       printf("SSI Clock Configuration Failed, Error Code: %lu\n", sl_status);
-       break;
-     }
-     printf("SSI Clock Configuration Success\n");
- 
      // Initialize the SSI driver
      sl_status = sl_si91x_ssi_init(ssi_master_config.device_mode, &ssi_driver_handle);
      if (sl_status != SL_STATUS_OK) {
-       printf("SSI Initialization Failed, Error Code: %lu\n", sl_status);
+       printf("SSI Initialization Failed, Error Code: %lu\n", (unsigned long)sl_status);
        break;
      }
      printf("SSI Initialization Success\n");
@@ -240,7 +212,7 @@
      // Configure the SSI to Master, 8-bit mode @10000 kBits/sec
      sl_status = sl_si91x_ssi_set_configuration(ssi_driver_handle, &ssi_master_config, SSI_SLAVE_0);
      if (sl_status != SL_STATUS_OK) {
-       printf("Failed to Set Configuration Parameters to SSI, Error Code: %lu\n", sl_status);
+       printf("Failed to Set Configuration Parameters to SSI, Error Code: %lu\n", (unsigned long)sl_status);
        break;
      }
      printf("Set Configuration Parameters to SSI\n");
@@ -248,13 +220,14 @@
      // Register the user callback
      sl_status = sl_si91x_ssi_register_event_callback(ssi_driver_handle, ssi_master_callback_event_handler);
      if (sl_status != SL_STATUS_OK) {
-       printf("SSI register event callback Failed, Error Code: %lu\n", sl_status);
+       printf("SSI register event callback Failed, Error Code: %lu\n", (unsigned long)sl_status);
        break;
      }
      printf("SSI register event callback Success\n");
  
      // Print current clock division factor
-     printf("Current Clock division factor is %lu\n", sl_si91x_ssi_get_clock_division_factor(ssi_driver_handle));
+     printf("Current Clock division factor is %lu\n",
+            (unsigned long)sl_si91x_ssi_get_clock_division_factor(ssi_driver_handle));
  
      // Set the slave number
      sl_si91x_ssi_set_slave_number((uint8_t)ssi_slave_number);
@@ -262,7 +235,7 @@
      // Reset the sensor
      sl_status = sl_si91x_icm40627_software_reset(ssi_driver_handle);
      if (sl_status != SL_STATUS_OK) {
-       printf("Sensor Software reset unsuccessful, Error Code: 0x%ld\n", sl_status);
+       printf("Sensor Software reset unsuccessful, Error Code: 0x%lx\n", (unsigned long)sl_status);
        break;
      } else {
        printf("Software reset successful\n");
@@ -291,7 +264,7 @@
      sl_status = sl_si91x_gpio_driver_configure_uulp_interrupt(
          SL_GPIO_INTERRUPT_FALL_EDGE, IMU_interrupt_PIN, on_data_available);
      if (sl_status != SL_STATUS_OK) {
-       printf("Interrupt callback setup failed, Error Code: %lu\n", sl_status);
+       printf("Interrupt callback setup failed, Error Code: %lu\n", (unsigned long)sl_status);
        break;
      }
  
@@ -364,26 +337,4 @@
        break;
    }
  }
- /**
-  * @brief Set the values in the SSI Master clock config structure
-  * @param[in] clock_config Clock configuration structure
-  * @return SL_STATUS_OK if set was fine, SL_STATUS_NULL_POINTER if NULL ptr passed in
-  */
- static sl_status_t ssi_master_init_clock_configuration_structure(sl_ssi_clock_config_t *clock_config)
- {
-   if (clock_config == NULL) {
-     return SL_STATUS_NULL_POINTER;
-   }
- 
-   clock_config->soc_pll_mm_count_value     = SSI_MASTER_SOC_PLL_MM_COUNT_LIMIT;
-   clock_config->intf_pll_500_control_value = SSI_MASTER_INTF_PLL_500_CTRL_VALUE;
-   clock_config->intf_pll_clock             = SSI_MASTER_INTF_PLL_CLK;
-   clock_config->intf_pll_reference_clock   = SSI_MASTER_INTF_PLL_REF_CLK;
-   clock_config->soc_pll_clock              = SSI_MASTER_SOC_PLL_CLK;
-   clock_config->soc_pll_reference_clock    = SSI_MASTER_SOC_PLL_REF_CLK;
-   clock_config->division_factor            = SSI_MASTER_DIVISION_FACTOR;
- 
-   return SL_STATUS_OK;
- }
- 
  

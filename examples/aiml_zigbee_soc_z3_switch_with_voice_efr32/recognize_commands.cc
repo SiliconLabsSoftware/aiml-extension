@@ -39,7 +39,7 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
 {
   int8_t current_top_index = 0;
   uint32_t current_top_score = 0;
-  uint8_t converted_scores[category_count];
+  uint8_t converted_scores[MAX_CATEGORY_COUNT];
 
   if ((latest_results->dims->size != 2)
       || (latest_results->dims->data[0] != 1)
@@ -122,7 +122,7 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
     consecutive_min_count = 0;
 
     // Calculate the average score across all the results in the window.
-    uint32_t average_scores[category_count];
+    uint32_t average_scores[MAX_CATEGORY_COUNT];
     for (int offset = 0; offset < previous_results_.size(); ++offset) {
       PreviousResultsQueue::Result previous_result =
         previous_results_.from_front(offset);
@@ -178,7 +178,7 @@ TfLiteStatus RecognizeCommands::ProcessLatestResults(
     ptr += sprintf(ptr, "%3d ", converted_scores[i]);
   }
   *ptr++ = 0;
-  puts(buffer);
+  printf("%s\n", buffer);
 #endif
 
   *found_command_index = current_top_index;
