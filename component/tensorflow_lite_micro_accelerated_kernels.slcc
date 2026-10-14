@@ -24,21 +24,59 @@ provides:
   - name: tensorflow_kernel_implementation
     allow_multiple: true
   - name: tensorflow_kernel_accelerated_add
+  - name: tensorflow_kernel_accelerated_batch_matmul
   - name: tensorflow_kernel_accelerated_conv
   - name: tensorflow_kernel_accelerated_depthwise_conv
   - name: tensorflow_kernel_accelerated_fully_connected
+  - name: tensorflow_kernel_accelerated_maximum_minimum
   - name: tensorflow_kernel_accelerated_mul
   - name: tensorflow_kernel_accelerated_pooling
+  - name: tensorflow_kernel_accelerated_pad
+  - name: tensorflow_kernel_accelerated_softmax
   - name: tensorflow_kernel_accelerated_transpose_conv
+  - name: tensorflow_kernel_accelerated_transpose
 requires:
+  - name: tensorflow_lite_micro_model
   - name: tensorflow_lite_micro_optimized_kernels
-  - name: nn_mvp
-root_path: src/kernels/mvp1
+root_path: compiled_model/kernels/mvpv1
+include:
+  - path: .
+    file_list:
+    - path: tflite_micro_mvpv1_accelerator.hpp
+    - path: tflite_micro_mvpv1_context.hpp
+    - path: compiled_registration_helper.hpp
+    - path: mvpv1_kernel_debug.hpp
+    - path: mvpv1_kernel_utils.hpp
+    - path: add/add_compiled.hpp
+    - path: batch_matmul/batch_matmul_compiled.hpp
+    - path: conv2d/conv2d_compiled.hpp
+    - path: depthwise_conv2d/depthwise_conv2d_compiled.hpp
+    - path: fully_connected/fully_connected_compiled.hpp
+    - path: maximum_minimum/maximum_minimum_compiled.hpp
+    - path: mul/mul_compiled.hpp
+    - path: pooling2d/pooling2d_compiled.hpp
+    - path: pad/pad_compiled.hpp
+    - path: transpose_conv2d/transpose_conv2d_compiled.hpp
+    - path: transpose/transpose_compiled.hpp
 source:
-  - path: add.cc
-  - path: conv.cc
-  - path: depthwise_conv.cc
-  - path: fully_connected.cc
-  - path: mul.cc
-  - path: pooling.cc
-  - path: transpose_conv.cc
+  - path: tflite_micro_mvpv1_accelerator.cc
+  - path: tflite_micro_mvpv1_context.cc
+  - path: compiled_kernel_executor.cc
+  - path: compiled_registration_helper.cc
+  - path: mvpv1_kernel_debug.cc
+  - path: mvpv1_kernel_utils.cc
+  - path: add/add_compiled.cc
+  - path: batch_matmul/batch_matmul_compiled.cc
+  - path: conv2d/conv2d_compiled.cc
+  - path: depthwise_conv2d/depthwise_conv2d_compiled.cc
+  - path: fully_connected/fully_connected_compiled.cc
+  - path: maximum_minimum/maximum_minimum_compiled.cc
+  - path: mul/mul_compiled.cc
+  - path: pooling2d/pooling2d_compiled.cc
+  - path: pad/pad_compiled.cc
+  - path: softmax/softmax_compiled.cc
+  - path: transpose_conv2d/transpose_conv2d_compiled.cc
+  - path: transpose/transpose_compiled.cc
+toolchain_settings:
+  - option: gcc_compiler_option
+    value: "-mfp16-format=ieee"

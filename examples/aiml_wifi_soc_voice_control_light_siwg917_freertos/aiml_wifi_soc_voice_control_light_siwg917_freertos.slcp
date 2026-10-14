@@ -40,11 +40,11 @@ component:
   instance:
   - keyword_spotting_on_off_v3
 - id: sl_main
+- id: sl_si91x_errno
 - id: si91x_mem_config_3
 - id: freertos
 - id: freertos_heap_4
 - id: syscalls
-  #- id: si91x_memory_default_config
 - id: wiseconnect_common
 - id: wifi
 - id: sl_si91x_mem_pool_buffers
@@ -69,7 +69,6 @@ component:
 - id: fe_audio
   instance:
   - keyword_spotting_on_off_v3
-  #- id: MEMORY_MCU_ADVANCED_WIRELESS_BASIC
 toolchain_settings:
 - option: gcc_compiler_option
   value: -Wall -Werror
@@ -89,6 +88,8 @@ toolchain_settings:
   value: -Wno-vla-cxx-extension
 - option: llvm_compiler_option
   value: -Wno-missing-designated-field-initializers
+- option: llvm_compiler_option   #TODO: remove this suppression after fix from platform
+  value: -Wno-non-literal-null-conversion
 - option: gcc_compiler_option
   value: "-mfp16-format=ieee"
 configuration:
@@ -140,11 +141,11 @@ post_build:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 3.0.1
+  version: 3.0.2
 - id: wiseconnect3_sdk
   vendor: silabs
-  version: 4.1.1
+  version: 4.1.2
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2026.6.1
+  version: 2026.6.2

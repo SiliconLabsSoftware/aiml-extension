@@ -26,7 +26,7 @@
 #include "sl_component_catalog.h"
 #endif
 
-#include "ml/third_party/tflm/micro_profiler_interface.h"
+#include "micro_profiler_interface.h"
 #include "tflite_micro_model.hpp"
 #include "model_profiler.h"
 #include "energy_profiling_utils.hpp"
@@ -440,7 +440,9 @@ void model_profiler_process_action(void)
     profiler.reset_metrics();
     memset(input_tensor->data.data, 0, input_tensor->bytes);
 
-    if (interpreter->Invoke() != kTfLiteOk) {
+    // Must use TfliteMicroModel::invoke()
+    // execute_program() calls TfliteMicroMvpv1Context::get() with no TfLiteContext
+    if (!g_profiler_model.invoke()) {
       printf("Model invocation failed !\n");
       invoke_ok = false;
       break;

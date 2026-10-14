@@ -22,39 +22,49 @@ provides:
   - name: tensorflow_kernel_implementation
     allow_multiple: true
   - name: tensorflow_kernel_optimized_add
+  - name: tensorflow_kernel_optimized_batch_matmul
   - name: tensorflow_kernel_optimized_conv
   - name: tensorflow_kernel_optimized_depthwise_conv
   - name: tensorflow_kernel_optimized_fully_connected
   - name: tensorflow_kernel_optimized_mul
   - name: tensorflow_kernel_optimized_pooling
+  - name: tensorflow_kernel_optimized_maximum_minimum
+  - name: tensorflow_kernel_optimized_pad
   - name: tensorflow_kernel_optimized_softmax
   - name: tensorflow_kernel_optimized_svdf
-  - name: tensorflow_kernel_optimized_unidirectional_sequence_lstm
+  - name: tensorflow_kernel_optimized_transpose
+  - name: tensorflow_kernel_optimized_transpose_conv
 requires:
   - name: cmsis_nn
+  - name: tensorflow_lite_micro_model
   - name: tensorflow_lite_micro_reference_kernels
-root_path: third_party/tflite-micro/tensorflow/lite/micro/kernels/cmsis_nn
+
+include:
+  - path: compiled_model/kernels/cmsis
+    file_list:
+    - path: tflite_micro_cmsis_accelerator.hpp
+      unless:
+        - tensorflow_lite_micro_accelerated_kernels
 source:
-  - path: add.cc
+  - path: compiled_model/kernels/cmsis/tflite_micro_cmsis_accelerator.cc
     unless:
-      - tensorflow_kernel_accelerated_add
-  - path: conv.cc
-    unless:
-      - tensorflow_kernel_accelerated_conv
-  - path: depthwise_conv.cc
-    unless:
-      - tensorflow_kernel_accelerated_depthwise_conv
-  - path: fully_connected.cc
-    unless:
-      - tensorflow_kernel_accelerated_fully_connected
-  - path: mul.cc
-    unless:
-      - tensorflow_kernel_accelerated_mul
-  - path: pooling.cc
-    unless:
-      - tensorflow_kernel_accelerated_pooling
-  - path: softmax.cc
-  - path: svdf.cc
-  - path: unidirectional_sequence_lstm.cc
+        - tensorflow_lite_micro_accelerated_kernels
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/add.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/batch_matmul.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/conv.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/depthwise_conv.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/fully_connected.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/maximum_minimum.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/mul.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/pad.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/pooling.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/softmax.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/svdf.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/transpose_conv.cc
+  - path: compiled_model/third_party/tflite_micro/tensorflow/lite/micro/kernels/cmsis_nn/transpose.cc
 define:
-  - name: "CMSIS_NN"
+  - name: TFLITE_MICRO_CMSIS_KERNEL_REGISTRATIONS_DISABLED
+    condition:
+      - tensorflow_lite_micro_accelerated_kernels
+  - name: CMSIS_NN
+    value: 1

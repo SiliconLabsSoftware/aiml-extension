@@ -41,7 +41,7 @@ extern "C" {
 #endif
 
 
-#ifdef __arm__
+#if defined(__arm__) || defined(__ICCARM__) || defined(__ARM_ARCH)
 
 /// Complex int16 type
 struct complex_int16_t {

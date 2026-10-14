@@ -18,7 +18,7 @@
  ******************************************************************************/
 #include "sl_ml_silabs_profiler.h"
 #include <cstring>   // for memset
-#include "ml/third_party/tflm/micro_allocator.h"
+#include "micro_allocator.h"
 
 using namespace tflite;
 

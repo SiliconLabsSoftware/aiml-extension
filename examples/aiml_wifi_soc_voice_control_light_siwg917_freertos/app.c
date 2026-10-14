@@ -45,7 +45,6 @@
  #include "sl_wifi_callback_framework.h"
  #include "app.h"
  #include "app_ml_bridge.h"
- #include "ml/platform/ml_clock_helper.h"
  #include "sl_sleeptimer.h"
  #include "FreeRTOS.h"
  #include "task.h"
@@ -455,7 +454,6 @@ bool app_udp_notify_consume_and_send(void)
   osDelay(3000);
 
   printf("application_start: before ML / mic init\n");
-  ml_configure_clocks_to_max_rate();
   app_led_init();
   app_enable_mic();
   printf("application_start: after ML / mic init\n");

@@ -35,7 +35,6 @@
 #include "microfrontend/lib/frontend.h"
 #include "microfrontend/lib/frontend_util.h"
 #include "sl_fe_audio.h"
-#include "sl_fe_audio_common.h"
 #include "sl_common.h"
 
 /*******************************************************************************
@@ -73,7 +72,6 @@ struct FrontendState frontend_state;
  **************************   LOCAL FUNCTIONS   ********************************
  ******************************************************************************/
 
-static sl_status_t process_audio_buffer_chunk(const int16_t *audio_data, size_t *slices_updated);
 static void sli_ml_audio_feature_generation_release(void);
 static void sli_ml_fe_mic_buffer_release(void);
 static void sli_ml_fe_mic_teardown(void);
@@ -173,7 +171,14 @@ sl_status_t sl_ml_audio_feature_generation_update_features()
   }
 
   while (audio_buffer_read_index != audio_buffer_write_index) {
-    process_audio_buffer_chunk(&audio_buffer[audio_buffer_read_index], &num_slices_updated);
+    size_t feature_start = feature_buffer_start;
+    num_slices_updated += sli_fe_audio_process_samples(&frontend_state,
+                                                     &audio_buffer[audio_buffer_read_index],
+                                                     sli_fe_runtime_cfg.audio_buffer_chunk_size,
+                                                     feature_buffer,
+                                                     feature_buffer_cap,
+                                                     &feature_start);
+    feature_buffer_start = feature_start;
     audio_buffer_read_index =
         (audio_buffer_read_index + sli_fe_runtime_cfg.audio_buffer_chunk_size) % audio_buffer_cap;
   }
@@ -249,6 +254,7 @@ sl_status_t sli_ml_audio_feature_generation_get_features_dynamically_quantized(i
   return SL_STATUS_OK;
 }
 
+#if defined(SL_CATALOG_TENSORFLOW_LITE_MICRO_PRESENT)
 sl_status_t sl_ml_audio_feature_generation_fill_tensor(TfLiteTensor *input_tensor)
 {
   sl_status_t status = SL_STATUS_OK;
@@ -276,6 +282,7 @@ sl_status_t sl_ml_audio_feature_generation_fill_tensor(TfLiteTensor *input_tenso
 
   return status;
 }
+#endif
 
 int sl_ml_audio_feature_generation_get_new_feature_slice_count()
 {
@@ -305,30 +312,6 @@ void sl_ml_audio_feature_generation_reset()
 int sl_ml_audio_feature_generation_get_feature_buffer_size()
 {
   return (int)feature_buffer_cap;
-}
-
-static sl_status_t process_audio_buffer_chunk(const int16_t *audio_data, size_t *slices_updated)
-{
-  size_t num_samples = sli_fe_runtime_cfg.audio_buffer_chunk_size;
-
-  while (num_samples > 0) {
-    size_t num_samples_read;
-    struct FrontendOutput output = FrontendProcessSamples(
-      &frontend_state, audio_data, num_samples, &num_samples_read);
-
-    audio_data += num_samples_read;
-    num_samples -= num_samples_read;
-    if (output.values != NULL) {
-      for (size_t i = 0; i < output.size; i++) {
-        feature_buffer[(feature_buffer_start + i) % feature_buffer_cap] = output.values[i];
-      }
-
-      feature_buffer_start = (feature_buffer_start + output.size) % feature_buffer_cap;
-      *slices_updated += 1;
-    }
-  }
-
-  return SL_STATUS_OK;
 }
 
 /***************************************************************************//**

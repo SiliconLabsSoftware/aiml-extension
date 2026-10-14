@@ -34,11 +34,12 @@
 #include <limits.h>
 #include <algorithm>
 #include "sl_fe_audio_si91x.h"
-#include "sl_fe_audio_common.h"
 #include "sl_status.h"
 #include "microfrontend/lib/frontend.h"
 #include "microfrontend/lib/frontend_util.h"
-#include "ml/third_party/tflm/common.h"
+#if defined(SL_CATALOG_TENSORFLOW_LITE_MICRO_PRESENT)
+#include "micro_common.h"
+#endif
 #include "sl_ml_mic_i2s_si91x.h"
 
 /*******************************************************************************
@@ -85,12 +86,6 @@ static void *mic_callback_arg = NULL;
 struct FrontendState frontend_state;
 
 extern "C" void sli_ml_audio_feature_generation_si91x_release(void);
-
-/*******************************************************************************
- **************************   LOCAL FUNCTIONS   ********************************
- ******************************************************************************/
-
-static sl_status_t process_audio_buffer_chunk(const int16_t *audio_data, size_t num_samples, size_t *slices_updated);
 
 /*******************************************************************************
  **************************   GLOBAL FUNCTIONS   *******************************
@@ -147,16 +142,17 @@ sl_status_t sl_ml_audio_feature_generation_frontend_init(const sl_fe_audio_confi
 }
 
 /***************************************************************************//**
- *  Mic chunk notification: samples already live in @c sl_ml_audio_feature_generation_audio_buffer
- *  (I2S/DMA ping-pong). Advances the ring write index and optionally applies @c audio_gain
- *  in place when gain is greater than 1. @p new_samples points at the filled region (same
- *  backing store); it is not memcpy'd into the ring by this function.
+ *  Copy one chunk of audio samples into the ring at @c audio_buffer_write_index
+ *  and advance the write index. Matches the EFR32 @c write_chunk contract so
+ *  callers may pass PCM from any buffer (unit tests, file playback) as well as
+ *  from the I2S/DMA ping-pong region already backed by
+ *  @c sl_ml_audio_feature_generation_audio_buffer.
  *
  *  @param[in] new_samples
- *    Pointer to the chunk that was just written into the audio ring (same buffer base).
+ *    New audio samples to copy into the ring.
  *
  *  @param[in] num_samples
- *    Number of samples in this chunk; must stay consistent across callbacks for a given init.
+ *    Number of samples in this chunk.
  *
  *  @return
  *    SL_STATUS_OK on success, or an error status if not initialized.
@@ -168,15 +164,21 @@ sl_status_t sli_ml_audio_feature_generation_audio_buffer_write_chunk(const int16
     return SL_STATUS_NOT_INITIALIZED;
   }
 
-  if (audio_volume_scaler > 1) {
-    size_t index = audio_buffer_write_index;
-    for (uint32_t i = 0; i < num_samples; i++) {
-      audio_buffer[index] = (int16_t)((int32_t)audio_buffer[index] * audio_volume_scaler);
-      index = (index + 1U) % audio_buffer_size;
-    }
+  if (new_samples == NULL || num_samples == 0U) {
+    return SL_STATUS_INVALID_PARAMETER;
   }
 
-  audio_buffer_write_index = (audio_buffer_write_index + num_samples) % audio_buffer_size;
+  size_t index = audio_buffer_write_index;
+  for (uint32_t i = 0; i < num_samples; i++) {
+    int16_t sample = new_samples[i];
+    if (audio_volume_scaler > 1) {
+      sample = (int16_t)((int32_t)sample * audio_volume_scaler);
+    }
+    audio_buffer[index] = sample;
+    index = (index + 1U) % audio_buffer_size;
+  }
+
+  audio_buffer_write_index = index;
   return SL_STATUS_OK;
 }
 
@@ -208,8 +210,16 @@ sl_status_t sl_ml_audio_feature_generation_update_features()
   if (new_data_length > 0) {
     const int length_to_end = (int)(audio_buffer_size - audio_buffer_read_index);
     const int chunk_length = (new_data_length < length_to_end) ? new_data_length : length_to_end;
+    size_t feature_start = feature_buffer_write_index;
 
-    process_audio_buffer_chunk(&audio_buffer[audio_buffer_read_index], (size_t)chunk_length, &num_slices_updated);
+    num_slices_updated += sli_fe_audio_process_samples(&frontend_state,
+                                                     &audio_buffer[audio_buffer_read_index],
+                                                     (size_t)chunk_length,
+                                                     feature_buffer,
+                                                     feature_buffer_size,
+                                                     &feature_start);
+    feature_buffer_write_index = feature_start;
+    feature_buffer_read_index = feature_buffer_write_index;
 
     // Update read index
     audio_buffer_read_index = (audio_buffer_read_index + (size_t)chunk_length) % audio_buffer_size;
@@ -217,7 +227,14 @@ sl_status_t sl_ml_audio_feature_generation_update_features()
 
     // If the buffer wrapped and there's still more data to be read
     if (new_data_length > 0) {
-      process_audio_buffer_chunk(&audio_buffer[0], (size_t)new_data_length, &num_slices_updated);
+      num_slices_updated += sli_fe_audio_process_samples(&frontend_state,
+                                                       &audio_buffer[0],
+                                                       (size_t)new_data_length,
+                                                       feature_buffer,
+                                                       feature_buffer_size,
+                                                       &feature_start);
+      feature_buffer_write_index = feature_start;
+      feature_buffer_read_index = feature_buffer_write_index;
 
       audio_buffer_read_index = (size_t)new_data_length;
     }
@@ -377,6 +394,7 @@ sl_status_t sl_ml_audio_feature_generation_get_features_mean_std_normalized(floa
   return SL_STATUS_OK;
 }
 
+#if defined(SL_CATALOG_TENSORFLOW_LITE_MICRO_PRESENT)
 /***************************************************************************//**
  *  Fills a TensorFlow tensor with feature data
  ******************************************************************************/
@@ -421,6 +439,7 @@ sl_status_t sl_ml_audio_feature_generation_fill_tensor(struct TfLiteTensor *inpu
 
   return status;
 }
+#endif
 
 /***************************************************************************//**
  *    Returns how many new or unfetched feature slices that have been updated
@@ -479,69 +498,6 @@ sl_status_t sl_ml_audio_feature_generation_activity_detected()
 bool sl_ml_audio_feature_generation_is_activity_detection_enabled(void)
 {
   return sli_fe_runtime_cfg_valid && sli_fe_runtime_cfg.frontend_config.activity_detection.enable_activation_detection;
-}
-
-/*******************************************************************************
- **************************   LOCAL FUNCTIONS   ********************************
- ******************************************************************************/
-
-/***************************************************************************//**
- *  Calculates features from a single chunk from the audio buffer
- *
- *  This function will consume all samples from the audio buffer chunk
- *  and generate as many feature slices as possible from this data. Any leftover
- *  audio samples will be consumed by Microfrontend and kept until the next call
- *  to generate features from then.
- *
- *  @param[in] audio_data
- *    Next chunk from the audio_data buffer to process
- *
- * @param[in] num_samples
- *    Number of samples to process in the audio_data buffer
- *
- *  @param[out] slices_updated
- *    Adds how many slices were updated to this parameter
- ******************************************************************************/
-static sl_status_t process_audio_buffer_chunk(const int16_t *audio_data, size_t num_samples, size_t *slices_updated)
-{
-  if (audio_data == NULL || feature_buffer == NULL || feature_buffer_size == 0U || !sli_fe_runtime_cfg_valid) {
-    return SL_STATUS_NOT_INITIALIZED;
-  }
-
-  int write_index = (int)feature_buffer_write_index;
-
-  while (num_samples > 0) {
-    size_t num_samples_read;
-    struct FrontendOutput output = FrontendProcessSamples(
-        &frontend_state, audio_data, num_samples, &num_samples_read);
-
-    audio_data += num_samples_read;
-    num_samples -= num_samples_read;
-    if (output.values != NULL) {
-      for (size_t i = 0; i < output.size; i++) {
-        feature_buffer[write_index + (int)i] = output.values[i];
-      }
-
-      write_index = (int)(((size_t)write_index + output.size) % feature_buffer_size);
-      *slices_updated += 1;
-    } else {
-      // No feature slice was generated, but data is stored internally in the frontend for
-      // next iteration.
-    }
-  }
-
-  feature_buffer_write_index = (size_t)write_index;
-
-  // Currently, we assume that the entire feature buffer is always processed
-  // each time a sl_ml_audio_feature_generation_get_features_xxx API is called.
-  // Thus, we set the read index to point the the next write index
-  // (which is the oldest element in the circular buffer).
-  // In this way, the sl_ml_audio_feature_generation_get_features_xxx APIs
-  // will always return the latest features.
-  // This helps to work-around dropped data.
-  feature_buffer_read_index = feature_buffer_write_index;
-
-  return SL_STATUS_OK;
 }
 
 /***************************************************************************//**

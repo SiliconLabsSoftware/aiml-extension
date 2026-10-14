@@ -32,7 +32,7 @@
 #include "sl_sleeptimer.h"
 
 #if defined(SL_BOARD_SI91X)
-#include "ml_clock_helper.h"
+#include "system_si91x.h"
 #endif
 
 #if defined(SL_BOARD_EFX)

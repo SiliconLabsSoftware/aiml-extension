@@ -48,6 +48,7 @@ codegen:
     add_header_includes: true
     generate_model_load_function: true
     generate_op_resolver_instance: true
+    generate_micro_allocator_function: false
   model_parameters_header:
     enabled: true
     prefix: "SL_TFLITE_MODEL_{prefix}_"

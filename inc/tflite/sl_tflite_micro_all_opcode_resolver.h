@@ -23,7 +23,7 @@
 #ifndef SL_TFLITE_MICRO_ALL_OPCODE_RESOLVER_H
 #define SL_TFLITE_MICRO_ALL_OPCODE_RESOLVER_H
 
-#include "ml/third_party/tflm/micro_mutable_op_resolver.h"
+#include "micro_mutable_op_resolver.h"
 
 #define SL_TFLITE_MICRO_OPCODE_RESOLVER(opcode_resolver) \
 static tflite::MicroMutableOpResolver<95> opcode_resolver; \

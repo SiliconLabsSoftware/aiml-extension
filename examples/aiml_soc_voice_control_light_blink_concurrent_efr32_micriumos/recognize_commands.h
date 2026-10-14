@@ -20,8 +20,8 @@
 
 #include <cstdint>
 
-#include "ml/third_party/tflm/common.h"
-#include "ml/third_party/tflm/micro_log.h"
+#include "micro_common.h"
+#include "micro_log.h"
 
 constexpr int kMaxCategoryCount = 4;
 extern const char* kCategoryLabels[kMaxCategoryCount];

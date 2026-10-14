@@ -19,7 +19,7 @@
 #include <cstdio>
 #include <limits>
 
-#include "ml/tflite_micro_model/tflite_micro_logger.hpp"
+#include "tflite_micro_logger.hpp"
 
 #include "voice_control_light.h"
 

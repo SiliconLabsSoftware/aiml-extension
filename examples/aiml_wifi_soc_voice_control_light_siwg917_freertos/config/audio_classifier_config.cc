@@ -18,8 +18,8 @@
 
 #include "audio_classifier_config.h"
 
-#include "ml/tflite_micro_model/tflite_micro_logger.hpp"
-#include "ml/tflite_micro_model/tflite_model_parameters.hpp"
+#include "tflite_micro_logger.hpp"
+#include "tflite_model_parameters.hpp"
 
 #include "tflite_micro_model.hpp"
 

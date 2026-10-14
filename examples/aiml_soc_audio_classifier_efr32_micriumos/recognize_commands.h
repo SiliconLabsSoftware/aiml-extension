@@ -20,8 +20,8 @@
 
 #include <cstdint>
 
-#include "ml/third_party/tflm/common.h"
-#include "ml/third_party/tflm/micro_log.h"
+#include "micro_common.h"
+#include "micro_log.h"
 #include "config/audio_classifier_config.h"
 #include "audio_classifier.h"
 

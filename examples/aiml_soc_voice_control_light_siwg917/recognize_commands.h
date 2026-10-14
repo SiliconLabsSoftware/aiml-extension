@@ -21,8 +21,8 @@
 #include <cstdint>
 
 #include "audio_classifier_config.h"
-#include "ml/third_party/tflm/common.h"
-#include "ml/third_party/tflm/micro_log.h"
+#include "micro_common.h"
+#include "micro_log.h"
 
 extern int category_count;
 

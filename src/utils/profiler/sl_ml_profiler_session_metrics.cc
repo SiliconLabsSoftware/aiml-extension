@@ -26,7 +26,7 @@
 #if defined(SL_CATALOG_MEMORY_MANAGER_PRESENT)
 #include "sl_memory_manager.h"
 #endif
-#include "ml/tflite_micro_model/tflite_micro_accelerator.hpp"
+#include "tflite_micro_accelerator.hpp"
 #include "sl_ml_mvp_counter.h"
 // If you use Silicon Labs sleeptimer:
 // If you don't have sleeptimer, use your always-on timer instead and
@@ -380,6 +380,9 @@ void SilabsProfiler::update_end_session_info()
 #endif //SL_ML_ENABLE_PROFILER_DEBUG_MSG
             // Prepare end session info to debug channel
             emit_end_session_info();
+#if (SL_ML_ENABLE_DYNAMIC_BUFFER_ALLOCATION == 1)
+            release_dynamic_tflite_micro_model();
+#endif
             exit(1);
         }
     }
@@ -448,7 +451,7 @@ std::uint32_t SilabsProfiler::get_cpu_freq() {
   cpu_freq_hz = CMU_ClockFreqGet(cmuClock_CORE);   // Core (CPU) clock
 #endif
 #if defined(SL_BOARD_SI91X)
-  cpu_freq_hz = ml_get_cpu_clock_frequency();
+  cpu_freq_hz = system_clocks.soc_clock;   // Core (CPU) clock
 #endif
   return cpu_freq_hz;
 }

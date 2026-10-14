@@ -1,0 +1,42 @@
+id: ml_upgrade_compatibility_301_to_302
+package: aiml
+label: ML Upgrade Compatibility 3.0.1 to 3.0.2
+description: >
+  Provides deprecated ml/... include-path shims for apps upgraded from aiml 3.0.1
+  to 3.0.2. Prefer the flattened headers (e.g. micro_common.h, tflite_model_parameters.hpp).
+category: Machine Learning|TensorFlow
+quality: production
+root_path: upgrade_compatibility_301_to_302
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
+metadata:
+  sbom:
+    license: MSLA
+provides:
+  - name: ml_upgrade_compatibility_301_to_302
+include:
+  - path: inc
+    file_list:
+      - path: ml/platform/ml_clock_helper.h
+      - path: ml/third_party/tflm/common.h
+      - path: ml/third_party/tflm/micro_log.h
+      - path: ml/third_party/tflm/micro_profiler_interface.h
+      - path: ml/tflite_micro_model/tflite_model_parameters.hpp
+      - path: ml/tflite_micro_model/tflite_micro_logger.hpp
+  - path: ..
+    file_list:
+      - path: compiled_model/tflite_model_parameters.hpp
+      - path: compiled_model/tflite_micro_logger.hpp
+  - path: ../compiled_model/third_party/tflite_micro
+    file_list:
+      - path: tensorflow/lite/micro/micro_common.h
+      - path: tensorflow/lite/micro/micro_log.h
+      - path: tensorflow/lite/micro/micro_profiler_interface.h
+define:
+  - name: ML_UPGRADE_COMPATIBILITY_EFR32
+    condition: [device_efx]
+  - name: ML_UPGRADE_COMPATIBILITY_SIWG917
+    condition: [device_si91x]
+ui_hints:
+  visibility: never

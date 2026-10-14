@@ -7,7 +7,7 @@ When a payload contains the substring `off`, the blue status LED is turned off; 
 it contains `on`, the LED is turned on. Matching is done with substring search (not
 whole-word), and `off` is evaluated before `on` if both could apply.
 
-The LED used on **BRD2605A** is the blue LED (**LED0_B**, ULP GPIO 15). It is wired
+The LED used on **BRD2605A** / **BRD2605B** is the blue LED (**LED0_B**, ULP GPIO 15). It is wired
 active-low: driving the pin low turns the LED on. For other boards you may need to
 adjust the GPIO mapping in `app.c`.
 

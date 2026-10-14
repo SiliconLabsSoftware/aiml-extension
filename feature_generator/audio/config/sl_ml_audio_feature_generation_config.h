@@ -1,6 +1,6 @@
 /***************************************************************************//**
- * @file
- * @brief Configuration file for Audio Frontend
+ * @file sl_ml_audio_feature_generation_config.h
+ * @brief Deprecated compatibility header for aiml 3.0.0 audio feature generation.
  *******************************************************************************
  * # License
  * <b>Copyright 2021 Silicon Laboratories Inc. www.silabs.com</b>
@@ -54,7 +54,8 @@ extern int SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ENABLE;
 #else
 
 /***************************************************************************//**
- * @deprecated Use sl_ml_audio_feature_generation_init(&sl_fe_audio_<instance>_cfg) instead.
+ * @deprecated Use @ref sl_ml_audio_feature_generation_init with
+ *             @c &sl_fe_audio_<instance>_cfg instead.
  ******************************************************************************/
 [[deprecated("Use sl_ml_audio_feature_generation_init(&sl_fe_audio_<instance>_cfg) instead.")]]
 inline sl_status_t sl_ml_audio_feature_generation_init(void)
@@ -63,7 +64,8 @@ inline sl_status_t sl_ml_audio_feature_generation_init(void)
 }
 
 /***************************************************************************//**
- * @deprecated Use sl_ml_audio_feature_generation_frontend_init(config) instead.
+ * @deprecated Use @ref sl_ml_audio_feature_generation_frontend_init with
+ *             @c &sl_fe_audio_<instance>_cfg instead.
  ******************************************************************************/
 [[deprecated("Use sl_ml_audio_feature_generation_frontend_init(&sl_fe_audio_<instance>_cfg) instead.")]]
 inline sl_status_t sl_ml_audio_feature_generation_frontend_init(void)
@@ -73,12 +75,21 @@ inline sl_status_t sl_ml_audio_feature_generation_frontend_init(void)
 
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /***************************************************************************//**
- * @deprecated Remove calls to this function; use SL_FE_* macros in
- *             sl_fe_audio_<instance>_config.h instead, and use
- *             sl_ml_audio_feature_generation_is_activity_detection_enabled() instead of
- *             SL_ML_FRONTEND_ACTIVITY_DETECTION_ENABLE for activity detection.
+ * @deprecated Remove calls to this function. Use @c SL_FE_* macros in
+ *             @c sl_fe_audio_<instance>_config.h instead. For activity detection,
+ *             call @ref sl_ml_audio_feature_generation_is_activity_detection_enabled
+ *             rather than reading @c SL_ML_FRONTEND_ACTIVITY_DETECTION_ENABLE.
  ******************************************************************************/
 __attribute__((deprecated("Remove calls to sl_ml_audio_feature_generation_load_model_settings(); use SL_FE_* macros in sl_fe_audio_<instance>_config.h instead, and use sl_ml_audio_feature_generation_is_activity_detection_enabled() instead of SL_ML_FRONTEND_ACTIVITY_DETECTION_ENABLE for activity detection.")))
-bool sl_ml_audio_feature_generation_load_model_settings(const void* tflite_flatbuffer);
+bool sl_ml_audio_feature_generation_load_model_settings(const void *tflite_flatbuffer);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif // SL_ML_AUDIO_FEATURE_GENERATION_CONFIG_H

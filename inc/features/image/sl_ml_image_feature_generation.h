@@ -22,14 +22,17 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include "ml/third_party/tflm/common.h"
+#include "micro_common.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /***************************************************************************//**
- * @addtogroup ml_image_feature_generation
+ * @defgroup ml_image_feature_generation Image Feature Generator
+ * @brief Processes camera images and extracts features for machine learning
+ *        image classification applications.
+ *
  * The image feature generator process input image captured from camera 
  * and extracts required features to use with machine learning image classification
  * applications using a camera as an image source.

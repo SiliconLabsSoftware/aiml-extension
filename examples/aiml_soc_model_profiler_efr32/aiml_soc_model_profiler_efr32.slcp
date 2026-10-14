@@ -67,8 +67,10 @@ configuration:
   value: 1
 - name: SL_IOSTREAM_USART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
   value: 1
+  condition: [iostream_usart]
 - name: SL_IOSTREAM_EUSART_VCOM_CONVERT_BY_DEFAULT_LF_TO_CRLF
   value: 1
+  condition: [iostream_eusart]
 - name: SL_CLOCK_MANAGER_HFRCO_DPLL_EN
   value: 1
 - name: SL_CLOCK_MANAGER_DEFAULT_HF_CLOCK_SOURCE
@@ -100,8 +102,8 @@ tag:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 3.0.1
+  version: 3.0.2
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2026.6.1
+  version: 2026.6.2

@@ -14,17 +14,17 @@
  * sections of the MSLA applicable to Source Code.
  *
  ******************************************************************************/
-#include "ml/platform/ml_clock_helper.h"
 #include "sl_sleeptimer.h"
 #include "sl_ml_model_soc_model_profiler.h"
 #include "sl_ml_mvp_counter.h"
 #include "sl_nn_util.h"
+#include "system_si91x.h"
 
 #if defined(SL_COMPONENT_CATALOG_PRESENT)
 #include "sl_component_catalog.h"
 #endif
 
-#include "ml/third_party/tflm/micro_profiler_interface.h"
+#include "micro_profiler_interface.h"
 #include "tflite_micro_model.hpp"
 #include "model_profiler.h"
 #include "energy_profiling_utils.hpp"
@@ -84,8 +84,6 @@ static void sli_model_profiler_hw_timer_ensure_running(void)
   initialized = true;
 }
 #endif // TIMER0
-
-
 
 namespace {
 
@@ -364,8 +362,9 @@ bool model_profiler_init(void)
 
   sl_sleeptimer_init();
 
-  ml_configure_clocks_to_max_rate();
-  cpu_freq = ml_get_cpu_clock_frequency();
+  // Core clock is already at SOC PLL max rate by sl_si91x_clock_manager_init(),
+  // which the platform_init event handler runs before app init.
+  cpu_freq = system_clocks.soc_clock;
   printf("CPU core frequency: %.1f MHz\n", (float)cpu_freq / 1000000.0);
   printf("Sleeptimer frequency: %lu Hz\n",
          (unsigned long)sl_sleeptimer_get_timer_frequency());
@@ -436,7 +435,9 @@ void model_profiler_process_action(void)
     profiler.reset_metrics();
     memset(input_tensor->data.data, 0, input_tensor->bytes);
 
-    if (interpreter->Invoke() != kTfLiteOk) {
+    // Must use TfliteMicroModel::invoke()
+    // execute_program() calls TfliteMicroMvpv1Context::get() with no TfLiteContext
+    if (!g_profiler_model.invoke()) {
       printf("Model invocation failed !\n");
       invoke_ok = false;
       break;

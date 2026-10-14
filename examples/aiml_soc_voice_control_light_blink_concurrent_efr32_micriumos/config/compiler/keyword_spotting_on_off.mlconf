@@ -9,3 +9,4 @@ memory_optimizer:
 codegen:
   model_parameters_header:
     enabled: true
+  output_format: header

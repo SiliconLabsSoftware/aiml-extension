@@ -25,7 +25,6 @@
 #include "sl_si91x_rgb_led_instances.h"
 #include "sl_si91x_icm40627.h"
 #include "rgb_led.h"
-#include "ml/platform/ml_clock_helper.h"
 #include <cinttypes>
 #include <cstdio>
 
@@ -85,9 +84,6 @@ void magic_wand_init(void)
 {
   printf("Magic Wand\n");
   printf("Initializing...\n");
-
-  // Configure clocks to maximum rate for optimal performance
-  ml_configure_clocks_to_max_rate();
 
   // Load the TensorFlow Lite model
   if (sl_ml_model_init(&sl_ml_magic_wand_model_model_handle) != SL_STATUS_OK) {

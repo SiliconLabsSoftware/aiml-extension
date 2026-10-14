@@ -39,7 +39,7 @@ extern "C" {
 #endif
 
 /***************************************************************************//**
- * @addtogroup sl_ml_mic_i2s_si91x
+ * @defgroup sl_ml_mic_i2s_si91x Microphone I2S Driver for Machine Learning
  * @brief Microphone driver API for I2S interface on SI91x.
  * @{
  ******************************************************************************/

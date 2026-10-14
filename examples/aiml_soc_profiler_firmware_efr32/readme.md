@@ -1,8 +1,8 @@
 # Profiler firmware for efr32
 
-This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component 
+This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component
 to profile machine learning models on EFR Series 2 boards. It enables dynamic loading and switching
-of ML models at runtime without recompiling the profiler logic, making it easier to evaluate and 
+of ML models at runtime without recompiling the profiler logic, making it easier to evaluate and
 benchmark different models directly on the device..
 
 ## Behavior
@@ -22,9 +22,9 @@ Before building the firmware, update the following parameters in your `.slcp` fi
 
 - **Model Base Address**  
   Update `SL_ML_PROFILER_DEBUG_MODEL_BASE_ADDR`.  
-  - Default value based on generated firmware file size from the app approximatly 750KB, we reserve 750KB from start address of flash and remaining portion can be utilized to model size.
+  - Default value based on generated firmware file size from the app approximately 750KB, we reserve 750KB from start address of flash and remaining portion can be utilized to model size.
   - Can be updated in the `.slcp` file.
-  
+
   **Example Calculation for BRD2601B**
     - Total flash available on xG24 SoC: 1,536 KB (`0x180000`).
     - Reserved for profiler firmware: 750 KB  
@@ -33,7 +33,7 @@ Before building the firmware, update the following parameters in your `.slcp` fi
     - Model region start (end of reserved firmware region, exclusive):
       `0x08000000 + 0xBB800 = 0x080BB800`
     - Default model flatbuffer base address: `0x080BB800` (adjust if firmware size changes).
-    
+
 - Use **SL_ML_ENABLE_PROFILER_DEBUG_MSG**
   - 1-> for writing profiler statistics to debug channel.
   - 0-> To print profiler statistics on VCOM terminal.
@@ -43,32 +43,29 @@ Before building the firmware, update the following parameters in your `.slcp` fi
 - Use the compiler executable located at `aiml/tool/compiler/` and run:
 
 ```bash
-sml_win_amd64.exe compile <tflite model file path> <output path> --platform efr32xg24 --is-studio
+sml_win_amd64.exe compile <tflite model file path> <output path> --platform efr32xg24 --memory-optimization
 ```
 compiled model will be stored in output directory with suffix '-mvpv1.tflite'
 
 ## Model Conversion
-- Change the model file extention from .tflite to .bin
+- Change the model file extension from .tflite to .bin
 - Convert to .s37 format using Simplicity Commander
  - --address specifies the Flash memory location where the model will be stored.
  - Adjust this address according to your board’s memory map and model size.
  - value of SL_ML_PROFILER_DEBUG_MODEL_BASE_ADDR should be same as address used here.
-    
+
     `commander convert <model_name_compiled>.bin --address 0x080BB800 --outfile <model_name>.s37`
 ## Example workflow
 - **Build profiler firmware**
-    
+
     `slc generate -p ml_profiler_firmware.slcp -d target/brd2601b --with brd2601b`
-    
+
     `sled slc build target/brd2601b`
 - **Flash firmware to board**
-    
+
     `commander device erase`
-    
+
     `commander flash aiml_soc_profiler_firmware_efr32.s37`
 - **Flash model firmware to board**
-    
+
     `commander flash <model_name>.s37`
-
-
-

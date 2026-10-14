@@ -18,7 +18,7 @@
 
 #include "keyword_detection_config.h"
 
-#include "ml/tflite_micro_model/tflite_model_parameters.hpp"
+#include "tflite_model_parameters.hpp"
 
 extern "C" {
 

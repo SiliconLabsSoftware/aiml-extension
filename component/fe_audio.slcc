@@ -41,8 +41,11 @@ requires:
     condition: [device_si91x]
   - name: sl_common
     condition: [device_efx]
+  - name: ml_cmsis_dsp_rfft_q15
+    condition: [device_si91x]
 recommends:
   - id: ml_cmsis_dsp_rfft_q15
+    condition: [device_efx]
 define:
   - name: SL_BOARD_SI91X
     value: 1
@@ -59,8 +62,6 @@ include:
       - path: sl_fe_audio_si91x.h
         condition: [device_si91x]
       - path: sl_fe_audio.h
-        condition: [device_efx]
-      - path: sl_fe_audio_common.h
   - path: ../..
     file_list:
       - path: microfrontend/lib/utils.h

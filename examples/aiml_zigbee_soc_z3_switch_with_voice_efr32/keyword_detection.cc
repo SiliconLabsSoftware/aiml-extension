@@ -246,10 +246,11 @@ void keyword_detection_process_action(void)
 {
   // Perform keyword detection every INFERENCE_INTERVAL_MS ms (from model metadata)
   if (inference_timeout) {
-    sl_ml_audio_feature_generation_update_features();
-    run_inference();
-    process_output();
     inference_timeout = false;
+    sl_ml_audio_feature_generation_update_features();
+    if (run_inference() == SL_STATUS_OK) {
+      process_output();
+    }
   }
 }
 

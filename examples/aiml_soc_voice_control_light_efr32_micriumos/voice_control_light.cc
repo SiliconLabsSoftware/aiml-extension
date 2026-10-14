@@ -113,12 +113,12 @@ static sl_status_t process_output(){
         // command = "on"
         sl_led_turn_on(&sl_led_led0);
         printf("Heard %s (%" PRIu8 ") @%" PRIu32 "ms\r\n", kCategoryLabels[found_command_index],
-                         score, current_time_stamp);  
+                         score, current_time_stamp);
     } else if (found_command_index == 1){
         // command = "off"
         sl_led_turn_off(&sl_led_led0);
         printf("Heard %s (%" PRIu8 ") @%" PRIu32 "ms\r\n", kCategoryLabels[found_command_index],
-                         score, current_time_stamp);  
+                         score, current_time_stamp);
     }
   }
 

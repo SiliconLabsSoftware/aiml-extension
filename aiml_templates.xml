@@ -9,7 +9,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_blink_efr32.aiml_soc_blink_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_blink_efr32/aiml_soc_blink_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_blink_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a brd2705a brd2505a brd2506a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a brd2608b brd2705a brd2505a brd2506a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -27,7 +27,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_magic_wand_efr32.aiml_soc_magic_wand_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_magic_wand_efr32/aiml_soc_magic_wand_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_magic_wand_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -46,7 +46,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_model_profiler_efr32.aiml_soc_model_profiler_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_model_profiler_efr32/aiml_soc_model_profiler_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a brd2705a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd4186c brd4187c brd2601b brd2608a brd2608b brd2705a com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -65,7 +65,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_voice_control_light_efr32_micriumos.aiml_soc_voice_control_light_efr32_micriumos.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_voice_control_light_efr32_micriumos/aiml_soc_voice_control_light_efr32_micriumos.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_voice_control_light_efr32_micriumos/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -86,7 +86,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -107,7 +107,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -126,7 +126,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_audio_classifier_efr32_micriumos.aiml_soc_audio_classifier_efr32_micriumos.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_audio_classifier_efr32_micriumos/aiml_soc_audio_classifier_efr32_micriumos.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_audio_classifier_efr32_micriumos/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -145,7 +145,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_image_classifier_efr32.aiml_soc_image_classifier_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_image_classifier_efr32/aiml_soc_image_classifier_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_image_classifier_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -163,7 +163,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_data_capture_efr32.aiml_soc_data_capture_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_data_capture_efr32/aiml_soc_data_capture_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_data_capture_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[46].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -180,7 +180,7 @@
     <properties key="solutionReferenceId" value="aiml_zigbee_soc_z3_switch_with_voice_efr32.aiml_zigbee_soc_z3_switch_with_voice_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_zigbee_soc_z3_switch_with_voice_efr32/aiml_zigbee_soc_z3_switch_with_voice_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_zigbee_soc_z3_switch_with_voice_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -197,7 +197,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_anomaly_detection_efr32.aiml_soc_anomaly_detection_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_anomaly_detection_efr32/aiml_soc_anomaly_detection_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_anomaly_detection_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[46].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -215,7 +215,7 @@
     <properties key="solutionReferenceId" value="aiml_soc_profiler_firmware_efr32.aiml_soc_profiler_firmware_efr32.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_profiler_firmware_efr32/aiml_soc_profiler_firmware_efr32.slcp"/>
     <properties key="readmeFiles" value="aiml_soc_profiler_firmware_efr32/readme.md"/>
-    <properties key="boardCompatibility" value="brd2601b brd2608a com.silabs.board.none "/>
+    <properties key="boardCompatibility" value="brd2601b brd2608a brd2608b com.silabs.board.none "/>
     <properties key="partCompatibility" value=".*ef.32.g2[468].*"/>
     <properties key="ideCompatibility" value="generic-template makefile-ide simplicity-ide visual-studio-code visual-studio-code-cmake iar-embedded-workbench"/>
     <properties key="toolchainCompatibility" value="gcc iar llvm"/>
@@ -232,7 +232,7 @@
     <properties key="namespace" value="template.uc"/>
     <properties key="keywords" value="ai ml machine\ learning sine intensity 917"/>
     <properties key="projectFilePaths" value="aiml_soc_blink_siwg917/aiml_soc_blink_siwg917.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a brd2605b"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc llvm"/>
@@ -251,7 +251,7 @@
     <properties key="namespace" value="template.uc"/>
     <properties key="keywords" value="ai ml machine\ learning profiler byte\ array"/>
     <properties key="projectFilePaths" value="aiml_soc_model_profiler_siwg917/aiml_soc_model_profiler_siwg917.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd4343a brd4343b brd4339b brd4340b brd4342a brd4343q brd2605a"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd4343a brd4343b brd4339b brd4340b brd4342a brd4343q brd2605a brd2605b"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc llvm"/>
@@ -270,7 +270,7 @@
     <properties key="namespace" value="template.uc"/>
     <properties key="keywords" value="ai ml machine\ learning on off audio microphone"/>
     <properties key="projectFilePaths" value="aiml_soc_voice_control_light_siwg917/aiml_soc_voice_control_light_siwg917.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a brd2605b"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc llvm"/>
@@ -292,7 +292,7 @@
     <properties key="keywords" value="ai ml machine\ learning on off audio microphone blink concurrent"/>
     <properties key="solutionReferenceId" value="aiml_soc_voice_control_light_blink_concurrent_siwg917.aiml_soc_voice_control_light_blink_concurrent_siwg917.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_voice_control_light_blink_concurrent_siwg917/aiml_soc_voice_control_light_blink_concurrent_siwg917.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a brd2605b"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc llvm"/>
@@ -314,7 +314,7 @@
     <properties key="keywords" value="ai ml machine\ learning on off audio microphone blink sequential"/>
     <properties key="solutionReferenceId" value="aiml_soc_voice_control_light_blink_sequential_siwg917.aiml_soc_voice_control_light_blink_sequential_siwg917.slcp"/>
     <properties key="projectFilePaths" value="aiml_soc_voice_control_light_blink_sequential_siwg917/aiml_soc_voice_control_light_blink_sequential_siwg917.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a brd2605b"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc llvm"/>
@@ -333,7 +333,7 @@
     <properties key="namespace" value="template.uc"/>
     <properties key="keywords" value="ai ml machine\ learning audio microphone"/>
     <properties key="projectFilePaths" value="aiml_soc_audio_classifier_siwg917/aiml_soc_audio_classifier_siwg917.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd4338a brd2605a brd2605b"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc llvm"/>
@@ -351,7 +351,7 @@
     <properties key="namespace" value="template.uc"/>
     <properties key="keywords" value="ai ml machine\ learning hand\ gestures accelerometer"/>
     <properties key="projectFilePaths" value="aiml_soc_magic_wand_siwg917/aiml_soc_magic_wand_siwg917.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd2605a"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd2605a brd2605b"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc llvm"/>
@@ -370,7 +370,7 @@
     <properties key="namespace" value="template.uc"/>
     <properties key="keywords" value="ai ml machine\ learning wifi on off audio microphone freertos"/>
     <properties key="projectFilePaths" value="aiml_wifi_soc_voice_control_light_siwg917_freertos/aiml_wifi_soc_voice_control_light_siwg917_freertos.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd2605a"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd2605a brd2605b"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc llvm"/>
@@ -389,7 +389,7 @@
     <properties key="namespace" value="template.uc"/>
     <properties key="keywords" value="ai ml wifi udp led freertos on off siwg917"/>
     <properties key="projectFilePaths" value="aiml_wifi_soc_led_switch_siwg917_freertos/aiml_wifi_soc_led_switch_siwg917_freertos.slcp"/>
-    <properties key="boardCompatibility" value="com.silabs.board.none brd2605a"/>
+    <properties key="boardCompatibility" value="com.silabs.board.none brd2605a brd2605b"/>
     <properties key="partCompatibility" value=" .*si917.* .*siwg917m111mgtba.* .*siwg917m141xgtba.* .*siwg917y111mgab.* .*siwg917y111mgnba.* .*siwg917y121mgnb.* .*siwg917m121xgtba.* .*siwg917m111xgtba.* .*siwg917m100mgtba.* .*siwg917m110lgtba.* .*siwg917y111mgnba.* .*siwg917y110lgnba.* .*siwg917y111xgnba.* .*siwg917y121mgnba.* .*siwg917y111mgaba.* .*siwg917y110lgaba.* .*siwg917y111xgaba.* .*siwg917y121mgaba.*"/>
     <properties key="ideCompatibility" value="makefile-ide simplicity-ide visual-studio-code generic-template"/>
     <properties key="toolchainCompatibility" value="gcc llvm"/>
@@ -402,4 +402,3 @@
   </descriptors>
 
 </model:MDescriptors>
-

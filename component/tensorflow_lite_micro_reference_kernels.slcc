@@ -22,7 +22,17 @@ provides:
   - name: tensorflow_kernel_implementation
     allow_multiple: true
 requires:
-  - name: tensorflow_lite_micro
-root_path: third_party/tflite-micro
+  - name: tensorflow_lite_micro_model
+root_path: compiled_model/kernels/sw_ref
 include:
   - path: .
+    file_list:
+      - path: tflite_micro_sw_ref_accelerator.hpp
+        unless:
+        - tensorflow_lite_micro_accelerated_kernels
+        - tensorflow_lite_micro_optimized_kernels
+source:
+  - path: tflite_micro_sw_ref_accelerator.cc
+    unless:
+    - tensorflow_lite_micro_accelerated_kernels
+    - tensorflow_lite_micro_optimized_kernels

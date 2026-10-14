@@ -15,3 +15,5 @@ memory_specification:
 codegen:
   model_parameters_header:
     enabled: true
+  model_header:
+    generate_micro_allocator_function: false

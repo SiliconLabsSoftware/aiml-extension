@@ -15,8 +15,8 @@
  *
  ******************************************************************************/
 
-#include "ml/tflite_micro_model/tflite_model_parameters.hpp"
-#include "ml/tflite_micro_model/tflite_micro_logger.hpp"
+#include "tflite_model_parameters.hpp"
+#include "tflite_micro_logger.hpp"
 #include "sl_ml_image_feature_generation_config.h"
 
 #include <cstdio>

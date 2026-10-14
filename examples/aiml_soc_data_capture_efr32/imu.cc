@@ -59,14 +59,14 @@ typedef struct imu_data {
   int16_t oz;
 } imu_data_t;
 
-// IMU data buffer
-static imu_data_t buffer[IMU_BUFFER_SIZE];
+// IMU data buffer (volatile: written in ISR, read in main — required under GCC LTO)
+static volatile imu_data_t buffer[IMU_BUFFER_SIZE];
 
 // Current head pointer of the buffer
-static int head_ptr = 0;
+static volatile int head_ptr = 0;
 
 // Wait for buffer to be filled first time
-static bool init_done = false;
+static volatile bool init_done = false;
 
 // Called when the IMU has data available using gpio interrupt.
 static void on_data_available(uint8_t int_id, void *ctx)
@@ -148,16 +148,15 @@ sl_status_t imu_read(imu_data_float_t* dst, int n)
     if (index < 0 ) {
       index += IMU_BUFFER_SIZE;
     }
-    imu_data_t src = buffer[index];
-    dst[i].x = src.x;
-    dst[i].y = src.y;
-    dst[i].z = src.z;
-    dst[i].gx=src.gx;
-    dst[i].gy=src.gy;
-    dst[i].gz=src.gz;
-    dst[i].ox=src.ox;
-    dst[i].oy=src.oy;
-    dst[i].oz=src.oz;
+    dst[i].x = buffer[index].x;
+    dst[i].y = buffer[index].y;
+    dst[i].z = buffer[index].z;
+    dst[i].gx = buffer[index].gx;
+    dst[i].gy = buffer[index].gy;
+    dst[i].gz = buffer[index].gz;
+    dst[i].ox = buffer[index].ox;
+    dst[i].oy = buffer[index].oy;
+    dst[i].oz = buffer[index].oz;
 
   }
   CORE_EXIT_CRITICAL();

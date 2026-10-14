@@ -250,29 +250,26 @@ notification path.
 
 ## Model
 
-The application uses `keyword_spotting_on_off_v3.tflite`
-as the default model, depending on whether the application is generated for a
-development board featuring an MVP hardware accelerator or not. When an MVP
-hardware accelerator is featured on the board, inference will run at a faster
-speed such that a larger model can be chosen, yielding more accurate keyword
-detections.
+The application uses `keyword_spotting_on_off_v3.tflite` as the default model.
+On development boards featuring an MVP hardware accelerator, inference runs
+faster, allowing larger models to be used for improved keyword-detection
+accuracy.
 
 Details about the model architectures and scripts for generating the models can
 be found in the [Silicon Labs machine learning applications](https://github.com/SiliconLabs/machine_learning_applications/tree/main/) repository, under
 `application/voice/keyword_spotting/model`.
 
+Silicon Labs AI/ML projects use quantized `.tflite` models with TensorFlow Lite
+for Microcontrollers. Integer quantization is recommended for deployment on
+Silicon Labs devices. See [Developing a Machine Learning Model](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/developing-a-model)
+for model development and conversion guidance.
 
-In order for the audio classification to work correctly we need to use the same
-audio feature generator configuration parameters for inference as is used when
-training the model. When using the MLTK to train an audio classification model
-the model parameters will be embedded in the metadata section of the .tflite
-file. When generating a project this metadata is extracted by tools in the Simplicity
-SDK and placed in the file called sl_tflite_micro_model_parameters.h inside the
-autogen folder of the example.
-
-This example will automatically use the parameters from the .tflite file in
-order to configure the audio feature generator to correctly extract features
-from input audio data which can be passed to TensorFlow when doing inference.
+The [Audio Feature Generator](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/feature-generators)
+converts microphone samples into the input features expected by the model. Its
+frontend parameters must match those used during model training. The compiler
+configuration for the model enables model-parameter header generation so that
+model-specific settings can be generated with the project and used by the audio
+frontend.
 
 ## References
 

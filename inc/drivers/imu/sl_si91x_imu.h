@@ -41,7 +41,7 @@ extern "C" {
 #endif
 
 /***************************************************************************//**
- * @addtogroup imu
+ * @defgroup imu IMU - Inertial Measurement Unit
  * @brief Inertial Measurement Unit driver
  * @{
 
@@ -105,8 +105,8 @@ extern "C" {
 /**@}*/
 
 /***************************************************************************//**
- * @addtogroup imu_fusion IMU Fusion
- * @brief IMU fusion driver.
+ * @name IMU Fusion Data Types
+ * Sensor fusion state shared by the IMU fusion routines.
  * @{
  ******************************************************************************/
 /***************************************************************************//**
@@ -222,8 +222,8 @@ sl_status_t sl_imu_calibrate_gyro(sl_ssi_handle_t ssi_driver_handle);
 void sl_imu_get_gyro_correction_angles(float acorr[3]);
 
 /***************************************************************************//**
- * @addtogroup vector_matrix_math Vector and Matrix Math
- * @brief Inertial measurement unit fusion driver math routines.
+ * @name Vector and Matrix Math
+ * Inertial measurement unit fusion driver math routines.
  * @{
  ******************************************************************************/
 
@@ -358,8 +358,8 @@ void sl_imu_vector_cross_product(float r[3], float a[3], float b[3]);
 /** @} */ //Vector and matrix math
 
 /***************************************************************************//**
- * @addtogroup direction_cosine_matrix Direction Cosine Matrix
- * @brief Unit DCM matrix related routines
+ * @name Direction Cosine Matrix
+ * Unit DCM matrix related routines.
  * @{
  ******************************************************************************/
 
@@ -453,7 +453,8 @@ void sl_imu_get_acceleration_raw_data(float avec[3]);
 void sl_imu_get_gyro_raw_data(float gvec[3]);
 
 /***************************************************************************//**
- * @addtogroup imu_fusion
+ * @name IMU Fusion Functions
+ * Sensor fusion configuration and update routines.
  * @{
  ******************************************************************************/
 

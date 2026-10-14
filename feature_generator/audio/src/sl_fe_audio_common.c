@@ -30,7 +30,8 @@
 #include <math.h>
 #include <stdint.h>
 
-#include "sl_fe_audio_common.h"
+#include "microfrontend/lib/frontend.h"
+#include "sl_fe_audio.h"
 #include "sl_status.h"
 
 sl_status_t sli_fe_audio_validate_config(const sl_fe_audio_config_t *config)
@@ -74,6 +75,35 @@ sl_status_t sli_fe_audio_compute_feature_buffer_element_count(const sl_fe_audio_
 
   *element_count = (size_t)slice_count * (size_t)nch;
   return SL_STATUS_OK;
+}
+
+size_t sli_fe_audio_process_samples(struct FrontendState *frontend_state,
+                                    const int16_t *audio_data,
+                                    size_t num_samples,
+                                    uint16_t *feature_buffer,
+                                    size_t feature_buffer_count,
+                                    size_t *feature_buffer_start)
+{
+  size_t slices_updated = 0U;
+
+  while (num_samples > 0U) {
+    size_t num_samples_read;
+    struct FrontendOutput output = FrontendProcessSamples(
+        frontend_state, audio_data, num_samples, &num_samples_read);
+
+    audio_data += num_samples_read;
+    num_samples -= num_samples_read;
+    if (output.values != NULL) {
+      for (size_t i = 0U; i < output.size; i++) {
+        feature_buffer[(*feature_buffer_start + i) % feature_buffer_count] = output.values[i];
+      }
+
+      *feature_buffer_start = (*feature_buffer_start + output.size) % feature_buffer_count;
+      slices_updated += 1U;
+    }
+  }
+
+  return slices_updated;
 }
 
 /* Explicit clamp helpers keep the quantizer output bit-identical regardless of which

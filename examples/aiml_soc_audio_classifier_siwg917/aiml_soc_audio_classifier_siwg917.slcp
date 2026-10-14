@@ -45,6 +45,8 @@ toolchain_settings:
   value: -u _printf_float
 - option: llvm_compiler_option
   value: -Wno-implicit-exception-spec-mismatch
+- option: llvm_compiler_option   #TODO: remove this suppression after fix from platform
+  value: -Wno-non-literal-null-conversion
 - option: gcc_compiler_option
   value: "-mfp16-format=ieee"
 - option: gcc_compiler_option
@@ -55,7 +57,7 @@ component:
   - keyword_spotting_on_off_v3
 - id: i2s_instance
   instance: [i2s0]
-- id: si91x_memory_default_config
+- id: si91x_mem_config_3
 - id: psram_core
   condition: [external_psram_8mb]
 - id: psram_aps6404l_sqh
@@ -124,11 +126,11 @@ post_build:
 sdk_extension:
 - id: aiml
   vendor: silabs
-  version: 3.0.1
+  version: 3.0.2
 - id: wiseconnect3_sdk
   vendor: silabs
-  version: 4.1.1
+  version: 4.1.2
 sdk:
   id: simplicity_sdk
   vendor: silabs
-  version: 2026.6.1
+  version: 2026.6.2

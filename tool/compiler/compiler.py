@@ -111,9 +111,8 @@ def run_generate(input_dir: Path, output_dir: Path, part_number: str) -> None:
             str(gen_out),
             "--platform",
             part_number,
-            "--is-studio",
+            "--use-config",
             "--clean-workspace",
-            "--generate-templates",
         ]
 
         rc = subprocess.run(cmd).returncode

@@ -5,3 +5,7 @@ graph_optimizer:
 
 memory_optimizer:
   enabled: true
+
+codegen:
+  model_header:
+    generate_micro_allocator_function: false

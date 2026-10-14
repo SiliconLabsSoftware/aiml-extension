@@ -1,1381 +1,741 @@
 <?xml version="1.0"?>
 <demos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.silabs.com/ss/Demo.ecore">
-  <demo name="brd2505a.demo.aiml_soc_blink_efr32_gcc" label="AI/ML - SoC Blink EFR32">
+  <demo name="brd2505a.demo.aiml_soc_blink_efr32" label="AI/ML - SoC Blink EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
     <property key="core.boardCompatibility" value="brd2505a" />
     <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2505a/gcc/aiml_soc_blink_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2505a/aiml_soc_blink_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
   </demo>
-  <demo name="brd2505a.demo.aiml_soc_blink_efr32_iar" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd2505a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2505a/iar/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2505a.demo.aiml_soc_blink_efr32_llvm" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd2505a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2505a/llvm/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2506a.demo.aiml_soc_blink_efr32_gcc" label="AI/ML - SoC Blink EFR32">
+  <demo name="brd2506a.demo.aiml_soc_blink_efr32" label="AI/ML - SoC Blink EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
     <property key="core.boardCompatibility" value="brd2506a" />
     <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2506a/gcc/aiml_soc_blink_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2506a/aiml_soc_blink_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
   </demo>
-  <demo name="brd2506a.demo.aiml_soc_blink_efr32_iar" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd2506a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2506a/iar/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2506a.demo.aiml_soc_blink_efr32_llvm" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd2506a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2506a/llvm/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_anomaly_detection_efr32_gcc" label="AI/ML - SoC Anomaly Detection EFR32">
+  <demo name="brd2601b.demo.aiml_soc_anomaly_detection_efr32" label="AI/ML - SoC Anomaly Detection EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Anomaly Detection EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_anomaly_detection_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_anomaly_detection_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_anomaly_detection_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to detect anomalies in imu series data. The detected class (anomaly/no anomaly) is printed to the serial port.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_anomaly_detection_efr32_iar" label="AI/ML - SoC Anomaly Detection EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Anomaly Detection EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_anomaly_detection_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_anomaly_detection_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to detect anomalies in imu series data. The detected class (anomaly/no anomaly) is printed to the serial port.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_anomaly_detection_efr32_llvm" label="AI/ML - SoC Anomaly Detection EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Anomaly Detection EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_anomaly_detection_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_anomaly_detection_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to detect anomalies in imu series data. The detected class (anomaly/no anomaly) is printed to the serial port.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_audio_classifier_efr32_micriumos_gcc" label="AI/ML - SoC Audio Classifier MicriumOS EFR32">
+  <demo name="brd2601b.demo.aiml_soc_audio_classifier_efr32_micriumos" label="AI/ML - SoC Audio Classifier MicriumOS EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Audio Classifier MicriumOS EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_audio_classifier_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_audio_classifier_efr32_micriumos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_audio_classifier_efr32_micriumos.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_audio_classifier_efr32_micriumos_iar" label="AI/ML - SoC Audio Classifier MicriumOS EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Audio Classifier MicriumOS EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_audio_classifier_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_audio_classifier_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_audio_classifier_efr32_micriumos_llvm" label="AI/ML - SoC Audio Classifier MicriumOS EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Audio Classifier MicriumOS EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_audio_classifier_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_audio_classifier_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_blink_efr32_gcc" label="AI/ML - SoC Blink EFR32">
+  <demo name="brd2601b.demo.aiml_soc_blink_efr32" label="AI/ML - SoC Blink EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_blink_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_blink_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_blink_efr32_iar" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_blink_efr32_llvm" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_data_capture_efr32_gcc" label="AI/ML - SoC Data Capture EFR32">
+  <demo name="brd2601b.demo.aiml_soc_data_capture_efr32" label="AI/ML - SoC Data Capture EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Data Capture EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_data_capture_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_data_capture_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_data_capture_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application captures IMU sensor data and logs it to CSV format for machine learning dataset generation.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_data_capture_efr32_iar" label="AI/ML - SoC Data Capture EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Data Capture EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_data_capture_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_data_capture_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application captures IMU sensor data and logs it to CSV format for machine learning dataset generation.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_data_capture_efr32_llvm" label="AI/ML - SoC Data Capture EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Data Capture EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_data_capture_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_data_capture_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application captures IMU sensor data and logs it to CSV format for machine learning dataset generation.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_image_classifier_efr32_gcc" label="AI/ML - SoC Image Classifier EFR32">
+  <demo name="brd2601b.demo.aiml_soc_image_classifier_efr32" label="AI/ML - SoC Image Classifier EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Image Classifier EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_image_classifier_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_image_classifier_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_image_classifier_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to classify Hand gestures captured on camera images in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_image_classifier_efr32_iar" label="AI/ML - SoC Image Classifier EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Image Classifier EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_image_classifier_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_image_classifier_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify Hand gestures captured on camera images in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_image_classifier_efr32_llvm" label="AI/ML - SoC Image Classifier EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Image Classifier EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_image_classifier_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_image_classifier_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify Hand gestures captured on camera images in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_magic_wand_efr32_gcc" label="AI/ML - SoC Magic Wand EFR32">
+  <demo name="brd2601b.demo.aiml_soc_magic_wand_efr32" label="AI/ML - SoC Magic Wand EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Magic Wand EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_magic_wand_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_magic_wand_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_magic_wand_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to recognize various hand gestures with an accelerometer. The detected gestures are printed to the serial port.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_magic_wand_efr32_iar" label="AI/ML - SoC Magic Wand EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Magic Wand EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_magic_wand_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_magic_wand_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to recognize various hand gestures with an accelerometer. The detected gestures are printed to the serial port.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_magic_wand_efr32_llvm" label="AI/ML - SoC Magic Wand EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Magic Wand EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_magic_wand_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_magic_wand_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to recognize various hand gestures with an accelerometer. The detected gestures are printed to the serial port.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_model_profiler_efr32_gcc" label="AI/ML - SoC Model Profiler EFR32">
+  <demo name="brd2601b.demo.aiml_soc_model_profiler_efr32" label="AI/ML - SoC Model Profiler EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_model_profiler_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_model_profiler_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_model_profiler_efr32_iar" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_model_profiler_efr32_llvm" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_profiler_firmware_efr32_gcc" label="AI/ML - SoC Profiler Firmware EFR32">
+  <demo name="brd2601b.demo.aiml_soc_profiler_firmware_efr32" label="AI/ML - SoC Profiler Firmware EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Profiler Firmware EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_profiler_firmware_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_profiler_firmware_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_profiler_firmware_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component to profile machine learning models on EFR Series 2 boards.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_profiler_firmware_efr32_iar" label="AI/ML - SoC Profiler Firmware EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Profiler Firmware EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_profiler_firmware_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_profiler_firmware_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component to profile machine learning models on EFR Series 2 boards.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_profiler_firmware_efr32_llvm" label="AI/ML - SoC Profiler Firmware EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Profiler Firmware EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_profiler_firmware_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_profiler_firmware_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component to profile machine learning models on EFR Series 2 boards.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos_gcc" label="AI/ML - SoC Voice Control Light Blink Concurrent EFR32">
+  <demo name="brd2601b.demo.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos" label="AI/ML - SoC Voice Control Light Blink Concurrent EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos_iar" label="AI/ML - SoC Voice Control Light Blink Concurrent EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos_llvm" label="AI/ML - SoC Voice Control Light Blink Concurrent EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos_gcc" label="AI/ML - SoC Voice Control Light Blink Sequential EFR32">
+  <demo name="brd2601b.demo.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos" label="AI/ML - SoC Voice Control Light Blink Sequential EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos_iar" label="AI/ML - SoC Voice Control Light Blink Sequential EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos_llvm" label="AI/ML - SoC Voice Control Light Blink Sequential EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_voice_control_light_efr32_micriumos_gcc" label="AI/ML - SoC Voice Control Light EFR32">
+  <demo name="brd2601b.demo.aiml_soc_voice_control_light_efr32_micriumos" label="AI/ML - SoC Voice Control Light EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_soc_voice_control_light_efr32_micriumos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_soc_voice_control_light_efr32_micriumos.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. The detected keywords are used to control an LED on the board.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_soc_voice_control_light_efr32_micriumos_iar" label="AI/ML - SoC Voice Control Light EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_soc_voice_control_light_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. The detected keywords are used to control an LED on the board.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_soc_voice_control_light_efr32_micriumos_llvm" label="AI/ML - SoC Voice Control Light EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_soc_voice_control_light_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. The detected keywords are used to control an LED on the board.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_zigbee_soc_z3_switch_with_voice_efr32_gcc" label="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32">
+  <demo name="brd2601b.demo.aiml_zigbee_soc_z3_switch_with_voice_efr32" label="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g24.*" />
     <property key="core.boardCompatibility" value="brd2601b" />
     <property key="core.readmeFiles" value="aiml_zigbee_soc_z3_switch_with_voice_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/gcc/aiml_zigbee_soc_z3_switch_with_voice_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2601b/aiml_zigbee_soc_z3_switch_with_voice_efr32.s37" />
     <property key="filters" value="Wireless\ Technology|Zigbee Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>Zigbee 3.0 Switch with Voice sample.</description>
   </demo>
-  <demo name="brd2601b.demo.aiml_zigbee_soc_z3_switch_with_voice_efr32_iar" label="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_zigbee_soc_z3_switch_with_voice_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/iar/aiml_zigbee_soc_z3_switch_with_voice_efr32.s37" />
-    <property key="filters" value="Wireless\ Technology|Zigbee Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>Zigbee 3.0 Switch with Voice sample.</description>
-  </demo>
-  <demo name="brd2601b.demo.aiml_zigbee_soc_z3_switch_with_voice_efr32_llvm" label="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g24.*" />
-    <property key="core.boardCompatibility" value="brd2601b" />
-    <property key="core.readmeFiles" value="aiml_zigbee_soc_z3_switch_with_voice_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2601b/llvm/aiml_zigbee_soc_z3_switch_with_voice_efr32.s37" />
-    <property key="filters" value="Wireless\ Technology|Zigbee Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>Zigbee 3.0 Switch with Voice sample.</description>
-  </demo>
-  <demo name="brd2605a.demo.aiml_soc_audio_classifier_siwg917_gcc" label="AI/ML - SoC Audio Classifier SiWG917">
+  <demo name="brd2605a.demo.aiml_soc_audio_classifier_siwg917" label="AI/ML - SoC Audio Classifier SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Audio Classifier SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd2605a" />
     <property key="core.readmeFiles" value="aiml_soc_audio_classifier_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/gcc/aiml_soc_audio_classifier_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605a/aiml_soc_audio_classifier_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone. The classification is used to control a LED on the board.</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_soc_audio_classifier_siwg917_llvm" label="AI/ML - SoC Audio Classifier SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Audio Classifier SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
-    <property key="core.readmeFiles" value="aiml_soc_audio_classifier_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/llvm/aiml_soc_audio_classifier_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd2605a.demo.aiml_soc_blink_siwg917_gcc" label="AI/ML - SoC Blink SiWG917">
+  <demo name="brd2605a.demo.aiml_soc_blink_siwg917" label="AI/ML - SoC Blink SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Blink SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd2605a" />
     <property key="core.readmeFiles" value="aiml_soc_blink_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/gcc/aiml_soc_blink_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605a/aiml_soc_blink_siwg917.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_soc_blink_siwg917_llvm" label="AI/ML - SoC Blink SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Blink SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/llvm/aiml_soc_blink_siwg917.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2605a.demo.aiml_soc_magic_wand_siwg917_gcc" label="AI/ML - SoC Magic Wand SiWG917">
+  <demo name="brd2605a.demo.aiml_soc_magic_wand_siwg917" label="AI/ML - SoC Magic Wand SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Magic Wand SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd2605a" />
     <property key="core.readmeFiles" value="aiml_soc_magic_wand_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/gcc/aiml_soc_magic_wand_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605a/aiml_soc_magic_wand_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to recognize various hand gestures with an accelerometer. The detected gestures are printed to the serial port.</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_soc_magic_wand_siwg917_llvm" label="AI/ML - SoC Magic Wand SiWG917">
+  <demo name="brd2605a.demo.aiml_soc_model_profiler_siwg917" label="AI/ML - SoC Model Profiler SiWG917">
+    <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
+    <property key="core.partCompatibility" value=".*" />
+    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605a/aiml_soc_model_profiler_siwg917.s37" />
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
+  </demo>
+  <demo name="brd2605a.demo.aiml_soc_voice_control_light_blink_concurrent_siwg917" label="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917">
+    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917" />
+    <property key="core.partCompatibility" value=".*" />
+    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_siwg917/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605a/aiml_soc_voice_control_light_blink_concurrent_siwg917.s37" />
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="EXPERIMENTAL" />
+    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
+  </demo>
+  <demo name="brd2605a.demo.aiml_soc_voice_control_light_blink_sequential_siwg917" label="AI/ML - SoC Voice Control Light Blink Sequential SiWG917">
+    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential SiWG917" />
+    <property key="core.partCompatibility" value=".*" />
+    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_siwg917/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605a/aiml_soc_voice_control_light_blink_sequential_siwg917.s37" />
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="EXPERIMENTAL" />
+    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
+  </demo>
+  <demo name="brd2605a.demo.aiml_soc_voice_control_light_siwg917" label="AI/ML - SoC Voice control light SiWG917">
+    <property key="demos.blurb" value="AI/ML - SoC Voice control light SiWG917" />
+    <property key="core.partCompatibility" value=".*" />
+    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_siwg917/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605a/aiml_soc_voice_control_light_siwg917.s37" />
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. The detected keywords are used to control an LED on the board.</description>
+  </demo>
+  <demo name="brd2605a.demo.aiml_wifi_soc_led_switch_siwg917_freertos" label="AI/ML - SoC Wi-Fi UDP LED Switch FreeRTOS SiWG917">
+    <property key="demos.blurb" value="AI/ML - SoC Wi-Fi UDP LED Switch FreeRTOS SiWG917" />
+    <property key="core.partCompatibility" value=".*" />
+    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.readmeFiles" value="aiml_wifi_soc_led_switch_siwg917_freertos/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605a/aiml_wifi_soc_led_switch_siwg917_freertos.s37" />
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="EXPERIMENTAL" />
+    <description>This application runs on SiWx917 under FreeRTOS as a Wi-Fi station. It joins an access point, obtains an IPv4 address, listens on a UDP port, and turns the board blue LED on or off when incoming datagram payloads contain the substrings on or off.</description>
+  </demo>
+  <demo name="brd2605a.demo.aiml_wifi_soc_voice_control_light_siwg917_freertos" label="AI/ML - SoC Wi-Fi Voice Control Light FreeRTOS SiWG917">
+    <property key="demos.blurb" value="AI/ML - SoC Wi-Fi Voice Control Light FreeRTOS SiWG917" />
+    <property key="core.partCompatibility" value=".*" />
+    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.readmeFiles" value="aiml_wifi_soc_voice_control_light_siwg917_freertos/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605a/aiml_wifi_soc_voice_control_light_siwg917_freertos.s37" />
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="EXPERIMENTAL" />
+    <description>This application uses TensorFlow Lite for Microcontrollers on SiWx917 with Wi-Fi and FreeRTOS to detect the spoken words on and off from audio data recorded on the microphone. The detected keywords are used to control an LED on the board or could be paired with aiml_wifi_soc_led_switch_freertos to control the LED's on that board</description>
+  </demo>
+  <demo name="brd2605b.demo.aiml_soc_audio_classifier_siwg917" label="AI/ML - SoC Audio Classifier SiWG917">
+    <property key="demos.blurb" value="AI/ML - SoC Audio Classifier SiWG917" />
+    <property key="core.partCompatibility" value=".*" />
+    <property key="core.boardCompatibility" value="brd2605b" />
+    <property key="core.readmeFiles" value="aiml_soc_audio_classifier_siwg917/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605b/aiml_soc_audio_classifier_siwg917.s37" />
+    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone. The classification is used to control a LED on the board.</description>
+  </demo>
+  <demo name="brd2605b.demo.aiml_soc_blink_siwg917" label="AI/ML - SoC Blink SiWG917">
+    <property key="demos.blurb" value="AI/ML - SoC Blink SiWG917" />
+    <property key="core.partCompatibility" value=".*" />
+    <property key="core.boardCompatibility" value="brd2605b" />
+    <property key="core.readmeFiles" value="aiml_soc_blink_siwg917/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605b/aiml_soc_blink_siwg917.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
+  </demo>
+  <demo name="brd2605b.demo.aiml_soc_magic_wand_siwg917" label="AI/ML - SoC Magic Wand SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Magic Wand SiWG917" />
     <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.boardCompatibility" value="brd2605b" />
     <property key="core.readmeFiles" value="aiml_soc_magic_wand_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/llvm/aiml_soc_magic_wand_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605b/aiml_soc_magic_wand_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to recognize various hand gestures with an accelerometer. The detected gestures are printed to the serial port.</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_soc_model_profiler_siwg917_gcc" label="AI/ML - SoC Model Profiler SiWG917">
+  <demo name="brd2605b.demo.aiml_soc_model_profiler_siwg917" label="AI/ML - SoC Model Profiler SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
     <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.boardCompatibility" value="brd2605b" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/gcc/aiml_soc_model_profiler_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605b/aiml_soc_model_profiler_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_soc_model_profiler_siwg917_llvm" label="AI/ML - SoC Model Profiler SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/llvm/aiml_soc_model_profiler_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
-  </demo>
-  <demo name="brd2605a.demo.aiml_soc_voice_control_light_blink_concurrent_siwg917_gcc" label="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917">
+  <demo name="brd2605b.demo.aiml_soc_voice_control_light_blink_concurrent_siwg917" label="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917" />
     <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.boardCompatibility" value="brd2605b" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/gcc/aiml_soc_voice_control_light_blink_concurrent_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605b/aiml_soc_voice_control_light_blink_concurrent_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_soc_voice_control_light_blink_concurrent_siwg917_llvm" label="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/llvm/aiml_soc_voice_control_light_blink_concurrent_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
-  </demo>
-  <demo name="brd2605a.demo.aiml_soc_voice_control_light_blink_sequential_siwg917_gcc" label="AI/ML - SoC Voice Control Light Blink Sequential SiWG917">
+  <demo name="brd2605b.demo.aiml_soc_voice_control_light_blink_sequential_siwg917" label="AI/ML - SoC Voice Control Light Blink Sequential SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential SiWG917" />
     <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.boardCompatibility" value="brd2605b" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/gcc/aiml_soc_voice_control_light_blink_sequential_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605b/aiml_soc_voice_control_light_blink_sequential_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_soc_voice_control_light_blink_sequential_siwg917_llvm" label="AI/ML - SoC Voice Control Light Blink Sequential SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/llvm/aiml_soc_voice_control_light_blink_sequential_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
-  </demo>
-  <demo name="brd2605a.demo.aiml_soc_voice_control_light_siwg917_gcc" label="AI/ML - SoC Voice control light SiWG917">
+  <demo name="brd2605b.demo.aiml_soc_voice_control_light_siwg917" label="AI/ML - SoC Voice control light SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Voice control light SiWG917" />
     <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.boardCompatibility" value="brd2605b" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/gcc/aiml_soc_voice_control_light_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605b/aiml_soc_voice_control_light_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. The detected keywords are used to control an LED on the board.</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_soc_voice_control_light_siwg917_llvm" label="AI/ML - SoC Voice control light SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Voice control light SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/llvm/aiml_soc_voice_control_light_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. The detected keywords are used to control an LED on the board.</description>
-  </demo>
-  <demo name="brd2605a.demo.aiml_wifi_soc_led_switch_siwg917_freertos_gcc" label="AI/ML - SoC Wi-Fi UDP LED Switch FreeRTOS SiWG917">
+  <demo name="brd2605b.demo.aiml_wifi_soc_led_switch_siwg917_freertos" label="AI/ML - SoC Wi-Fi UDP LED Switch FreeRTOS SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Wi-Fi UDP LED Switch FreeRTOS SiWG917" />
     <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.boardCompatibility" value="brd2605b" />
     <property key="core.readmeFiles" value="aiml_wifi_soc_led_switch_siwg917_freertos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/gcc/aiml_wifi_soc_led_switch_siwg917_freertos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605b/aiml_wifi_soc_led_switch_siwg917_freertos.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application runs on SiWx917 under FreeRTOS as a Wi-Fi station. It joins an access point, obtains an IPv4 address, listens on a UDP port, and turns the board blue LED on or off when incoming datagram payloads contain the substrings on or off.</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_wifi_soc_led_switch_siwg917_freertos_llvm" label="AI/ML - SoC Wi-Fi UDP LED Switch FreeRTOS SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Wi-Fi UDP LED Switch FreeRTOS SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
-    <property key="core.readmeFiles" value="aiml_wifi_soc_led_switch_siwg917_freertos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/llvm/aiml_wifi_soc_led_switch_siwg917_freertos.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application runs on SiWx917 under FreeRTOS as a Wi-Fi station. It joins an access point, obtains an IPv4 address, listens on a UDP port, and turns the board blue LED on or off when incoming datagram payloads contain the substrings on or off.</description>
-  </demo>
-  <demo name="brd2605a.demo.aiml_wifi_soc_voice_control_light_siwg917_freertos_gcc" label="AI/ML - SoC Wi-Fi Voice Control Light FreeRTOS SiWG917">
+  <demo name="brd2605b.demo.aiml_wifi_soc_voice_control_light_siwg917_freertos" label="AI/ML - SoC Wi-Fi Voice Control Light FreeRTOS SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Wi-Fi Voice Control Light FreeRTOS SiWG917" />
     <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
+    <property key="core.boardCompatibility" value="brd2605b" />
     <property key="core.readmeFiles" value="aiml_wifi_soc_voice_control_light_siwg917_freertos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/gcc/aiml_wifi_soc_voice_control_light_siwg917_freertos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2605b/aiml_wifi_soc_voice_control_light_siwg917_freertos.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application uses TensorFlow Lite for Microcontrollers on SiWx917 with Wi-Fi and FreeRTOS to detect the spoken words on and off from audio data recorded on the microphone. The detected keywords are used to control an LED on the board or could be paired with aiml_wifi_soc_led_switch_freertos to control the LED's on that board</description>
   </demo>
-  <demo name="brd2605a.demo.aiml_wifi_soc_voice_control_light_siwg917_freertos_llvm" label="AI/ML - SoC Wi-Fi Voice Control Light FreeRTOS SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Wi-Fi Voice Control Light FreeRTOS SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd2605a" />
-    <property key="core.readmeFiles" value="aiml_wifi_soc_voice_control_light_siwg917_freertos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2605a/llvm/aiml_wifi_soc_voice_control_light_siwg917_freertos.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers on SiWx917 with Wi-Fi and FreeRTOS to detect the spoken words on and off from audio data recorded on the microphone. The detected keywords are used to control an LED on the board or could be paired with aiml_wifi_soc_led_switch_freertos to control the LED's on that board</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_anomaly_detection_efr32_gcc" label="AI/ML - SoC Anomaly Detection EFR32">
+  <demo name="brd2608a.demo.aiml_soc_anomaly_detection_efr32" label="AI/ML - SoC Anomaly Detection EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Anomaly Detection EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
     <property key="core.boardCompatibility" value="brd2608a" />
     <property key="core.readmeFiles" value="aiml_soc_anomaly_detection_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_anomaly_detection_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_anomaly_detection_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to detect anomalies in imu series data. The detected class (anomaly/no anomaly) is printed to the serial port.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_anomaly_detection_efr32_iar" label="AI/ML - SoC Anomaly Detection EFR32">
+  <demo name="brd2608a.demo.aiml_soc_audio_classifier_efr32_micriumos" label="AI/ML - SoC Audio Classifier MicriumOS EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Audio Classifier MicriumOS EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_audio_classifier_efr32_micriumos/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_audio_classifier_efr32_micriumos.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_soc_blink_efr32" label="AI/ML - SoC Blink EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_blink_efr32.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_soc_data_capture_efr32" label="AI/ML - SoC Data Capture EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Data Capture EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_data_capture_efr32/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_data_capture_efr32.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application captures IMU sensor data and logs it to CSV format for machine learning dataset generation.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_soc_image_classifier_efr32" label="AI/ML - SoC Image Classifier EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Image Classifier EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_image_classifier_efr32/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_image_classifier_efr32.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application uses TensorFlow Lite for Microcontrollers to classify Hand gestures captured on camera images in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_soc_magic_wand_efr32" label="AI/ML - SoC Magic Wand EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Magic Wand EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_magic_wand_efr32/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_magic_wand_efr32.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application demonstrates a model trained to recognize various hand gestures with an accelerometer. The detected gestures are printed to the serial port.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_soc_model_profiler_efr32" label="AI/ML - SoC Model Profiler EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_model_profiler_efr32.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_soc_profiler_firmware_efr32" label="AI/ML - SoC Profiler Firmware EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Profiler Firmware EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_profiler_firmware_efr32/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_profiler_firmware_efr32.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component to profile machine learning models on EFR Series 2 boards.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos" label="AI/ML - SoC Voice Control Light Blink Concurrent EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="EXPERIMENTAL" />
+    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos" label="AI/ML - SoC Voice Control Light Blink Sequential EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="EXPERIMENTAL" />
+    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_soc_voice_control_light_efr32_micriumos" label="AI/ML - SoC Voice Control Light EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_efr32_micriumos/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_soc_voice_control_light_efr32_micriumos.s37" />
+    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. The detected keywords are used to control an LED on the board.</description>
+  </demo>
+  <demo name="brd2608a.demo.aiml_zigbee_soc_z3_switch_with_voice_efr32" label="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32">
+    <property key="demos.blurb" value="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32" />
+    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
+    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.readmeFiles" value="aiml_zigbee_soc_z3_switch_with_voice_efr32/readme.md" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608a/aiml_zigbee_soc_z3_switch_with_voice_efr32.s37" />
+    <property key="filters" value="Wireless\ Technology|Zigbee Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
+    <property key="core.quality" value="PRODUCTION" />
+    <description>Zigbee 3.0 Switch with Voice sample.</description>
+  </demo>
+  <demo name="brd2608b.demo.aiml_soc_anomaly_detection_efr32" label="AI/ML - SoC Anomaly Detection EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Anomaly Detection EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_anomaly_detection_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_anomaly_detection_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_anomaly_detection_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to detect anomalies in imu series data. The detected class (anomaly/no anomaly) is printed to the serial port.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_anomaly_detection_efr32_llvm" label="AI/ML - SoC Anomaly Detection EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Anomaly Detection EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_anomaly_detection_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_anomaly_detection_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to detect anomalies in imu series data. The detected class (anomaly/no anomaly) is printed to the serial port.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_audio_classifier_efr32_micriumos_gcc" label="AI/ML - SoC Audio Classifier MicriumOS EFR32">
+  <demo name="brd2608b.demo.aiml_soc_audio_classifier_efr32_micriumos" label="AI/ML - SoC Audio Classifier MicriumOS EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Audio Classifier MicriumOS EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_audio_classifier_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_audio_classifier_efr32_micriumos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_audio_classifier_efr32_micriumos.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_audio_classifier_efr32_micriumos_iar" label="AI/ML - SoC Audio Classifier MicriumOS EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Audio Classifier MicriumOS EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_audio_classifier_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_audio_classifier_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_audio_classifier_efr32_micriumos_llvm" label="AI/ML - SoC Audio Classifier MicriumOS EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Audio Classifier MicriumOS EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_audio_classifier_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_audio_classifier_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_blink_efr32_gcc" label="AI/ML - SoC Blink EFR32">
+  <demo name="brd2608b.demo.aiml_soc_blink_efr32" label="AI/ML - SoC Blink EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_blink_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_blink_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_blink_efr32_iar" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_blink_efr32_llvm" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_data_capture_efr32_gcc" label="AI/ML - SoC Data Capture EFR32">
+  <demo name="brd2608b.demo.aiml_soc_data_capture_efr32" label="AI/ML - SoC Data Capture EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Data Capture EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_data_capture_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_data_capture_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_data_capture_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application captures IMU sensor data and logs it to CSV format for machine learning dataset generation.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_data_capture_efr32_iar" label="AI/ML - SoC Data Capture EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Data Capture EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_data_capture_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_data_capture_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application captures IMU sensor data and logs it to CSV format for machine learning dataset generation.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_data_capture_efr32_llvm" label="AI/ML - SoC Data Capture EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Data Capture EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_data_capture_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_data_capture_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application captures IMU sensor data and logs it to CSV format for machine learning dataset generation.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_image_classifier_efr32_gcc" label="AI/ML - SoC Image Classifier EFR32">
+  <demo name="brd2608b.demo.aiml_soc_image_classifier_efr32" label="AI/ML - SoC Image Classifier EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Image Classifier EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_image_classifier_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_image_classifier_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_image_classifier_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to classify Hand gestures captured on camera images in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_image_classifier_efr32_iar" label="AI/ML - SoC Image Classifier EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Image Classifier EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_image_classifier_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_image_classifier_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify Hand gestures captured on camera images in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_image_classifier_efr32_llvm" label="AI/ML - SoC Image Classifier EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Image Classifier EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_image_classifier_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_image_classifier_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify Hand gestures captured on camera images in a MicriumOS kernel task. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_magic_wand_efr32_gcc" label="AI/ML - SoC Magic Wand EFR32">
+  <demo name="brd2608b.demo.aiml_soc_magic_wand_efr32" label="AI/ML - SoC Magic Wand EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Magic Wand EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_magic_wand_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_magic_wand_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_magic_wand_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to recognize various hand gestures with an accelerometer. The detected gestures are printed to the serial port.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_magic_wand_efr32_iar" label="AI/ML - SoC Magic Wand EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Magic Wand EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_magic_wand_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_magic_wand_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to recognize various hand gestures with an accelerometer. The detected gestures are printed to the serial port.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_magic_wand_efr32_llvm" label="AI/ML - SoC Magic Wand EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Magic Wand EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_magic_wand_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_magic_wand_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to recognize various hand gestures with an accelerometer. The detected gestures are printed to the serial port.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_model_profiler_efr32_gcc" label="AI/ML - SoC Model Profiler EFR32">
+  <demo name="brd2608b.demo.aiml_soc_model_profiler_efr32" label="AI/ML - SoC Model Profiler EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_model_profiler_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_model_profiler_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_model_profiler_efr32_iar" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_model_profiler_efr32_llvm" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_profiler_firmware_efr32_gcc" label="AI/ML - SoC Profiler Firmware EFR32">
+  <demo name="brd2608b.demo.aiml_soc_profiler_firmware_efr32" label="AI/ML - SoC Profiler Firmware EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Profiler Firmware EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_profiler_firmware_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_profiler_firmware_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_profiler_firmware_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component to profile machine learning models on EFR Series 2 boards.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_profiler_firmware_efr32_iar" label="AI/ML - SoC Profiler Firmware EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Profiler Firmware EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_profiler_firmware_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_profiler_firmware_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component to profile machine learning models on EFR Series 2 boards.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_profiler_firmware_efr32_llvm" label="AI/ML - SoC Profiler Firmware EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Profiler Firmware EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_profiler_firmware_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_profiler_firmware_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers together with the ml_profiler component to profile machine learning models on EFR Series 2 boards.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos_gcc" label="AI/ML - SoC Voice Control Light Blink Concurrent EFR32">
+  <demo name="brd2608b.demo.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos" label="AI/ML - SoC Voice Control Light Blink Concurrent EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos_iar" label="AI/ML - SoC Voice Control Light Blink Concurrent EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos_llvm" label="AI/ML - SoC Voice Control Light Blink Concurrent EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_voice_control_light_blink_concurrent_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos_gcc" label="AI/ML - SoC Voice Control Light Blink Sequential EFR32">
+  <demo name="brd2608b.demo.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos" label="AI/ML - SoC Voice Control Light Blink Sequential EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos_iar" label="AI/ML - SoC Voice Control Light Blink Sequential EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_voice_control_light_blink_sequential_efr32_micriumos_llvm" label="AI/ML - SoC Voice Control Light Blink Sequential EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_voice_control_light_blink_sequential_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. When 'on' is detected, a sine blink model drives LED0 with PWM for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_voice_control_light_efr32_micriumos_gcc" label="AI/ML - SoC Voice Control Light EFR32">
+  <demo name="brd2608b.demo.aiml_soc_voice_control_light_efr32_micriumos" label="AI/ML - SoC Voice Control Light EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_soc_voice_control_light_efr32_micriumos.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_soc_voice_control_light_efr32_micriumos.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. The detected keywords are used to control an LED on the board.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_soc_voice_control_light_efr32_micriumos_iar" label="AI/ML - SoC Voice Control Light EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_soc_voice_control_light_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. The detected keywords are used to control an LED on the board.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_soc_voice_control_light_efr32_micriumos_llvm" label="AI/ML - SoC Voice Control Light EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_efr32_micriumos/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_soc_voice_control_light_efr32_micriumos.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words 'on' and 'off' from audio data recorded on the microphone in a MicriumOS kernel task. The detected keywords are used to control an LED on the board.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_zigbee_soc_z3_switch_with_voice_efr32_gcc" label="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32">
+  <demo name="brd2608b.demo.aiml_zigbee_soc_z3_switch_with_voice_efr32" label="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
+    <property key="core.boardCompatibility" value="brd2608b" />
     <property key="core.readmeFiles" value="aiml_zigbee_soc_z3_switch_with_voice_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/gcc/aiml_zigbee_soc_z3_switch_with_voice_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2608b/aiml_zigbee_soc_z3_switch_with_voice_efr32.s37" />
     <property key="filters" value="Wireless\ Technology|Zigbee Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>Zigbee 3.0 Switch with Voice sample.</description>
   </demo>
-  <demo name="brd2608a.demo.aiml_zigbee_soc_z3_switch_with_voice_efr32_iar" label="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_zigbee_soc_z3_switch_with_voice_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/iar/aiml_zigbee_soc_z3_switch_with_voice_efr32.s37" />
-    <property key="filters" value="Wireless\ Technology|Zigbee Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>Zigbee 3.0 Switch with Voice sample.</description>
-  </demo>
-  <demo name="brd2608a.demo.aiml_zigbee_soc_z3_switch_with_voice_efr32_llvm" label="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g26.*" />
-    <property key="core.boardCompatibility" value="brd2608a" />
-    <property key="core.readmeFiles" value="aiml_zigbee_soc_z3_switch_with_voice_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2608a/llvm/aiml_zigbee_soc_z3_switch_with_voice_efr32.s37" />
-    <property key="filters" value="Wireless\ Technology|Zigbee Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>Zigbee 3.0 Switch with Voice sample.</description>
-  </demo>
-  <demo name="brd2705a.demo.aiml_soc_blink_efr32_gcc" label="AI/ML - SoC Blink EFR32">
+  <demo name="brd2705a.demo.aiml_soc_blink_efr32" label="AI/ML - SoC Blink EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g28.*" />
     <property key="core.boardCompatibility" value="brd2705a" />
     <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2705a/gcc/aiml_soc_blink_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2705a/aiml_soc_blink_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
   </demo>
-  <demo name="brd2705a.demo.aiml_soc_blink_efr32_iar" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g28.*" />
-    <property key="core.boardCompatibility" value="brd2705a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2705a/iar/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2705a.demo.aiml_soc_blink_efr32_llvm" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g28.*" />
-    <property key="core.boardCompatibility" value="brd2705a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2705a/llvm/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd2705a.demo.aiml_soc_model_profiler_efr32_gcc" label="AI/ML - SoC Model Profiler EFR32">
+  <demo name="brd2705a.demo.aiml_soc_model_profiler_efr32" label="AI/ML - SoC Model Profiler EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g28.*" />
     <property key="core.boardCompatibility" value="brd2705a" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2705a/gcc/aiml_soc_model_profiler_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd2705a/aiml_soc_model_profiler_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
   </demo>
-  <demo name="brd2705a.demo.aiml_soc_model_profiler_efr32_iar" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g28.*" />
-    <property key="core.boardCompatibility" value="brd2705a" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2705a/iar/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd2705a.demo.aiml_soc_model_profiler_efr32_llvm" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g28.*" />
-    <property key="core.boardCompatibility" value="brd2705a" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd2705a/llvm/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4186c.demo.aiml_soc_blink_efr32_gcc" label="AI/ML - SoC Blink EFR32">
+  <demo name="brd4186c.demo.aiml_soc_blink_efr32" label="AI/ML - SoC Blink EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
     <property key="core.boardCompatibility" value="brd4186c" />
     <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4186c/gcc/aiml_soc_blink_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4186c/aiml_soc_blink_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
   </demo>
-  <demo name="brd4186c.demo.aiml_soc_blink_efr32_iar" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd4186c" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4186c/iar/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd4186c.demo.aiml_soc_blink_efr32_llvm" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd4186c" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4186c/llvm/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd4186c.demo.aiml_soc_model_profiler_efr32_gcc" label="AI/ML - SoC Model Profiler EFR32">
+  <demo name="brd4186c.demo.aiml_soc_model_profiler_efr32" label="AI/ML - SoC Model Profiler EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
     <property key="core.boardCompatibility" value="brd4186c" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4186c/gcc/aiml_soc_model_profiler_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4186c/aiml_soc_model_profiler_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
   </demo>
-  <demo name="brd4186c.demo.aiml_soc_model_profiler_efr32_iar" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd4186c" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4186c/iar/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4186c.demo.aiml_soc_model_profiler_efr32_llvm" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd4186c" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4186c/llvm/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4187c.demo.aiml_soc_blink_efr32_gcc" label="AI/ML - SoC Blink EFR32">
+  <demo name="brd4187c.demo.aiml_soc_blink_efr32" label="AI/ML - SoC Blink EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
     <property key="core.boardCompatibility" value="brd4187c" />
     <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4187c/gcc/aiml_soc_blink_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4187c/aiml_soc_blink_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
   </demo>
-  <demo name="brd4187c.demo.aiml_soc_blink_efr32_iar" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd4187c" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4187c/iar/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd4187c.demo.aiml_soc_blink_efr32_llvm" label="AI/ML - SoC Blink EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Blink EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd4187c" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4187c/llvm/aiml_soc_blink_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd4187c.demo.aiml_soc_model_profiler_efr32_gcc" label="AI/ML - SoC Model Profiler EFR32">
+  <demo name="brd4187c.demo.aiml_soc_model_profiler_efr32" label="AI/ML - SoC Model Profiler EFR32">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
     <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
     <property key="core.boardCompatibility" value="brd4187c" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4187c/gcc/aiml_soc_model_profiler_efr32.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4187c/aiml_soc_model_profiler_efr32.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
   </demo>
-  <demo name="brd4187c.demo.aiml_soc_model_profiler_efr32_iar" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd4187c" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4187c/iar/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4187c.demo.aiml_soc_model_profiler_efr32_llvm" label="AI/ML - SoC Model Profiler EFR32">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler EFR32" />
-    <property key="core.partCompatibility" value=".*ef.32.g2[468].*" />
-    <property key="core.boardCompatibility" value="brd4187c" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_efr32/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4187c/llvm/aiml_soc_model_profiler_efr32.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array which is generated from a Tensorflow tflite model file. Profiling is performed by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4338a.demo.aiml_soc_audio_classifier_siwg917_gcc" label="AI/ML - SoC Audio Classifier SiWG917">
+  <demo name="brd4338a.demo.aiml_soc_audio_classifier_siwg917" label="AI/ML - SoC Audio Classifier SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Audio Classifier SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4338a" />
     <property key="core.readmeFiles" value="aiml_soc_audio_classifier_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/gcc/aiml_soc_audio_classifier_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4338a/aiml_soc_audio_classifier_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone. The classification is used to control a LED on the board.</description>
   </demo>
-  <demo name="brd4338a.demo.aiml_soc_audio_classifier_siwg917_llvm" label="AI/ML - SoC Audio Classifier SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Audio Classifier SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4338a" />
-    <property key="core.readmeFiles" value="aiml_soc_audio_classifier_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/llvm/aiml_soc_audio_classifier_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to classify audio data recorded on the microphone. The classification is used to control a LED on the board.</description>
-  </demo>
-  <demo name="brd4338a.demo.aiml_soc_blink_siwg917_gcc" label="AI/ML - SoC Blink SiWG917">
+  <demo name="brd4338a.demo.aiml_soc_blink_siwg917" label="AI/ML - SoC Blink SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Blink SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4338a" />
     <property key="core.readmeFiles" value="aiml_soc_blink_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/gcc/aiml_soc_blink_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4338a/aiml_soc_blink_siwg917.s37" />
     <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
   </demo>
-  <demo name="brd4338a.demo.aiml_soc_blink_siwg917_llvm" label="AI/ML - SoC Blink SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Blink SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4338a" />
-    <property key="core.readmeFiles" value="aiml_soc_blink_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/llvm/aiml_soc_blink_siwg917.s37" />
-    <property key="filters" value="Device Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application demonstrates a model trained to replicate a sine function. The model is continuously fed with values ranging from 0 to 2pi, and the output of the model is used to control the intensity of an LED.</description>
-  </demo>
-  <demo name="brd4338a.demo.aiml_soc_model_profiler_siwg917_gcc" label="AI/ML - SoC Model Profiler SiWG917">
+  <demo name="brd4338a.demo.aiml_soc_model_profiler_siwg917" label="AI/ML - SoC Model Profiler SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4338a" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/gcc/aiml_soc_model_profiler_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4338a/aiml_soc_model_profiler_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
   </demo>
-  <demo name="brd4338a.demo.aiml_soc_model_profiler_siwg917_llvm" label="AI/ML - SoC Model Profiler SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4338a" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/llvm/aiml_soc_model_profiler_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4338a.demo.aiml_soc_voice_control_light_blink_concurrent_siwg917_gcc" label="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917">
+  <demo name="brd4338a.demo.aiml_soc_voice_control_light_blink_concurrent_siwg917" label="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4338a" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/gcc/aiml_soc_voice_control_light_blink_concurrent_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4338a/aiml_soc_voice_control_light_blink_concurrent_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
   </demo>
-  <demo name="brd4338a.demo.aiml_soc_voice_control_light_blink_concurrent_siwg917_llvm" label="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Concurrent SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4338a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_concurrent_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/llvm/aiml_soc_voice_control_light_blink_concurrent_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The concurrent variant keeps both the keyword spotting and blink models initialized in RAM.</description>
-  </demo>
-  <demo name="brd4338a.demo.aiml_soc_voice_control_light_blink_sequential_siwg917_gcc" label="AI/ML - SoC Voice Control Light Blink Sequential SiWG917">
+  <demo name="brd4338a.demo.aiml_soc_voice_control_light_blink_sequential_siwg917" label="AI/ML - SoC Voice Control Light Blink Sequential SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4338a" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/gcc/aiml_soc_voice_control_light_blink_sequential_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4338a/aiml_soc_voice_control_light_blink_sequential_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="EXPERIMENTAL" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
   </demo>
-  <demo name="brd4338a.demo.aiml_soc_voice_control_light_blink_sequential_siwg917_llvm" label="AI/ML - SoC Voice Control Light Blink Sequential SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Voice Control Light Blink Sequential SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4338a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_blink_sequential_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/llvm/aiml_soc_voice_control_light_blink_sequential_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="EXPERIMENTAL" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. When on is detected, a sine blink model drives the indicator LED for three full cycles, then leaves the LED on. The sequential variant keeps only one model initialized in RAM at a time.</description>
-  </demo>
-  <demo name="brd4338a.demo.aiml_soc_voice_control_light_siwg917_gcc" label="AI/ML - SoC Voice control light SiWG917">
+  <demo name="brd4338a.demo.aiml_soc_voice_control_light_siwg917" label="AI/ML - SoC Voice control light SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Voice control light SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4338a" />
     <property key="core.readmeFiles" value="aiml_soc_voice_control_light_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/gcc/aiml_soc_voice_control_light_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4338a/aiml_soc_voice_control_light_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. The detected keywords are used to control an LED on the board.</description>
   </demo>
-  <demo name="brd4338a.demo.aiml_soc_voice_control_light_siwg917_llvm" label="AI/ML - SoC Voice control light SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Voice control light SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4338a" />
-    <property key="core.readmeFiles" value="aiml_soc_voice_control_light_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4338a/llvm/aiml_soc_voice_control_light_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application uses TensorFlow Lite for Microcontrollers to detect the spoken words on and off from audio data recorded on the microphone. The detected keywords are used to control an LED on the board.</description>
-  </demo>
-  <demo name="brd4339b.demo.aiml_soc_model_profiler_siwg917_gcc" label="AI/ML - SoC Model Profiler SiWG917">
+  <demo name="brd4339b.demo.aiml_soc_model_profiler_siwg917" label="AI/ML - SoC Model Profiler SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4339b" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4339b/gcc/aiml_soc_model_profiler_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4339b/aiml_soc_model_profiler_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
   </demo>
-  <demo name="brd4339b.demo.aiml_soc_model_profiler_siwg917_llvm" label="AI/ML - SoC Model Profiler SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4339b" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4339b/llvm/aiml_soc_model_profiler_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4340b.demo.aiml_soc_model_profiler_siwg917_gcc" label="AI/ML - SoC Model Profiler SiWG917">
+  <demo name="brd4340b.demo.aiml_soc_model_profiler_siwg917" label="AI/ML - SoC Model Profiler SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4340b" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4340b/gcc/aiml_soc_model_profiler_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4340b/aiml_soc_model_profiler_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
   </demo>
-  <demo name="brd4340b.demo.aiml_soc_model_profiler_siwg917_llvm" label="AI/ML - SoC Model Profiler SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4340b" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4340b/llvm/aiml_soc_model_profiler_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4342a.demo.aiml_soc_model_profiler_siwg917_gcc" label="AI/ML - SoC Model Profiler SiWG917">
+  <demo name="brd4342a.demo.aiml_soc_model_profiler_siwg917" label="AI/ML - SoC Model Profiler SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4342a" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4342a/gcc/aiml_soc_model_profiler_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4342a/aiml_soc_model_profiler_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
   </demo>
-  <demo name="brd4342a.demo.aiml_soc_model_profiler_siwg917_llvm" label="AI/ML - SoC Model Profiler SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4342a" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4342a/llvm/aiml_soc_model_profiler_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4343a.demo.aiml_soc_model_profiler_siwg917_gcc" label="AI/ML - SoC Model Profiler SiWG917">
+  <demo name="brd4343a.demo.aiml_soc_model_profiler_siwg917" label="AI/ML - SoC Model Profiler SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4343a" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4343a/gcc/aiml_soc_model_profiler_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4343a/aiml_soc_model_profiler_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
   </demo>
-  <demo name="brd4343a.demo.aiml_soc_model_profiler_siwg917_llvm" label="AI/ML - SoC Model Profiler SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4343a" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4343a/llvm/aiml_soc_model_profiler_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4343b.demo.aiml_soc_model_profiler_siwg917_gcc" label="AI/ML - SoC Model Profiler SiWG917">
+  <demo name="brd4343b.demo.aiml_soc_model_profiler_siwg917" label="AI/ML - SoC Model Profiler SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4343b" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4343b/gcc/aiml_soc_model_profiler_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4343b/aiml_soc_model_profiler_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
   </demo>
-  <demo name="brd4343b.demo.aiml_soc_model_profiler_siwg917_llvm" label="AI/ML - SoC Model Profiler SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4343b" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4343b/llvm/aiml_soc_model_profiler_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4343q.demo.aiml_soc_model_profiler_siwg917_gcc" label="AI/ML - SoC Model Profiler SiWG917">
+  <demo name="brd4343q.demo.aiml_soc_model_profiler_siwg917" label="AI/ML - SoC Model Profiler SiWG917">
     <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
     <property key="core.partCompatibility" value=".*" />
     <property key="core.boardCompatibility" value="brd4343q" />
     <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4343q/gcc/aiml_soc_model_profiler_siwg917.s37" />
-    <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
-    <property key="core.quality" value="PRODUCTION" />
-    <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>
-  </demo>
-  <demo name="brd4343q.demo.aiml_soc_model_profiler_siwg917_llvm" label="AI/ML - SoC Model Profiler SiWG917">
-    <property key="demos.blurb" value="AI/ML - SoC Model Profiler SiWG917" />
-    <property key="core.partCompatibility" value=".*" />
-    <property key="core.boardCompatibility" value="brd4343q" />
-    <property key="core.readmeFiles" value="aiml_soc_model_profiler_siwg917/readme.md" />
-    <property key="demos.imageFile" value="asset://extension.aiml_3.0.1/aiml_app/brd4343q/llvm/aiml_soc_model_profiler_siwg917.s37" />
+    <property key="demos.imageFile" value="asset://extension.aiml_3.0.2/aiml_app/brd4343q/aiml_soc_model_profiler_siwg917.s37" />
     <property key="filters" value="Device\ Type|SoC MCU|32-bit\ MCU Project\ Difficulty|Advanced Capability|Machine\ Learning" />
     <property key="core.quality" value="PRODUCTION" />
     <description>This application profiles a ML model. The ML model is loaded as a byte array tflite model file. Profiling is performed which is generated from a Tensorflow by running one inference with the model.</description>

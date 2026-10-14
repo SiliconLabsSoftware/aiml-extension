@@ -34,12 +34,10 @@ results. This behavior can be disabled in the application configuration file.
 
 ## Model
 
-The application uses `keyword_spotting_on_off_v3.tflite`
-as the default model, depending on whether the application is generated for a
-development board featuring an MVP hardware accelerator or not. When an MVP
-hardware accelerator is featured on the board, inference will run at a faster
-speed such that a larger model can be chosen, yielding more accurate keyword
-detections.
+The application uses `keyword_spotting_on_off_v3.tflite` as the default model.
+On development boards featuring an MVP hardware accelerator, inference runs
+faster, allowing larger models to be used for improved keyword-detection
+accuracy.
 
 Details about the model architectures and scripts for generating the models can
 be found in the [Silicon Labs machine learning applications](https://github.com/SiliconLabs/machine_learning_applications/tree/main/) repository, under
@@ -69,13 +67,13 @@ from input audio data which can be passed to TensorFlow when doing inference.
 See the MLTK documentation for more information about the model parameters:
 <https://siliconlabs.github.io/mltk/docs/model_parameters.html>
 
-# Switching between I2S0 and ULP I2S on brd2605a / brd4338a
+# Switching between I2S0 and ULP I2S on brd2605a / brd2605b / brd4338a
 
 The microphone driver (`sl_ml_mic_i2s_si91x.c`) supports two I2S peripherals on the SiWG917. Only **one** is active per build:
 
 | Mode | Peripheral | Typical use case |
 |------|-----------|-----------------|
-| **I2S0** (full-power) | `SL_I2S0_PERIPHERAL` | Onboard digital microphone (brd2605a) or external mic on HP I2S GPIOs |
+| **I2S0** (full-power) | `SL_I2S0_PERIPHERAL` | Onboard digital microphone (brd2605a / brd2605b) or external mic on HP I2S GPIOs |
 | **ULP I2S** (ultra-low-power) | `SL_ULP_I2S_PERIPHERAL` | External INMP441 (or similar) mic on ULP GPIOs for low-power audio |
 
 ### How to switch
@@ -97,11 +95,11 @@ No other file needs to change. The conditional include is handled in `sl_i2s_ins
 
 Both sets of pin defines are always present in the `.slcp` `configuration:` section. Only the set matching the active instance is used at build time.
 
-**I2S0 pins (brd2605a / brd4338a):**
+**I2S0 pins (brd2605a / brd2605b / brd4338a):**
 
-Port IDs `RTE_I2S0_SCLK_PORT_ID`, `RTE_I2S0_WSCLK_PORT_ID`, `RTE_I2S0_DIN0_PORT_ID` are set to `2` for the standard brd2605a / brd4338a schematic. No manual pin configuration is needed for I2S0.
+Port IDs `RTE_I2S0_SCLK_PORT_ID`, `RTE_I2S0_WSCLK_PORT_ID`, `RTE_I2S0_DIN0_PORT_ID` are set to `2` for the standard brd2605a / brd2605b / brd4338a schematic. No manual pin configuration is needed for I2S0.
 
-**ULP I2S pins (brd2605a / brd4338a):**
+**ULP I2S pins (brd2605a / brd2605b / brd4338a):**
 
 1. In the `.slcp` file, set the I2S instance to **`ulp_i2s`**:
    ```yaml
@@ -124,7 +122,7 @@ Port IDs `RTE_I2S0_SCLK_PORT_ID`, `RTE_I2S0_WSCLK_PORT_ID`, `RTE_I2S0_DIN0_PORT_
 
 The `.slcp` pin values (`SL_ULP_I2S_*`) only reach the SL API layer. The CMSIS I2S driver (`rsi_i2s.c`) reads pin assignments from `RTE_Device_917.h`, which in turn reads from `pin_config.h`. Without the entries below, the CMSIS driver falls back to wrong default pins and the I2S DMA receive will never complete.
 
-After generating or regenerating the project, open `target/brd2605a/config/pin_config.h` and add the following inside the `// $[ULP_I2S]` section:
+After generating or regenerating the project, open `target/brd2605a/config/pin_config.h` (or `target/brd2605b/config/pin_config.h` for BRD2605B) and add the following inside the `// $[ULP_I2S]` section:
 
 ```c
 // $[ULP_I2S]
@@ -158,5 +156,4 @@ The example is based on TensorFlow's example called **[micro speech](https://git
 and audio is processed using the **[audio feature generator](https://docs.silabs.com/machine-learning/latest/aiml-reference-guide/ml-audio-feature-generation)**.
 
 - [Machine Learning (AI/ML) Documentation](https://docs.silabs.com/machine-learning/latest/aiml-developing-with)
-- [MLTK Documentation](https://siliconlabs.github.io/mltk)
 - [TensorFlow Lite Micro](https://www.tensorflow.org/lite/microcontrollers)

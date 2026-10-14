@@ -1,8 +1,8 @@
 # Properties file for Simplicity Studio metadata
-prop.subLabel=Silicon\\ Labs\\ AI/ML\\ SDK\\ 3.0.1
+prop.subLabel=Silicon\\ Labs\\ AI/ML\\ SDK\\ 3.0.2
+prop.file.templatesFile=examples/aiml_templates.xml
+prop.file.demosFile=examples/aiml_demos.xml
 prop.file.docsFile=aiml_docs.xml
 prop.file.adapterPacks=tool/compiler
 prop.boardCompatibility=.*brd2601.* .*brd2605.* .*brd2608.* .*brd4186.* .*brd4187.*
 prop.partCompatibility=.*si917.* .*efr32.g2[468].*
-prop.file.templatesFile=examples/aiml_templates.xml
-prop.file.demosFile=examples/aiml_demos.xml

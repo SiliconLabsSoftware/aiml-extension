@@ -46,34 +46,21 @@ Details about the model architectures and scripts for generating the models can
 be found in the [Silicon Labs machine learning applications](https://github.com/SiliconLabs/machine_learning_applications/tree/main/) repository, under
 `application/voice/keyword_spotting/model`.
 
-The application is designed to work with an audio classification model created
-using the Silicon Labs Machine Learning Toolkit
-([MLTK](https://siliconlabs.github.io/mltk)). Use the MLTK to train a new audio
-classifier model and replace the model inside this example with the new audio
-classification model. To replace the audio classification model with a new model
-created using the MLTK simply replace the .tflite file in the config/tflite folder
-of this project with your new. tflite file. After a new .tflite file is added
-to the project Simplicity Studio will automatically use the [flatbuffer converter tool](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/flatbuffer-conversion)
-to convert the .tflite file into a c file which is added to the project.
+Silicon Labs AI/ML projects use quantized `.tflite` models with TensorFlow Lite
+for Microcontrollers. Integer quantization is recommended for deployment on
+Silicon Labs devices. See [Developing a Machine Learning Model](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/developing-a-model)
+for model development and conversion guidance.
 
-In order for the audio classification to work correctly we need to use the same
-audio feature generator configuration parameters for inference as is used when
-training the model. When using the MLTK to train an audio classification model
-the model parameters will be embedded in the metadata section of the .tflite
-file. When generating a project this metadata is extracted by tools in the Simplicity
-SDK and placed in the file called sl_tflite_micro_model_parameters.h inside the
-autogen folder of the example.
-
-This example will automatically use the parameters from the .tflite file in
-order to configure the audio feature generator to correctly extract features
-from input audio data which can be passed to TensorFlow when doing inference.
-See the MLTK documentation for more information about the model parameters:
-<https://siliconlabs.github.io/mltk/docs/model_parameters.html>
+The [Audio Feature Generator](https://docs.silabs.com/machine-learning/latest/aiml-developers-guide/feature-generators)
+converts microphone samples into the input features expected by the model. Its
+frontend parameters must match those used during model training. The compiler
+configuration for each model enables model-parameter header generation so that
+model-specific settings can be generated with the project and used by the audio
+frontend.
 
 ## References
 
 The example is based on TensorFlow's example called **[micro speech](https://github.com/tensorflow/tflite-micro/tree/main/tensorflow/lite/micro/examples/micro_speech)** and audio is processed using the **[audio feature generator](https://docs.silabs.com/machine-learning/latest/aiml-reference-guide/ml-audio-feature-generation)**.
 
 - [Machine Learning (AI/ML) Documentation](https://docs.silabs.com/machine-learning/latest/aiml-developing-with)
-- [MLTK Documentation](https://siliconlabs.github.io/mltk)
 - [TensorFlow Lite Micro](https://www.tensorflow.org/lite/microcontrollers)

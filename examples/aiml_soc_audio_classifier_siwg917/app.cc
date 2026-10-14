@@ -19,7 +19,6 @@
 
 #include "audio_classifier.h"
 
-#include "ml/platform/ml_clock_helper.h"
 #include "sl_sleeptimer.h"
 #include "sl_ml_mic_i2s_si91x.h"
 
@@ -33,13 +32,17 @@ extern "C" {
 
 #include "mic_helper.hpp"
 
+/* FreeRTOS sl_main defaults this to false, which exits main before app_process_action runs. */
+extern "C" bool sl_main_start_task_should_continue(void)
+{
+  return true;
+}
+
 /*******************************************************************************
  * Initialize application.
  *
  ******************************************************************************/
 extern void app_init(void) {
-    ml_configure_clocks_to_max_rate();
-
     // Initialize the LEDs
     led_init();
     // Enable the microphone

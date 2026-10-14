@@ -53,6 +53,7 @@ The following default pin mappings are used by:
 
 - **BRD2601**
 - **BRD2608A**
+- **BRD2608B**
 
 | ArduCAM Pin | Board Expansion Header Pin |
 | ----------- | -------------------------- |
@@ -107,7 +108,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-Live preview uses defaults `96x96x2` camera resolution and `84x84` target shape (matching the model input region). 
+Live preview uses defaults `96x96x2` camera resolution and `84x84` target shape (matching the model input region).
 
 See `tool\image-visualization\readme.md` in your SDK installation for all command-line options, serial port settings, and notes on aligning the hand gesture with the on-screen target rectangle.
 

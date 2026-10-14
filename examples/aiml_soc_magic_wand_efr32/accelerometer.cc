@@ -52,14 +52,14 @@ typedef struct imu_data {
   int16_t z;
 } imu_data_t;
 
-// IMU data buffer
-static imu_data_t buffer[IMU_BUFFER_SIZE];
+// IMU data buffer (volatile: written in ISR, read in main — required under GCC LTO)
+static volatile imu_data_t buffer[IMU_BUFFER_SIZE];
 
 // Current head pointer of the buffer
-static int head_ptr = 0;
+static volatile int head_ptr = 0;
 
 // Wait for buffer to be filled first time
-static bool init_done = false;
+static volatile bool init_done = false;
 
 // Called when the IMU has data available using gpio interrupt.
 static void on_data_available(uint8_t int_id, void *ctx)
@@ -132,11 +132,9 @@ sl_status_t accelerometer_read(acc_data_t* dst, int n)
     if (index < 0 ) {
       index += IMU_BUFFER_SIZE;
     }
-    imu_data_t src = buffer[index];
-
-    dst[i].x = src.x;
-    dst[i].y = src.y;
-    dst[i].z = src.z;
+    dst[i].x = buffer[index].x;
+    dst[i].y = buffer[index].y;
+    dst[i].z = buffer[index].z;
   }
   CORE_EXIT_CRITICAL();
   return SL_STATUS_OK;

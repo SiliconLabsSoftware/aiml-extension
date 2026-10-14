@@ -23,6 +23,12 @@
 #include "sl_sleeptimer.h"
 #include "timestamp.h"
 
+/* FreeRTOS sl_main defaults this to false, which exits main before app_process_action runs. */
+extern "C" bool sl_main_start_task_should_continue(void)
+{
+  return true;
+}
+
 static int count = 0;
 
 #define INFERENCE_PER_CYCLE (1000 / TIME_DELAY_MS)
@@ -92,7 +98,7 @@ void app_process_action(void) {
 
     float brightness = (y + 1.0f) * 0.5f;  // Map [-1, +1] to [0, 1]
     uint32_t value = (uint32_t)(TIME_DELAY_MS * (1.0f - brightness));
-  
+
     count += 1;
     if (count >= INFERENCE_PER_CYCLE) {
         count = 0;

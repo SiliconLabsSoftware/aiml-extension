@@ -1,0 +1,62 @@
+id: tensorflow_lite_micro_model
+package: aiml
+label: TensorFlow Lite Micro
+description: Runtime to execute AOT optimized TFLite models
+category: Machine Learning|TensorFlow
+quality: production
+documentation:
+  docset: machine-learning
+  document: aiml-reference-guide
+metadata:
+  sbom:
+    license: MSLA
+root_path: compiled_model
+ui_hints:
+  visibility: never
+provides:
+  - name: tensorflow_lite_micro_model
+requires:
+  - name: tensorflow_kernel_implementation
+  - name: tensorflow_lite_micro
+
+config_file:
+  - path: config/tflite_micro_model_config.h
+
+include:
+  - path: .
+    file_list:
+      - path: tflite_micro_model.hpp
+      - path: tflite_micro_accelerator.hpp
+      - path: tflite_micro_compiled_allocator.hpp
+      - path: tflite_micro_logger.hpp
+      - path: tflite_micro_model_context.hpp
+      - path: tflite_micro_model_helper.hpp
+      - path: tflite_micro_tensor.hpp
+      - path: tflite_model_parameters.hpp
+      - path: tflite_model_parameters_flatbuffer_generated.h
+      - path: tflite_micro_kernel_utils.hpp
+      - path: compiled_model_paging_interface.hpp
+      - path: compiled_memory_plan_interface.hpp
+      - path: compiled_model_paging.hpp
+      - path: compiled_model_context.hpp
+      - path: compiled_model_dma_mgr.hpp
+      - path: compiled_model_interface.hpp
+      - path: compiled_model_utils.hpp
+      - path: compiled_model.hpp
+source:
+  - path: tflite_micro_accelerator.cc
+  - path: tflite_micro_compiled_allocator.cc
+  - path: tflite_micro_model_context.cc
+  - path: tflite_micro_model_helper.cc
+  - path: tflite_micro_model.cc
+  - path: tflite_micro_tensor.cc
+  - path: tflite_model_parameters.cc
+  - path: compiled_model_utils.cc
+  - path: compiled_model_context.cc
+  - path: compiled_model_paging.cc
+  - path: series2_dma_mgr.cc
+    condition:
+      - device_efx
+  - path: si91x_dma_mgr.cc
+    condition:
+      - device_si91x

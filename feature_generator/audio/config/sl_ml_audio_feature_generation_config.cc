@@ -8,12 +8,17 @@
  * upgrade. New projects should use sl_fe_audio_<instance>_config.h instead.
  ******************************************************************************/
 
-#include "ml/tflite_micro_model/tflite_model_parameters.hpp"
-#include "ml/tflite_micro_model/tflite_micro_logger.hpp"
+#include "sl_component_catalog.h"
+
+#if defined(SL_CATALOG_TENSORFLOW_LITE_MICRO_PRESENT)
+#include "tflite_model_parameters.hpp"
+#include "tflite_micro_logger.hpp"
+#endif
 #include "sl_ml_audio_feature_generation_config.h"
 
 #include <cstdio>
 
+#if defined(SL_CATALOG_TENSORFLOW_LITE_MICRO_PRESENT)
 template<typename T>
 bool get_param(const npu_toolkit::TfliteModelParameters& model_parameters, const char *key, T& val)
 {
@@ -45,6 +50,7 @@ bool get_param_default(const npu_toolkit::TfliteModelParameters& model_parameter
 #define GET_INT_DEFAULT(key, val, default_val) get_param_default(model_parameters, key, val, default_val);  printf("%s=%d\n", key, val)
 #define GET_FLOAT(key, val) missing_params |= get_param(model_parameters, key, val);  printf("%s=%5.3f\n", key, val)
 #define GET_FLOAT_DEFAULT(key, val, default_val) get_param_default(model_parameters, key, val, default_val);  printf("%s=%5.3f\n", key, val)
+#endif
 
 int SL_ML_AUDIO_FEATURE_GENERATION_DUMP_RAW_SPECTROGRAM;
 int SL_ML_AUDIO_FEATURE_GENERATION_DUMP_QUANTIZED_SPECTROGRAM;
@@ -52,6 +58,7 @@ int SL_ML_AUDIO_FEATURE_GENERATION_DUMP_AUDIO;
 int SL_TFLITE_MODEL_AUDIO_FEATURE_GENERATION_AUDIO_GAIN;
 int SL_TFLITE_MODEL_FE_ACTIVITY_DETECTION_ENABLE;
 
+#if defined(SL_CATALOG_TENSORFLOW_LITE_MICRO_PRESENT)
 bool sl_ml_audio_feature_generation_load_model_settings(const void *tflite_flatbuffer)
 {
   npu_toolkit::TfliteModelParameters model_parameters;
@@ -68,3 +75,4 @@ bool sl_ml_audio_feature_generation_load_model_settings(const void *tflite_flatb
 
   return !missing_params;
 }
+#endif

@@ -17,6 +17,8 @@
 #ifndef SL_ML_PROFILER_INTERPRETER_H
 #define SL_ML_PROFILER_INTERPRETER_H
 
+#include "sl_ml_profiler_config.h"
+
 namespace sl {
 namespace ml {
 class SilabsProfiler;
@@ -32,7 +34,7 @@ class SilabsProfiler;
 
 #include "micro_profiler_interface.h"
 #include "tflite_micro_model.hpp"
-#include "ml/tflite_micro_model/tflite_micro_model_helper.hpp"
+#include "tflite_micro_model_helper.hpp"
 
 using namespace npu_toolkit;
 
@@ -65,5 +67,8 @@ private:
 #if (SL_ML_ENABLE_DYNAMIC_MODEL_LOAD == 1)
 bool load_dynamic_tflite_micro_model(SLTfliteMicroModel& model);
 #endif // SL_ML_ENABLE_DYNAMIC_MODEL_LOAD
+#if (SL_ML_ENABLE_DYNAMIC_BUFFER_ALLOCATION == 1)
+void release_dynamic_tflite_micro_model(void);
+#endif // SL_ML_ENABLE_DYNAMIC_BUFFER_ALLOCATION
 
 #endif // SL_ML_PROFILER_INTERPRETER_H

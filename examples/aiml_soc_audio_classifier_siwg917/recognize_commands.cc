@@ -20,7 +20,7 @@
 #include <limits>
 
 #include "audio_classifier.h"
-#include "ml/tflite_micro_model/tflite_micro_logger.hpp"
+#include "tflite_micro_logger.hpp"
 
 
 extern const char* get_category_label(int index);

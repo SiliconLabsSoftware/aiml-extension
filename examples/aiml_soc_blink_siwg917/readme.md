@@ -19,8 +19,15 @@ The model used in the application is a regression model, trained to replicate a
 sine function. Input and output is a single floating point value represented as
 a quantized 8 bit value as we are using an integer only quantized model. The
 model is continuously fed with values ranging from 0 to 2pi, and the output of
-the model is used to control the intensity of an LED. Inference results are also
-printed over VCOM.
+the model is used to control the intensity of the RGB LED.
+
+## Behavior
+
+After flashing and resetting the board, open a serial terminal on the board VCOM
+port. VCOM prints startup messages (for example, model load
+success) and error messages if something fails. Inference output is shown on the
+RGB LED as a smooth brightness change over time; per-inference values are not
+printed on VCOM during normal operation.
 
 This model used is based on TensorFlow's hello world application. For details
 about the original application or information on how to train your own model,

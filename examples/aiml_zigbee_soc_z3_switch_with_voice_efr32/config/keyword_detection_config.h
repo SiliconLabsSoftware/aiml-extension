@@ -18,7 +18,7 @@
 #ifndef KEYWORD_DETECTION_CONFIG_H
 #define KEYWORD_DETECTION_CONFIG_H
 
-#include "ml/tflite_micro_model/tflite_model_parameters.hpp"
+#include "tflite_model_parameters.hpp"
 
 #ifdef __cplusplus
 extern "C" {

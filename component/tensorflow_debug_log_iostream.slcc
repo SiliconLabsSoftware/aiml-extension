@@ -17,8 +17,9 @@ provides:
   - name: tensorflow_debug_log_implementation
 requires:
   - name: iostream
+  - name: iostream_vuart_si91x
+    condition: [device_si91x]
 source:
   - path: src/utils/debug_log.cc
 define:
   - name: TF_LITE_MCU_DEBUG_LOG
-

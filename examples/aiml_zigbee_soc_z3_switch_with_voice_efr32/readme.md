@@ -65,7 +65,7 @@ below:
 
 | Role | Example project | Board | CLI prompt |
 |------|-----------------|-------|------------|
-| Switch | `AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32` | BRD2601B / BRD2608A | `zigbee_z3_switch_with_voice>` |
+| Switch | `AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32` | BRD2601B / BRD2608A / BRD2608B | `zigbee_z3_switch_with_voice>` |
 | Light | `Zigbee - SoC Z3 Light` | Any Zigbee 3.0-capable EFR32 kit | `zigbee_z3_light>` |
 | Bootloader | `Bootloader - SoC SPI Flash Storage (single image)` | Both boards | — |
 
@@ -367,7 +367,7 @@ commander vcom connect --serialno <J-Link-serial-number> --lineending cr
 
 | Symptom | Likely cause | What to try |
 |---------|--------------|-------------|
-| `Failed to load keyword model` or `Failed to init audio feature generator` | Wrong board target or incomplete build | Rebuild `AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32` in Simplicity Studio for BRD2601B or BRD2608A |
+| `Failed to load keyword model` or `Failed to init audio feature generator` | Wrong board target or incomplete build | Rebuild `AI/ML - SoC Zigbee 3.0 Switch with Voice EFR32` in Simplicity Studio for BRD2601B, BRD2608A, or BRD2608B |
 | No keyword settings at switch boot | ML init did not run | Confirm the switch board has a microphone and MVP; rebuild for the correct target |
 | Switch will not join | Light network not open, boards too far apart, or join window expired | On the light console: `plugin network-creator-security open-network`; move boards within ~1 m; join the switch with **BTN0** before the open-network timer expires (see [join timeout note](#32-join-the-zigbee-network)) |
 | Different PAN ID on `info` | Switch and light are not on the same network | Repeat [Join the Zigbee network](#32-join-the-zigbee-network) from Step 1 |

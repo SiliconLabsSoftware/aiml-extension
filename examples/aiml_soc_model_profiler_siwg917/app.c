@@ -17,6 +17,12 @@
 #include "app.h"
 #include "model_profiler.h"
 
+/* FreeRTOS sl_main defaults this to false, which exits main before app_process_action runs. */
+bool sl_main_start_task_should_continue(void)
+{
+  return true;
+}
+
 static bool init_success;
 /***************************************************************************//**
  * Initialize application.

@@ -30,7 +30,9 @@
 #endif
 
 /***************************************************************************//**
- * @addtogroup ml_tflite_micro_model
+ * @defgroup ml_tflite_micro_model Machine Learning model APIs and structures
+ * @brief Model handle structure and init/run/deinit functions for embedded
+ *        TensorFlow Lite Micro models.
  * @{
  ******************************************************************************/
 
